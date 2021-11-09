@@ -5,15 +5,15 @@ metadata:
     deployment.kubernetes.io/revision: "2"
     field.cattle.io/creatorId: user-t5wpm
     field.cattle.io/publicEndpoints: '[{"addresses":["167.172.178.78"],"port":30949,"protocol":"TCP","serviceName":"default:odoo-nodeport","allNodes":true}]'
-    meta.helm.sh/release-name: fleet
+    meta.helm.sh/release-name: siliconstreets
     meta.helm.sh/release-namespace: default
-    objectset.rio.cattle.io/id: default-fleet
-  creationTimestamp: "2021-11-09T16:24:26Z"
+    objectset.rio.cattle.io/id: default-siliconstreets
+  creationTimestamp: "2021-11-09T16:38:59Z"
   generation: 2
   labels:
     app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
-    objectset.rio.cattle.io/hash: ff49fc596fea0ea2fa196f6c87597b8fdd0efafd
+    objectset.rio.cattle.io/hash: 12263c2687310fee9069a9cb16537b32a7c684c8
     workload.user.cattle.io/workloadselector: deployment-default-odoo
   managedFields:
   - apiVersion: apps/v1
@@ -48,6 +48,7 @@ metadata:
           f:metadata:
             f:annotations:
               .: {}
+              f:cattle.io/timestamp: {}
               f:field.cattle.io/ports: {}
             f:labels:
               .: {}
@@ -65,7 +66,6 @@ metadata:
                   k:{"name":"PASSWORD"}:
                     .: {}
                     f:name: {}
-                    f:value: {}
                   k:{"name":"USER"}:
                     .: {}
                     f:name: {}
@@ -94,6 +94,10 @@ metadata:
                 f:tty: {}
                 f:volumeMounts:
                   .: {}
+                  k:{"mountPath":"/etc/odoo"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
                   k:{"mountPath":"/mnt/extra-addons"}:
                     .: {}
                     f:mountPath: {}
@@ -134,26 +138,28 @@ metadata:
                 f:name: {}
     manager: fleetagent
     operation: Update
-    time: "2021-11-09T16:24:26Z"
+    time: "2021-11-09T16:38:59Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
       f:spec:
         f:template:
-          f:metadata:
-            f:annotations:
-              f:cattle.io/timestamp: {}
           f:spec:
+            f:affinity: {}
             f:containers:
               k:{"name":"odoo"}:
-                f:volumeMounts:
-                  k:{"mountPath":"/etc/odoo"}:
-                    .: {}
-                    f:mountPath: {}
-                    f:name: {}
-    manager: rancher
+                f:env:
+                  k:{"name":"PASSWORD"}:
+                    f:valueFrom:
+                      .: {}
+                      f:secretKeyRef:
+                        .: {}
+                        f:key: {}
+                        f:name: {}
+                        f:optional: {}
+    manager: agent
     operation: Update
-    time: "2021-11-09T16:29:17Z"
+    time: "2021-11-09T17:01:16Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -161,7 +167,6 @@ metadata:
         f:annotations:
           f:deployment.kubernetes.io/revision: {}
       f:status:
-        f:availableReplicas: {}
         f:conditions:
           .: {}
           k:{"type":"Available"}:
@@ -181,16 +186,16 @@ metadata:
             f:status: {}
             f:type: {}
         f:observedGeneration: {}
-        f:readyReplicas: {}
         f:replicas: {}
+        f:unavailableReplicas: {}
         f:updatedReplicas: {}
     manager: kube-controller-manager
     operation: Update
-    time: "2021-11-09T16:29:23Z"
+    time: "2021-11-09T17:08:27Z"
   name: odoo
   namespace: default
-  resourceVersion: "16211"
-  uid: 7cf08635-9ea5-4bc8-abb4-21a38fce36b5
+  resourceVersion: "21500"
+  uid: c6df1ba7-bf49-4157-b1d6-ad68aba0e426
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -212,12 +217,17 @@ spec:
       labels:
         workload.user.cattle.io/workloadselector: deployment-default-odoo
     spec:
+      affinity: {}
       containers:
       - env:
         - name: HOST
           value: db
         - name: PASSWORD
-          value: odoo
+          valueFrom:
+            secretKeyRef:
+              key: PASSWORD
+              name: odoo-secret
+              optional: false
         - name: USER
           value: odoo
         image: odoo:15
@@ -266,21 +276,20 @@ spec:
           optional: false
         name: vol2
 status:
-  availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2021-11-09T16:24:36Z"
-    lastUpdateTime: "2021-11-09T16:24:36Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2021-11-09T16:24:26Z"
-    lastUpdateTime: "2021-11-09T16:29:24Z"
-    message: ReplicaSet "odoo-74bd5dd466" has successfully progressed.
+  - lastTransitionTime: "2021-11-09T16:38:59Z"
+    lastUpdateTime: "2021-11-09T17:01:36Z"
+    message: ReplicaSet "odoo-86574cb54c" has successfully progressed.
     reason: NewReplicaSetAvailable
     status: "True"
     type: Progressing
+  - lastTransitionTime: "2021-11-09T17:08:27Z"
+    lastUpdateTime: "2021-11-09T17:08:27Z"
+    message: Deployment does not have minimum availability.
+    reason: MinimumReplicasUnavailable
+    status: "False"
+    type: Available
   observedGeneration: 2
-  readyReplicas: 1
   replicas: 1
+  unavailableReplicas: 1
   updatedReplicas: 1
