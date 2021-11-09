@@ -194,7 +194,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-b
+          value: db
         - name: PASSWORD
           value: odoo
         - name: USER
