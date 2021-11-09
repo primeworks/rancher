@@ -199,7 +199,7 @@ spec:
           value: odoo
         - name: USER
           value: odoo
-        image: odoo
+        image: odoo:15
         imagePullPolicy: Always
         name: odoo
         resources: {}
