@@ -1,0 +1,177 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    field.cattle.io/creatorId: user-t5wpm
+  creationTimestamp: "2021-10-14T10:07:34Z"
+  generation: 3
+  labels:
+    cattle.io/creator: norman
+    workload.user.cattle.io/workloadselector: statefulSet-default-db
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:field.cattle.io/creatorId: {}
+        f:labels:
+          .: {}
+          f:cattle.io/creator: {}
+          f:workload.user.cattle.io/workloadselector: {}
+      f:spec:
+        f:podManagementPolicy: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector: {}
+        f:serviceName: {}
+        f:template:
+          f:metadata:
+            f:annotations:
+              .: {}
+              f:cattle.io/timestamp: {}
+              f:field.cattle.io/ports: {}
+            f:labels:
+              .: {}
+              f:workload.user.cattle.io/workloadselector: {}
+          f:spec:
+            f:containers:
+              k:{"name":"db"}:
+                .: {}
+                f:env:
+                  .: {}
+                  k:{"name":"POSTGRES_DB"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"POSTGRES_PASSWORD"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"POSTGRES_USER"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:resources: {}
+                f:securityContext:
+                  .: {}
+                  f:allowPrivilegeEscalation: {}
+                  f:capabilities: {}
+                  f:privileged: {}
+                  f:readOnlyRootFilesystem: {}
+                  f:runAsNonRoot: {}
+                f:stdin: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+                f:tty: {}
+                f:volumeMounts:
+                  .: {}
+                  k:{"mountPath":"/var/lib/postgresql/data"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+            f:dnsPolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+            f:volumes:
+              .: {}
+              k:{"name":"vol1"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+        f:updateStrategy:
+          f:type: {}
+    manager: rancher
+    operation: Update
+    time: "2021-10-14T10:07:34Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:collisionCount: {}
+        f:currentReplicas: {}
+        f:currentRevision: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updateRevision: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2021-10-16T13:17:41Z"
+  name: db
+  namespace: default
+  resourceVersion: "10622755"
+  uid: 64a9eac2-d0ae-42c0-bef2-0ca6f12b7feb
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: statefulSet-default-db
+  serviceName: db
+  template:
+    metadata:
+      annotations:
+        cattle.io/timestamp: "2021-10-16T13:04:32Z"
+        field.cattle.io/ports: '[[]]'
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: statefulSet-default-db
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_DB
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: odoo
+        - name: POSTGRES_USER
+          value: odoo
+        image: postgres:12
+        imagePullPolicy: Always
+        name: db
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: data
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          path: /mnt/data/database
+          type: DirectoryOrCreate
+        name: data
+  updateStrategy:
+    type: RollingUpdate
+status:
+  collisionCount: 0
+  currentReplicas: 1
+  currentRevision: db-5dcbfff89f
+  observedGeneration: 3
+  readyReplicas: 1
+  replicas: 1
+  updateRevision: db-5dcbfff89f
+  updatedReplicas: 1
