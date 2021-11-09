@@ -3,12 +3,34 @@ kind: StatefulSet
 metadata:
   annotations:
     field.cattle.io/creatorId: user-t5wpm
-  creationTimestamp: "2021-10-14T10:07:34Z"
-  generation: 3
+    meta.helm.sh/release-name: siliconstreets
+    meta.helm.sh/release-namespace: default
+    objectset.rio.cattle.io/id: default-siliconstreets
+  creationTimestamp: "2021-11-09T16:38:59Z"
+  generation: 2
   labels:
+    app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
+    objectset.rio.cattle.io/hash: 12263c2687310fee9069a9cb16537b32a7c684c8
     workload.user.cattle.io/workloadselector: statefulSet-default-db
   managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:template:
+          f:spec:
+            f:volumes:
+              k:{"name":"vol1"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+    manager: rancher
+    operation: Update
+    time: "2021-10-14T10:07:34Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -16,9 +38,14 @@ metadata:
         f:annotations:
           .: {}
           f:field.cattle.io/creatorId: {}
+          f:meta.helm.sh/release-name: {}
+          f:meta.helm.sh/release-namespace: {}
+          f:objectset.rio.cattle.io/id: {}
         f:labels:
           .: {}
+          f:app.kubernetes.io/managed-by: {}
           f:cattle.io/creator: {}
+          f:objectset.rio.cattle.io/hash: {}
           f:workload.user.cattle.io/workloadselector: {}
       f:spec:
         f:podManagementPolicy: {}
@@ -48,7 +75,6 @@ metadata:
                   k:{"name":"POSTGRES_PASSWORD"}:
                     .: {}
                     f:name: {}
-                    f:value: {}
                   k:{"name":"POSTGRES_USER"}:
                     .: {}
                     f:name: {}
@@ -81,7 +107,7 @@ metadata:
             f:terminationGracePeriodSeconds: {}
             f:volumes:
               .: {}
-              k:{"name":"vol1"}:
+              k:{"name":"data"}:
                 .: {}
                 f:hostPath:
                   .: {}
@@ -90,9 +116,30 @@ metadata:
                 f:name: {}
         f:updateStrategy:
           f:type: {}
-    manager: rancher
+    manager: fleetagent
     operation: Update
-    time: "2021-10-14T10:07:34Z"
+    time: "2021-11-09T16:38:59Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:template:
+          f:spec:
+            f:affinity: {}
+            f:containers:
+              k:{"name":"db"}:
+                f:env:
+                  k:{"name":"POSTGRES_PASSWORD"}:
+                    f:valueFrom:
+                      .: {}
+                      f:secretKeyRef:
+                        .: {}
+                        f:key: {}
+                        f:name: {}
+                        f:optional: {}
+    manager: agent
+    operation: Update
+    time: "2021-11-09T16:54:30Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -107,11 +154,11 @@ metadata:
         f:updatedReplicas: {}
     manager: kube-controller-manager
     operation: Update
-    time: "2021-10-16T13:17:41Z"
+    time: "2021-11-09T16:58:44Z"
   name: db
   namespace: default
-  resourceVersion: "10622755"
-  uid: 64a9eac2-d0ae-42c0-bef2-0ca6f12b7feb
+  resourceVersion: "19963"
+  uid: 92c0c764-680a-48f6-a63d-431d7bb7ceca
 spec:
   podManagementPolicy: OrderedReady
   replicas: 1
@@ -129,12 +176,17 @@ spec:
       labels:
         workload.user.cattle.io/workloadselector: statefulSet-default-db
     spec:
+      affinity: {}
       containers:
       - env:
         - name: POSTGRES_DB
           value: postgres
         - name: POSTGRES_PASSWORD
-          value: odoo
+          valueFrom:
+            secretKeyRef:
+              key: POSTGRES_PASSWORD
+              name: odoo-secret
+              optional: false
         - name: POSTGRES_USER
           value: odoo
         image: postgres:12
@@ -169,9 +221,9 @@ spec:
 status:
   collisionCount: 0
   currentReplicas: 1
-  currentRevision: db-5dcbfff89f
-  observedGeneration: 3
+  currentRevision: db-76f6694845
+  observedGeneration: 2
   readyReplicas: 1
   replicas: 1
-  updateRevision: db-5dcbfff89f
+  updateRevision: db-76f6694845
   updatedReplicas: 1
