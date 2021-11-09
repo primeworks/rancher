@@ -4,7 +4,7 @@ metadata:
   annotations:
     deployment.kubernetes.io/revision: "2"
     field.cattle.io/creatorId: user-t5wpm
-    field.cattle.io/publicEndpoints: '[{"addresses":["167.172.178.78"],"port":30949,"protocol":"TCP","serviceName":"default:odoo-nodeport","allNodes":true}]'
+    field.cattle.io/publicEndpoints: '[{"addresses":[""],"port":30949,"protocol":"TCP","serviceName":"default:odoo-nodeport","allNodes":true}]'
     meta.helm.sh/release-name: siliconstreets
     meta.helm.sh/release-namespace: default
     objectset.rio.cattle.io/id: default-siliconstreets
