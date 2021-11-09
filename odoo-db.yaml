@@ -3,34 +3,12 @@ kind: StatefulSet
 metadata:
   annotations:
     field.cattle.io/creatorId: user-t5wpm
-    meta.helm.sh/release-name: siliconstreets
-    meta.helm.sh/release-namespace: default
-    objectset.rio.cattle.io/id: default-siliconstreets
-  creationTimestamp: "2021-11-09T16:38:59Z"
-  generation: 2
+  creationTimestamp: "2021-10-18T13:33:46Z"
+  generation: 7
   labels:
-    app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
-    objectset.rio.cattle.io/hash: 12263c2687310fee9069a9cb16537b32a7c684c8
     workload.user.cattle.io/workloadselector: statefulSet-default-db
   managedFields:
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:spec:
-        f:template:
-          f:spec:
-            f:volumes:
-              k:{"name":"vol1"}:
-                .: {}
-                f:hostPath:
-                  .: {}
-                  f:path: {}
-                  f:type: {}
-                f:name: {}
-    manager: rancher
-    operation: Update
-    time: "2021-10-14T10:07:34Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -38,18 +16,12 @@ metadata:
         f:annotations:
           .: {}
           f:field.cattle.io/creatorId: {}
-          f:meta.helm.sh/release-name: {}
-          f:meta.helm.sh/release-namespace: {}
-          f:objectset.rio.cattle.io/id: {}
         f:labels:
           .: {}
-          f:app.kubernetes.io/managed-by: {}
           f:cattle.io/creator: {}
-          f:objectset.rio.cattle.io/hash: {}
           f:workload.user.cattle.io/workloadselector: {}
       f:spec:
         f:podManagementPolicy: {}
-        f:replicas: {}
         f:revisionHistoryLimit: {}
         f:selector: {}
         f:serviceName: {}
@@ -75,6 +47,7 @@ metadata:
                   k:{"name":"POSTGRES_PASSWORD"}:
                     .: {}
                     f:name: {}
+                    f:value: {}
                   k:{"name":"POSTGRES_USER"}:
                     .: {}
                     f:name: {}
@@ -107,7 +80,7 @@ metadata:
             f:terminationGracePeriodSeconds: {}
             f:volumes:
               .: {}
-              k:{"name":"data"}:
+              k:{"name":"vol1"}:
                 .: {}
                 f:hostPath:
                   .: {}
@@ -116,30 +89,20 @@ metadata:
                 f:name: {}
         f:updateStrategy:
           f:type: {}
-    manager: fleetagent
+    manager: rancher
     operation: Update
-    time: "2021-11-09T16:38:59Z"
+    time: "2021-10-18T13:33:46Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
       f:spec:
+        f:replicas: {}
         f:template:
           f:spec:
             f:affinity: {}
-            f:containers:
-              k:{"name":"db"}:
-                f:env:
-                  k:{"name":"POSTGRES_PASSWORD"}:
-                    f:valueFrom:
-                      .: {}
-                      f:secretKeyRef:
-                        .: {}
-                        f:key: {}
-                        f:name: {}
-                        f:optional: {}
     manager: agent
     operation: Update
-    time: "2021-11-09T16:54:30Z"
+    time: "2021-11-09T18:48:51Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -154,11 +117,11 @@ metadata:
         f:updatedReplicas: {}
     manager: kube-controller-manager
     operation: Update
-    time: "2021-11-09T16:58:44Z"
+    time: "2021-11-09T18:48:54Z"
   name: db
   namespace: default
-  resourceVersion: "19963"
-  uid: 92c0c764-680a-48f6-a63d-431d7bb7ceca
+  resourceVersion: "16670279"
+  uid: 22b73a28-9194-42e9-b5ed-0fd549af5795
 spec:
   podManagementPolicy: OrderedReady
   replicas: 1
@@ -170,7 +133,7 @@ spec:
   template:
     metadata:
       annotations:
-        cattle.io/timestamp: "2021-10-16T13:04:32Z"
+        cattle.io/timestamp: "2021-10-18T13:33:46Z"
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
@@ -182,11 +145,7 @@ spec:
         - name: POSTGRES_DB
           value: postgres
         - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: POSTGRES_PASSWORD
-              name: odoo-secret
-              optional: false
+          value: odoo
         - name: POSTGRES_USER
           value: odoo
         image: postgres:12
@@ -205,7 +164,7 @@ spec:
         tty: true
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
-          name: data
+          name: vol1
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -215,15 +174,15 @@ spec:
       - hostPath:
           path: /mnt/data/database
           type: DirectoryOrCreate
-        name: data
+        name: vol1
   updateStrategy:
     type: RollingUpdate
 status:
   collisionCount: 0
   currentReplicas: 1
-  currentRevision: db-76f6694845
-  observedGeneration: 2
+  currentRevision: db-7dc896db95
+  observedGeneration: 7
   readyReplicas: 1
   replicas: 1
-  updateRevision: db-76f6694845
+  updateRevision: db-7dc896db95
   updatedReplicas: 1
