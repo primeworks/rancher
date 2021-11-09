@@ -214,8 +214,9 @@ spec:
         terminationMessagePolicy: File
         tty: true
         volumeMounts:
-        - mountPath: /var/lib/odoo
+        - mountPath: /var/lib/odoo/filestore
           name: vol1
+          subPath: filestore
         - mountPath: /mnt/extra-addons
           name: vol3
         - mountPath: /etc/odoo
