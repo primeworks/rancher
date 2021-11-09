@@ -2,13 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    deployment.kubernetes.io/revision: "25"
+    deployment.kubernetes.io/revision: "5"
     field.cattle.io/creatorId: user-t5wpm
-    field.cattle.io/publicEndpoints: '[{"addresses":["159.89.12.95"],"port":31326,"protocol":"TCP","serviceName":"default:odoo-nodeport","allNodes":true},{"addresses":["159.89.12.95"],"port":443,"protocol":"HTTPS","serviceName":"default:odoo-nodeport","ingressName":"default:prints","hostname":"prints.studio24nigeria.com","allNodes":true},{"addresses":["159.89.12.95"],"port":443,"protocol":"HTTPS","serviceName":"default:odoo-nodeport","ingressName":"default:studio24nigeria","hostname":"www.studio24nigeria.com","allNodes":true},{"addresses":["159.89.12.95"],"port":443,"protocol":"HTTPS","serviceName":"default:odoo-nodeport","ingressName":"default:erp","hostname":"erp.studio24nigeria.com","allNodes":true}]'
-  creationTimestamp: "2021-10-14T10:08:19Z"
-  generation: 41
+    field.cattle.io/publicEndpoints: '[{"addresses":["167.172.178.78"],"port":30949,"protocol":"TCP","serviceName":"default:odoo-nodeport","allNodes":true}]'
+    meta.helm.sh/release-name: fleet
+    meta.helm.sh/release-namespace: default
+    objectset.rio.cattle.io/id: default-fleet
+  creationTimestamp: "2021-11-09T15:55:38Z"
+  generation: 6
   labels:
+    app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
+    objectset.rio.cattle.io/hash: ff49fc596fea0ea2fa196f6c87597b8fdd0efafd
     workload.user.cattle.io/workloadselector: deployment-default-odoo
   managedFields:
   - apiVersion: apps/v1
@@ -18,10 +23,14 @@ metadata:
         f:annotations:
           .: {}
           f:field.cattle.io/creatorId: {}
-          f:field.cattle.io/publicEndpoints: {}
+          f:meta.helm.sh/release-name: {}
+          f:meta.helm.sh/release-namespace: {}
+          f:objectset.rio.cattle.io/id: {}
         f:labels:
           .: {}
+          f:app.kubernetes.io/managed-by: {}
           f:cattle.io/creator: {}
+          f:objectset.rio.cattle.io/hash: {}
           f:workload.user.cattle.io/workloadselector: {}
       f:spec:
         f:progressDeadlineSeconds: {}
@@ -36,10 +45,7 @@ metadata:
           f:type: {}
         f:template:
           f:metadata:
-            f:annotations:
-              .: {}
-              f:cattle.io/timestamp: {}
-              f:field.cattle.io/ports: {}
+            f:annotations: {}
             f:labels:
               .: {}
               f:workload.user.cattle.io/workloadselector: {}
@@ -69,13 +75,11 @@ metadata:
                   k:{"containerPort":8069,"protocol":"TCP"}:
                     .: {}
                     f:containerPort: {}
-                    f:name: {}
                     f:protocol: {}
                 f:resources: {}
                 f:securityContext:
                   .: {}
                   f:allowPrivilegeEscalation: {}
-                  f:capabilities: {}
                   f:privileged: {}
                   f:readOnlyRootFilesystem: {}
                   f:runAsNonRoot: {}
@@ -86,10 +90,6 @@ metadata:
                 f:volumeMounts:
                   .: {}
                   k:{"mountPath":"/mnt/extra-addons"}:
-                    .: {}
-                    f:mountPath: {}
-                    f:name: {}
-                  k:{"mountPath":"/var/lib/odoo"}:
                     .: {}
                     f:mountPath: {}
                     f:name: {}
@@ -122,9 +122,38 @@ metadata:
                   f:path: {}
                   f:type: {}
                 f:name: {}
+    manager: fleetagent
+    operation: Update
+    time: "2021-11-09T15:55:38Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:field.cattle.io/publicEndpoints: {}
+      f:spec:
+        f:template:
+          f:metadata:
+            f:annotations:
+              f:cattle.io/timestamp: {}
+              f:field.cattle.io/ports: {}
+          f:spec:
+            f:containers:
+              k:{"name":"odoo"}:
+                f:ports:
+                  k:{"containerPort":8069,"protocol":"TCP"}:
+                    f:name: {}
+                f:securityContext:
+                  f:capabilities: {}
+                f:volumeMounts:
+                  k:{"mountPath":"/var/lib/odoo/filestore"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:subPath: {}
     manager: rancher
     operation: Update
-    time: "2021-11-06T22:39:26Z"
+    time: "2021-11-09T16:06:21Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -157,11 +186,11 @@ metadata:
         f:updatedReplicas: {}
     manager: kube-controller-manager
     operation: Update
-    time: "2021-11-06T22:39:29Z"
+    time: "2021-11-09T16:06:27Z"
   name: odoo
   namespace: default
-  resourceVersion: "15961429"
-  uid: 57eb8973-592c-4687-99c1-94f8e87aeb38
+  resourceVersion: "12648"
+  uid: e0a81f2e-a3e6-4433-a424-c876d67a70b4
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -177,7 +206,7 @@ spec:
   template:
     metadata:
       annotations:
-        cattle.io/timestamp: "2021-11-06T22:39:24Z"
+        cattle.io/timestamp: "2021-11-09T16:06:19Z"
         field.cattle.io/ports: '[[{"containerPort":8069,"dnsName":"odoo-nodeport","hostPort":0,"kind":"NodePort","name":"8069tcp01","protocol":"TCP","sourcePort":0}]]'
       creationTimestamp: null
       labels:
@@ -210,8 +239,9 @@ spec:
         terminationMessagePolicy: File
         tty: true
         volumeMounts:
-        - mountPath: /var/lib/odoo
+        - mountPath: /var/lib/odoo/filestore
           name: vol1
+          subPath: filestore
         - mountPath: /mnt/extra-addons
           name: vol3
       dnsPolicy: ClusterFirst
@@ -221,7 +251,7 @@ spec:
       terminationGracePeriodSeconds: 30
       volumes:
       - hostPath:
-          path: /mnt/staging/odoo
+          path: /mnt/data/odoo
           type: DirectoryOrCreate
         name: vol1
       - hostPath:
@@ -236,19 +266,19 @@ spec:
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2021-10-17T21:45:29Z"
-    lastUpdateTime: "2021-10-17T21:45:29Z"
+  - lastTransitionTime: "2021-11-09T15:55:47Z"
+    lastUpdateTime: "2021-11-09T15:55:47Z"
     message: Deployment has minimum availability.
     reason: MinimumReplicasAvailable
     status: "True"
     type: Available
-  - lastTransitionTime: "2021-10-14T10:08:20Z"
-    lastUpdateTime: "2021-11-06T22:39:29Z"
-    message: ReplicaSet "odoo-57c8dd8b96" has successfully progressed.
+  - lastTransitionTime: "2021-11-09T15:55:39Z"
+    lastUpdateTime: "2021-11-09T16:06:28Z"
+    message: ReplicaSet "odoo-5945f854b7" has successfully progressed.
     reason: NewReplicaSetAvailable
     status: "True"
     type: Progressing
-  observedGeneration: 41
+  observedGeneration: 6
   readyReplicas: 1
   replicas: 1
   updatedReplicas: 1
