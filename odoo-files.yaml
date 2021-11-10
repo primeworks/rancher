@@ -216,7 +216,6 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/odoo/filestore
           name: vol1
-          subPath: filestore
         - mountPath: /mnt/extra-addons
           name: vol3
         - mountPath: /etc/odoo
@@ -228,7 +227,7 @@ spec:
       terminationGracePeriodSeconds: 30
       volumes:
       - hostPath:
-          path: /mnt/data/odoo
+          path: /mnt/data/odoo/filestore
           type: DirectoryOrCreate
         name: vol1
       - hostPath:
