@@ -36,7 +36,7 @@ metadata:
               f:workload.user.cattle.io/workloadselector: {}
           f:spec:
             f:containers:
-              k:{"name":"db"}:
+              k:{"name":"db-tmp-1"}:
                 .: {}
                 f:env:
                   .: {}
@@ -118,7 +118,7 @@ metadata:
     manager: kube-controller-manager
     operation: Update
     time: "2021-11-09T18:48:54Z"
-  name: db
+  name: db-tmp-1
   namespace: default
   resourceVersion: "16670279"
   uid: 22b73a28-9194-42e9-b5ed-0fd549af5795
@@ -150,7 +150,7 @@ spec:
           value: odoo
         image: postgres:12
         imagePullPolicy: Always
-        name: db
+        name: db-tmp-1
         resources: {}
         securityContext:
           allowPrivilegeEscalation: false
