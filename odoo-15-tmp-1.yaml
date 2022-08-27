@@ -55,7 +55,7 @@ metadata:
               f:workload.user.cattle.io/workloadselector: {}
           f:spec:
             f:containers:
-              k:{"name":"odoo"}:
+              k:{"name":"odoo-15-tmp-1"}:
                 .: {}
                 f:env:
                   .: {}
@@ -107,7 +107,7 @@ metadata:
             f:terminationGracePeriodSeconds: {}
             f:volumes:
               .: {}
-              k:{"name":"odoo"}:
+              k:{"name":"odoo-15-tmp-1"}:
                 .: {}
                 f:configMap:
                   .: {}
@@ -165,9 +165,8 @@ metadata:
     manager: kube-controller-manager
     operation: Update
     time: "2021-11-09T18:59:38Z"
-  name: odoo
+  name: odoo-15-tmp-1
   namespace: default
-  resourceVersion: "16672234"
   uid: 069b6b0e-2622-4347-b2be-73dbfba6e2f1
 spec:
   progressDeadlineSeconds: 600
@@ -194,14 +193,14 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db
+          value: db-tmp-1
         - name: PASSWORD
           value: odoo
         - name: USER
           value: odoo
         image: odoo:15
         imagePullPolicy: Always
-        name: odoo
+        name: odoo-15-tmp-1
         resources: {}
         securityContext:
           allowPrivilegeEscalation: false
@@ -236,9 +235,9 @@ spec:
         name: vol3
       - configMap:
           defaultMode: 493
-          name: odoo
+          name: odoo.conf
           optional: false
-        name: odoo
+        name: odoo.conf
 status:
   availableReplicas: 1
   conditions:
@@ -255,6 +254,6 @@ status:
     status: "True"
     type: Progressing
   observedGeneration: 33
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1
+  readyReplicas: 0
+  replicas: 0
+  updatedReplicas: 0
