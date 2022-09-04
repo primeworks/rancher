@@ -213,8 +213,11 @@ spec:
         terminationMessagePolicy: File
         tty: true
         ports:
-        - containerPort: 8069
-          name: odoo-retail
+            - containerPort: 8069
+              name: odoo-retail
+              protocol: TCP
+              _serviceType: NodePort
+              _name: odoo-retail
         volumeMounts:
         - mountPath: /etc/odoo
           name: conf
