@@ -55,7 +55,7 @@ metadata:
               f:workload.user.cattle.io/workloadselector: {}
           f:spec:
             f:containers:
-              k:{"name":"odoo-15-tmp-1"}:
+              k:{"name":"odoo-retail"}:
                 .: {}
                 f:env:
                   .: {}
@@ -107,7 +107,7 @@ metadata:
             f:terminationGracePeriodSeconds: {}
             f:volumes:
               .: {}
-              k:{"name":"odoo-15-tmp-1"}:
+              k:{"name":"odoo-retail"}:
                 .: {}
                 f:configMap:
                   .: {}
@@ -165,7 +165,7 @@ metadata:
     manager: kube-controller-manager
     operation: Update
     time: "2021-11-09T18:59:38Z"
-  name: odoo-15-tmp-1
+  name: odoo-retail
   namespace: default
   uid: 069b6b0e-2622-4347-b2be-73dbfba6e2f1
 spec:
@@ -200,7 +200,7 @@ spec:
           value: odoo
         image: odoo:15
         imagePullPolicy: Always
-        name: odoo-15-tmp-1
+        name: odoo-retail
         resources: {}
         securityContext:
           allowPrivilegeEscalation: false
