@@ -233,7 +233,7 @@ spec:
         persistentVolumeClaim:
           claimName: odoo
 status:
-  availableReplicas: 1
+  availableReplicas: 0
   conditions:
   - lastTransitionTime: "2021-11-09T18:49:10Z"
     lastUpdateTime: "2021-11-09T18:49:10Z"
