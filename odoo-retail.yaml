@@ -232,22 +232,4 @@ spec:
       - name: files
         persistentVolumeClaim:
           claimName: retail-odoo
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2021-11-09T18:49:10Z"
-    lastUpdateTime: "2021-11-09T18:49:10Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2021-10-18T13:34:36Z"
-    lastUpdateTime: "2021-11-09T18:59:38Z"
-    message: ReplicaSet "odoo-7bf7478fc9" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 33
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1
+
