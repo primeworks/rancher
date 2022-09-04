@@ -212,6 +212,9 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         tty: true
+        ports:
+        - containerPort: 8069
+          name: odoo-retail
         volumeMounts:
         - mountPath: /etc/odoo
           name: conf
