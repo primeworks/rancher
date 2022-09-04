@@ -23,7 +23,6 @@ metadata:
   creationTimestamp: "2022-08-27T23:22:43Z"
   generation: 3
   labels:
-    labels:
     app: retail-odoo
     app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
