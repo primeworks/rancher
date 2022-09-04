@@ -207,17 +207,20 @@ spec:
         tty: true
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
-          name: vol1
+          name: data
+          subPath: database
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-      - hostPath:
-          path: /mnt/data/database
-          type: DirectoryOrCreate
-        name: vol1
+      - emptyDir:
+          medium: Memory
+        name: dshm
+      - name: vol2
+        persistentVolumeClaim:
+          claimName: retail-odoo
   updateStrategy:
     type: RollingUpdate
 status:
