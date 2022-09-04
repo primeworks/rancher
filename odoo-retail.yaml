@@ -231,7 +231,7 @@ spec:
         name: conf
       - name: files
         persistentVolumeClaim:
-          claimName: odoo
+          claimName: retail-odoo
 status:
   availableReplicas: 1
   conditions:
