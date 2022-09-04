@@ -224,9 +224,9 @@ spec:
   updateStrategy:
     type: RollingUpdate
 status:
-  availableReplicas: 0
+  availableReplicas: 1
   collisionCount: 0
   currentRevision: db-retail-dc7fc6786
   observedGeneration: 3
-  replicas: 0
+  replicas: 1
   updateRevision: db-retail-dc7fc6786
