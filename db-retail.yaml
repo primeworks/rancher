@@ -54,7 +54,7 @@ metadata:
           f:spec:
             f:affinity: {}
             f:containers:
-              k:{"name":"db-tmp-1"}:
+              k:{"name":"db-retail"}:
                 .: {}
                 f:env:
                   .: {}
@@ -140,12 +140,12 @@ metadata:
               f:cattle.io/timestamp: {}
           f:spec:
             f:containers:
-              k:{"name":"db-tmp-1"}:
+              k:{"name":"db-retail"}:
                 f:args: {}
     manager: rancher
     operation: Update
     time: "2022-09-04T02:49:37Z"
-  name: db-tmp-1
+  name: db-retail
   namespace: default
   uid: 7a54398b-ee3a-4f04-9e6a-af75a681a3a8
 spec:
@@ -179,7 +179,7 @@ spec:
           value: odoo
         image: postgres:12
         imagePullPolicy: Always
-        name: db-tmp-1
+        name: db-retail
         resources: {}
         securityContext:
           allowPrivilegeEscalation: false
@@ -209,7 +209,7 @@ spec:
 status:
   availableReplicas: 0
   collisionCount: 0
-  currentRevision: db-tmp-1-dc7fc6786
+  currentRevision: db-retail-dc7fc6786
   observedGeneration: 3
   replicas: 0
-  updateRevision: db-tmp-1-dc7fc6786
+  updateRevision: db-retail-dc7fc6786
