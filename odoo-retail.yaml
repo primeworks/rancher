@@ -216,8 +216,8 @@ spec:
             - containerPort: 8069
               name: odoo-retail
               protocol: TCP
-              _serviceType: NodePort
-              _name: odoo-retail
+               serviceType: NodePort
+               name: odoo-retail
         volumeMounts:
         - mountPath: /etc/odoo
           name: conf
