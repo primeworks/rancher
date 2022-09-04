@@ -3,12 +3,25 @@ kind: StatefulSet
 metadata:
   annotations:
     field.cattle.io/creatorId: user-t5wpm
-  creationTimestamp: "2021-10-18T13:33:46Z"
-  generation: 7
+    meta.helm.sh/release-name: silicon
+    meta.helm.sh/release-namespace: default
+    objectset.rio.cattle.io/id: default-silicon
+  creationTimestamp: "2022-08-27T23:22:43Z"
+  generation: 3
   labels:
+    app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
+    objectset.rio.cattle.io/hash: dbb408b909497414f93be5e7a78a2f285d27b7e1
     workload.user.cattle.io/workloadselector: statefulSet-default-db
   managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:collisionCount: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2021-11-09T18:48:54Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -16,9 +29,14 @@ metadata:
         f:annotations:
           .: {}
           f:field.cattle.io/creatorId: {}
+          f:meta.helm.sh/release-name: {}
+          f:meta.helm.sh/release-namespace: {}
+          f:objectset.rio.cattle.io/id: {}
         f:labels:
           .: {}
+          f:app.kubernetes.io/managed-by: {}
           f:cattle.io/creator: {}
+          f:objectset.rio.cattle.io/hash: {}
           f:workload.user.cattle.io/workloadselector: {}
       f:spec:
         f:podManagementPolicy: {}
@@ -29,12 +47,12 @@ metadata:
           f:metadata:
             f:annotations:
               .: {}
-              f:cattle.io/timestamp: {}
               f:field.cattle.io/ports: {}
             f:labels:
               .: {}
               f:workload.user.cattle.io/workloadselector: {}
           f:spec:
+            f:affinity: {}
             f:containers:
               k:{"name":"db-tmp-1"}:
                 .: {}
@@ -89,42 +107,50 @@ metadata:
                 f:name: {}
         f:updateStrategy:
           f:type: {}
-    manager: rancher
+    manager: fleetagent
     operation: Update
-    time: "2021-10-18T13:33:46Z"
+    time: "2022-08-27T23:22:43Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
       f:spec:
         f:replicas: {}
-        f:template:
-          f:spec:
-            f:affinity: {}
     manager: agent
     operation: Update
-    time: "2021-11-09T18:48:51Z"
+    time: "2022-09-01T12:23:34Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
       f:status:
-        f:collisionCount: {}
-        f:currentReplicas: {}
         f:currentRevision: {}
         f:observedGeneration: {}
-        f:readyReplicas: {}
         f:replicas: {}
         f:updateRevision: {}
-        f:updatedReplicas: {}
     manager: kube-controller-manager
     operation: Update
-    time: "2021-11-09T18:48:54Z"
+    subresource: status
+    time: "2022-09-04T02:49:37Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:template:
+          f:metadata:
+            f:annotations:
+              f:cattle.io/timestamp: {}
+          f:spec:
+            f:containers:
+              k:{"name":"db-tmp-1"}:
+                f:args: {}
+    manager: rancher
+    operation: Update
+    time: "2022-09-04T02:49:37Z"
   name: db-tmp-1
   namespace: default
-  resourceVersion: "16670279"
-  uid: 22b73a28-9194-42e9-b5ed-0fd549af5795
+  uid: 7a54398b-ee3a-4f04-9e6a-af75a681a3a8
 spec:
   podManagementPolicy: OrderedReady
-  replicas: 1
+  replicas: 0
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -133,7 +159,7 @@ spec:
   template:
     metadata:
       annotations:
-        cattle.io/timestamp: "2021-10-18T13:33:46Z"
+        cattle.io/timestamp: "2022-09-04T02:49:36Z"
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
@@ -141,7 +167,10 @@ spec:
     spec:
       affinity: {}
       containers:
-      - env:
+      - args:
+        - -c
+        - max_connections=1200
+        env:
         - name: POSTGRES_DB
           value: postgres
         - name: POSTGRES_PASSWORD
@@ -178,11 +207,9 @@ spec:
   updateStrategy:
     type: RollingUpdate
 status:
+  availableReplicas: 0
   collisionCount: 0
-  currentReplicas: 1
-  currentRevision: db-7dc896db95
-  observedGeneration: 7
-  readyReplicas: 1
-  replicas: 1
-  updateRevision: db-7dc896db95
-  updatedReplicas: 1
+  currentRevision: db-tmp-1-dc7fc6786
+  observedGeneration: 3
+  replicas: 0
+  updateRevision: db-tmp-1-dc7fc6786
