@@ -218,7 +218,7 @@ spec:
       - emptyDir:
           medium: Memory
         name: dshm
-      - name: vol2
+      - name: data
         persistentVolumeClaim:
           claimName: retail-odoo
   updateStrategy:
