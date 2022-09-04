@@ -6,9 +6,8 @@ metadata:
     app: odoo-retail
 spec:
   ports:
-  - name: 9001tcp01
-    nodePort: 31277
-    port: 9001
+  - name: 8069tcp01
+    port: 8069
     protocol: TCP
     targetPort: 8069
   selector:
