@@ -213,31 +213,25 @@ spec:
         terminationMessagePolicy: File
         tty: true
         volumeMounts:
-        - mountPath: /var/lib/odoo/filestore
-          name: vol1
-        - mountPath: /mnt/extra-addons
-          name: vol3
         - mountPath: /etc/odoo
-          name: odoo
+          name: conf
+        - mountPath: /var/lib/odoo
+          name: vol2
+          subPath: odoo
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-      - hostPath:
-          path: /mnt/data/odoo/filestore
-          type: DirectoryOrCreate
-        name: vol1
-      - hostPath:
-          path: /mnt/data/extra-addons
-          type: DirectoryOrCreate
-        name: vol3
       - configMap:
           defaultMode: 493
           name: odoo.conf
-          optional: false
-        name: odoo
+          optional: true
+        name: conf
+      - name: files
+        persistentVolumeClaim:
+          claimName: odoo
 status:
   availableReplicas: 1
   conditions:
