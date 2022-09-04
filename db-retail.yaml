@@ -13,7 +13,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
     objectset.rio.cattle.io/hash: dbb408b909497414f93be5e7a78a2f285d27b7e1
-    workload.user.cattle.io/workloadselector: statefulSet-default-db
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-retail
   managedFields:
   - apiVersion: apps/v1
     fieldsType: FieldsV1
@@ -154,8 +154,8 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: statefulSet-default-db
-  serviceName: db
+      workload.user.cattle.io/workloadselector: statefulSet-default-db-retail
+  serviceName: db-retail
   template:
     metadata:
       annotations:
@@ -163,7 +163,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: statefulSet-default-db
+        workload.user.cattle.io/workloadselector: statefulSet-default-db-retail
     spec:
       affinity: {}
       containers:
