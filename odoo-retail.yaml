@@ -170,7 +170,7 @@ metadata:
   namespace: default
 spec:
   progressDeadlineSeconds: 600
-  replicas: 0
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -193,7 +193,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-tmp-1
+          value: db-retail
         - name: PASSWORD
           value: odoo
         - name: USER
@@ -233,7 +233,7 @@ spec:
         persistentVolumeClaim:
           claimName: odoo
 status:
-  availableReplicas: 0
+  availableReplicas: 1
   conditions:
   - lastTransitionTime: "2021-11-09T18:49:10Z"
     lastUpdateTime: "2021-11-09T18:49:10Z"
@@ -248,6 +248,6 @@ status:
     status: "True"
     type: Progressing
   observedGeneration: 33
-  readyReplicas: 0
-  replicas: 0
-  updatedReplicas: 0
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
