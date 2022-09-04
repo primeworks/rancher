@@ -147,7 +147,6 @@ metadata:
     time: "2022-09-04T02:49:37Z"
   name: db-retail
   namespace: default
-  uid: 7a54398b-ee3a-4f04-9e6a-af75a681a3a8
 spec:
   podManagementPolicy: OrderedReady
   replicas: 0
