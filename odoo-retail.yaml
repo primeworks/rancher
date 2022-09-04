@@ -237,7 +237,7 @@ spec:
           defaultMode: 493
           name: odoo.conf
           optional: false
-        name: odoo.conf
+        name: odoo
 status:
   availableReplicas: 1
   conditions:
