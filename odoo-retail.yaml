@@ -8,6 +8,7 @@ metadata:
   creationTimestamp: "2021-10-18T13:34:36Z"
   generation: 33
   labels:
+    app: retail-odoo
     cattle.io/creator: norman
     workload.user.cattle.io/workloadselector: deployment-default-odoo
   managedFields:
