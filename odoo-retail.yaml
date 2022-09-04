@@ -216,7 +216,7 @@ spec:
         - mountPath: /etc/odoo
           name: conf
         - mountPath: /var/lib/odoo
-          name: vol2
+          name: files
           subPath: odoo
       dnsPolicy: ClusterFirst
       restartPolicy: Always
