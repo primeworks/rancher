@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: retail-odoo
+  name: odoo-odoo15
   labels:
-    app: retail-odoo
+    app: odoo-odoo15
 spec:
   accessModes:
     - ReadWriteMany
