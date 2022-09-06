@@ -8,10 +8,10 @@ metadata:
   creationTimestamp: "2021-10-18T13:34:36Z"
   generation: 33
   labels:
-    app: odoo-retail
+    app: odoo-odoo15
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-retail
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-odoo15
   managedFields:
   - apiVersion: apps/v1
     fieldsType: FieldsV1
@@ -57,7 +57,7 @@ metadata:
               f:workload.user.cattle.io/workloadselector: {}
           f:spec:
             f:containers:
-              k:{"name":"odoo-retail"}:
+              k:{"name":"odoo-odoo15"}:
                 .: {}
                 f:env:
                   .: {}
@@ -109,7 +109,7 @@ metadata:
             f:terminationGracePeriodSeconds: {}
             f:volumes:
               .: {}
-              k:{"name":"odoo-retail"}:
+              k:{"name":"odoo-odoo15"}:
                 .: {}
                 f:configMap:
                   .: {}
@@ -167,7 +167,7 @@ metadata:
     manager: kube-controller-manager
     operation: Update
     time: "2021-11-09T18:59:38Z"
-  name: odoo-retail
+  name: odoo-odoo15
   namespace: default
 spec:
   progressDeadlineSeconds: 600
@@ -175,7 +175,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-retail
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-odoo15
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -188,7 +188,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-retail
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-odoo15
     spec:
       affinity: {}
       containers:
@@ -201,7 +201,7 @@ spec:
           value: odoo
         image: odoo:15
         imagePullPolicy: IfNotPresent
-        name: odoo-retail
+        name: odoo-odoo15
         resources: {}
         securityContext:
           allowPrivilegeEscalation: false
@@ -215,7 +215,7 @@ spec:
         tty: true
         ports:
             - containerPort: 8069
-              name: odoo-retail
+              name: odoo-odoo15
               protocol: TCP
         volumeMounts:
         - mountPath: /etc/odoo
