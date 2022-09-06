@@ -9,6 +9,7 @@ metadata:
   generation: 33
   labels:
     app: odoo-retail
+    tier: frontend
     cattle.io/creator: norman
     workload.user.cattle.io/workloadselector: deployment-default-odoo-retail
   managedFields:
