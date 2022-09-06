@@ -18,7 +18,5 @@ spec:
     protocol: TCP
     targetPort: 8069
   selector:
-    app: odoo-retail
-    tier: frontend
     workload.user.cattle.io/workloadselector: deployment-default-odoo-retail
   type: NodePort
