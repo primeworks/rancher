@@ -2,6 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: odoo-retail
+  namespace: default
+  ownerReferences:
+  - apiVersion: apps/v1beta2
+    controller: true
+    kind: deployment
+    name: odoo-retail
   labels:
     app: odoo-retail
 spec:
@@ -13,4 +19,5 @@ spec:
   selector:
     app: odoo-retail
     tier: frontend
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-retail
   type: NodePort
