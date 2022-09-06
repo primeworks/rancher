@@ -8,6 +8,7 @@ metadata:
     controller: true
     kind: deployment
     name: odoo-retail
+    uid: 3e7f1301-0eba-409d-9765-256e2f284879
   labels:
     app: odoo-retail
 spec:
