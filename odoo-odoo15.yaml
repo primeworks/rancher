@@ -194,7 +194,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-retail
+          value: db-odoo15
         - name: PASSWORD
           value: odoo
         - name: USER
@@ -236,5 +236,5 @@ spec:
         name: conf
       - name: files
         persistentVolumeClaim:
-          claimName: retail-odoo
+          claimName: odoo-odoo15
 
