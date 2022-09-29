@@ -1,7 +1,7 @@
 version: '3'
 services:
     # Etherpad: real-time collaborative document editing
-    db:
+    etherpad-data:
         image: mysql:5.7
         restart: ${RESTART_POLICY}
         environment:
@@ -14,7 +14,7 @@ services:
         networks:
             - meet.jitsi
         command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
-    etherpad:
+    etherpad-b:
         image: etherpad/etherpad:1.8.6
         restart: ${RESTART_POLICY}
         environment:
@@ -23,7 +23,7 @@ services:
             - SKIN_NAME=${ETHERPAD_SKIN_NAME}
             - SKIN_VARIANTS=${ETHERPAD_SKIN_VARIANTS}
             - DB_TYPE=mysql
-            - DB_HOST=db
+            - DB_HOST=etherpad-data
             - DB_PORT=3306
             - DB_NAME=etherpad_lite_db
             - DB_USER=etherpaduser
