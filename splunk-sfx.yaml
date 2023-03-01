@@ -1,11 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "23"
-    field.cattle.io/publicEndpoints: '[{"addresses":["194.163.128.19"],"port":30790,"protocol":"TCP","serviceName":"default:splunk-sfx-nodeport","allNodes":true},{"addresses":["194.163.128.19"],"port":80,"protocol":"HTTP","serviceName":"default:splunk-sfx","ingressName":"default:ssws","hostname":"sfxt.webdiscode.com","allNodes":true}]'
-  creationTimestamp: "2023-01-12T20:05:28Z"
-  generation: 61
   labels:
     workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
   managedFields:
@@ -112,7 +107,6 @@ metadata:
                   f:claimName: {}
     manager: agent
     operation: Update
-    time: "2023-02-17T15:50:19Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -147,11 +141,8 @@ metadata:
     manager: kube-controller-manager
     operation: Update
     subresource: status
-    time: "2023-02-17T18:16:42Z"
   name: splunk-sfx
   namespace: default
-  resourceVersion: "22434791"
-  uid: f61b061e-ecc2-48ae-85f6-ff14b1ba1c72
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -166,8 +157,6 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      annotations:
-        cattle.io/timestamp: "2023-01-19T15:22:13Z"
       creationTimestamp: null
       labels:
         workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
