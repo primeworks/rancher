@@ -208,9 +208,9 @@ spec:
       - name: sfx-data
         persistentVolumeClaim:
           claimName: pvc-d8e1dded-830e-4c83-8389-5a46d9690bcd
-      - name: splunk-sfxt-vol-2
+      - name: splunk-sfx-vol-2
         persistentVolumeClaim:
-          claimName: splunk-sfxt-vol-2
+          claimName: splunk-sfx-vol-2
 status:
   availableReplicas: 1
   conditions:
