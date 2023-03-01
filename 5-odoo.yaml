@@ -199,7 +199,7 @@ spec:
           value: odoo
         - name: USER
           value: odoo
-        image: odoo:15
+        image: odoo:16
         imagePullPolicy: IfNotPresent
         name: odoo-ssws-odoo
         resources: 
