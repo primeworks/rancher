@@ -4,7 +4,7 @@ metadata:
   annotations:
     field.cattle.io/creatorId: user-t5wpm
     meta.helm.sh/release-name: silicon
-    meta.helm.sh/release-namespace: default
+    meta.helm.sh/release-namespace: clientName
     objectset.rio.cattle.io/id: default-silicon
   creationTimestamp: "2022-08-27T23:22:43Z"
   generation: 3
@@ -147,7 +147,7 @@ metadata:
     operation: Update
     time: "2022-09-04T02:49:37Z"
   name: db-clientName
-  namespace: default
+  namespace: clientName
 spec:
   podManagementPolicy: OrderedReady
   replicas: 1
@@ -180,7 +180,10 @@ spec:
         image: postgres:12
         imagePullPolicy: IfNotPresent
         name: db-clientName
-        resources: {}
+        resources:  
+          limits:
+            cpu: "0.3"
+            memory: 2000Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities: {}
