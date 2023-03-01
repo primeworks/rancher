@@ -165,7 +165,15 @@ spec:
       labels:
         workload.user.cattle.io/workloadselector: statefulSet-default-db-ssws-odoo
     spec:
-      affinity: {}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - db
       containers:
       - args:
         - -c
