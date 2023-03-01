@@ -226,7 +226,7 @@ spec:
         tty: true
         ports:
             - containerPort: 8069
-              name: odoo-ssws-odoo
+              name: ssws-odoo
               protocol: TCP
         volumeMounts:
         - mountPath: /etc/odoo
