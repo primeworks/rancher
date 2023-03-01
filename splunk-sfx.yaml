@@ -99,7 +99,7 @@ metadata:
                 f:persistentVolumeClaim:
                   .: {}
                   f:claimName: {}
-              k:{"name":"splunk-sfxt-vol-2"}:
+              k:{"name":"splunk-sfx-vol-2"}:
                 .: {}
                 f:name: {}
                 f:persistentVolumeClaim:
@@ -191,10 +191,10 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /opt/splunk/etc
-          name: splunk-sfxt-vol-2
+          name: splunk-sfx-vol-2
           subPath: sfx-splunk-etc
         - mountPath: /opt/splunk/var
-          name: splunk-sfxt-vol-2
+          name: splunk-sfx-vol-2
           subPath: sfx-splunk-var
         - mountPath: /opt/splunk/var/sfx-data
           name: sfx-data
