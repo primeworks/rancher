@@ -11,7 +11,7 @@ metadata:
     app: odoo-ssws-odoo
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-ssws-odoo
+    workload.user.cattle.io/workloadselector: deployment-default-ssws-odoo
   managedFields:
   - apiVersion: apps/v1
     fieldsType: FieldsV1
@@ -175,7 +175,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-ssws-odoo
+      workload.user.cattle.io/workloadselector: deployment-default-ssws-odoo
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -188,7 +188,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-ssws-odoo
+        workload.user.cattle.io/workloadselector: deployment-default-ssws-odoo
     spec:
       affinity:
         nodeAffinity:
