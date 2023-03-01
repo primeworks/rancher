@@ -194,7 +194,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-odoo15
+          value: db-ssws-odoo
         - name: PASSWORD
           value: odoo
         - name: USER
