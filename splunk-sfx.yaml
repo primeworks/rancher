@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
+    workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
   managedFields:
   - apiVersion: apps/v1
     fieldsType: FieldsV1
@@ -39,7 +39,7 @@ metadata:
                 .: {}
                 f:requiredDuringSchedulingIgnoredDuringExecution: {}
             f:containers:
-              k:{"name":"splunk-sfx"}:
+              k:{"name":"splunk-sfxt"}:
                 .: {}
                 f:env:
                   .: {}
@@ -99,7 +99,7 @@ metadata:
                 f:persistentVolumeClaim:
                   .: {}
                   f:claimName: {}
-              k:{"name":"splunk-sfx-vol-2"}:
+              k:{"name":"splunk-sfxt-vol-2"}:
                 .: {}
                 f:name: {}
                 f:persistentVolumeClaim:
@@ -141,7 +141,7 @@ metadata:
     manager: kube-controller-manager
     operation: Update
     subresource: status
-  name: splunk-sfx
+  name: splunk-sfxt
   namespace: default
 spec:
   progressDeadlineSeconds: 600
@@ -149,7 +149,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
+      workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -159,7 +159,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
+        workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
     spec:
       affinity:
         nodeAffinity:
@@ -178,7 +178,7 @@ spec:
           value: i)24125114**A
         image: splunk/splunk
         imagePullPolicy: IfNotPresent
-        name: splunk-sfx
+        name: splunk-sfxt
         ports:
         - containerPort: 8000
           name: 8000tcp
@@ -191,10 +191,10 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /opt/splunk/etc
-          name: splunk-sfx-vol-2
+          name: splunk-sfxt-vol-2
           subPath: sfx-splunk-etc
         - mountPath: /opt/splunk/var
-          name: splunk-sfx-vol-2
+          name: splunk-sfxt-vol-2
           subPath: sfx-splunk-var
         - mountPath: /opt/splunk/var/sfx-data
           name: sfx-data
@@ -208,9 +208,9 @@ spec:
       - name: sfx-data
         persistentVolumeClaim:
           claimName: pvc-d8e1dded-830e-4c83-8389-5a46d9690bcd
-      - name: splunk-sfx-vol-2
+      - name: splunk-sfxt-vol-2
         persistentVolumeClaim:
-          claimName: splunk-sfx-vol-2
+          claimName: splunk-sfxt-vol-2
 status:
   availableReplicas: 1
   conditions:
@@ -222,7 +222,7 @@ status:
     type: Available
   - lastTransitionTime: "2023-01-12T20:05:29Z"
     lastUpdateTime: "2023-02-17T18:16:44Z"
-    message: ReplicaSet "splunk-sfx-5d84d49c7b" has successfully progressed.
+    message: ReplicaSet "splunk-sfxt-5d84d49c7b" has successfully progressed.
     reason: NewReplicaSetAvailable
     status: "True"
     type: Progressing
