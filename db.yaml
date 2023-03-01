@@ -13,7 +13,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
     objectset.rio.cattle.io/hash: dbb408b909497414f93be5e7a78a2f285d27b7e1
-    workload.user.cattle.io/workloadselector: statefulSet-default-db-odoo15
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-clientName
   managedFields:
   - apiVersion: apps/v1
     fieldsType: FieldsV1
@@ -55,7 +55,7 @@ metadata:
           f:spec:
             f:affinity: {}
             f:containers:
-              k:{"name":"db-odoo15"}:
+              k:{"name":"db-clientName"}:
                 .: {}
                 f:env:
                   .: {}
@@ -141,12 +141,12 @@ metadata:
               f:cattle.io/timestamp: {}
           f:spec:
             f:containers:
-              k:{"name":"db-odoo15"}:
+              k:{"name":"db-clientName"}:
                 f:args: {}
     manager: rancher
     operation: Update
     time: "2022-09-04T02:49:37Z"
-  name: db-odoo15
+  name: db-clientName
   namespace: default
 spec:
   podManagementPolicy: OrderedReady
@@ -154,8 +154,8 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: statefulSet-default-db-odoo15
-  serviceName: db-odoo15
+      workload.user.cattle.io/workloadselector: statefulSet-default-db-clientName
+  serviceName: db-clientName
   template:
     metadata:
       annotations:
@@ -163,7 +163,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: statefulSet-default-db-odoo15
+        workload.user.cattle.io/workloadselector: statefulSet-default-db-clientName
     spec:
       affinity: {}
       containers:
@@ -179,7 +179,7 @@ spec:
           value: odoo
         image: postgres:12
         imagePullPolicy: IfNotPresent
-        name: db-odoo15
+        name: db-clientName
         resources: {}
         securityContext:
           allowPrivilegeEscalation: false
@@ -212,7 +212,7 @@ spec:
 status:
   availableReplicas: 1
   collisionCount: 0
-  currentRevision: db-odoo15-dc7fc6786
+  currentRevision: db-clientName-dc7fc6786
   observedGeneration: 3
   replicas: 1
-  updateRevision: db-odoo15-dc7fc6786
+  updateRevision: db-clientName-dc7fc6786
