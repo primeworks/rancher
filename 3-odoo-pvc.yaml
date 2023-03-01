@@ -4,7 +4,7 @@ metadata:
   name: ssws-odoo
   namespace: ssws-odoo
   labels:
-    app: odoo-ssws-odoo
+    app: ssws-odoo
 spec:
   accessModes:
     - ReadWriteMany
