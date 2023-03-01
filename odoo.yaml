@@ -8,10 +8,10 @@ metadata:
   creationTimestamp: "2021-10-18T13:34:36Z"
   generation: 33
   labels:
-    app: odoo-clientName
+    app: odoo-ssws-odoo
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-clientName
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-ssws-odoo
   managedFields:
   - apiVersion: apps/v1
     fieldsType: FieldsV1
@@ -57,7 +57,7 @@ metadata:
               f:workload.user.cattle.io/workloadselector: {}
           f:spec:
             f:containers:
-              k:{"name":"odoo-clientName"}:
+              k:{"name":"odoo-ssws-odoo"}:
                 .: {}
                 f:env:
                   .: {}
@@ -109,7 +109,7 @@ metadata:
             f:terminationGracePeriodSeconds: {}
             f:volumes:
               .: {}
-              k:{"name":"odoo-clientName"}:
+              k:{"name":"odoo-ssws-odoo"}:
                 .: {}
                 f:configMap:
                   .: {}
@@ -167,15 +167,15 @@ metadata:
     manager: kube-controller-manager
     operation: Update
     time: "2021-11-09T18:59:38Z"
-  name: odoo-clientName
-  namespace: clientName
+  name: odoo-ssws-odoo
+  namespace: ssws-odoo
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-clientName
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-ssws-odoo
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -188,7 +188,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-clientName
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-ssws-odoo
     spec:
       affinity: {}
       containers:
@@ -201,7 +201,7 @@ spec:
           value: odoo
         image: odoo:15
         imagePullPolicy: IfNotPresent
-        name: odoo-clientName
+        name: odoo-ssws-odoo
         resources: 
           limits:
             cpu: "0.3"
@@ -218,7 +218,7 @@ spec:
         tty: true
         ports:
             - containerPort: 8069
-              name: odoo-clientName
+              name: odoo-ssws-odoo
               protocol: TCP
         volumeMounts:
         - mountPath: /etc/odoo
@@ -239,5 +239,5 @@ spec:
         name: conf
       - name: files
         persistentVolumeClaim:
-          claimName: odoo-clientName
+          claimName: odoo-ssws-odoo
 
