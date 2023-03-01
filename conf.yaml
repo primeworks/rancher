@@ -1,0 +1,54 @@
+apiVersion: v1
+data:
+  odoo.conf: "[options] \naddons_path = /mnt/extra-addons\ndata_dir = /var/lib/odoo\nadmin_passwd
+    = UA29dGB28Gx5PWz8bnRW\n;csv_internal_sep = ,\n;db_host = 139.162.234.5\n;db_maxconn
+    = 64\n;db_password = i24125114A\n;db_port = 5432\n;db_sslmode = prefer\n;db_template
+    = template0\n;db_user = odoo\ndemo = {}\n;email_from = False\n;geoip_database
+    = /usr/share/GeoIP/GeoLite2-City.mmdb\n;http_enable = True\n;http_interface =
+    \nhttp_port = 8069\n;import_partial = \n;limit_memory_hard = 3221225472\n;limit_memory_soft
+    = 2684354560\n;limit_request = 8192\n;limit_time_cpu = 60\n;limit_time_real =
+    2400\n;limit_time_real_cron = -1\n;log_db = False\n;log_db_level = warning\n;log_handler
+    = :INFO\n;log_level = info\n;logfile = /var/log/odoo/odoo-server.log\n;logrotate
+    = False\n;longpolling_port = 8072\nmax_cron_threads = 2\n;osv_memory_age_limit
+    = 1.0\n;osv_memory_count_limit = False\n; pg_path = /usr/lib/postgresql/9.5/bin\npidfile
+    = None\nreportgz = False\nserver_wide_modules = base,web\nsmtp_password = UA29dGB28Gx5PWz8bnRW\nsmtp_port
+    = 25\nsmtp_server = relay.mailbaby.net\n;smtp_ssl = False\nsmtp_user = mb16635\n;syslog
+    = False\n;test_enable = False\n;test_file = False\n;test_tags = None\n;translate_modules
+    = ['all']\n;unaccent = False\n;without_demo = False\nworkers = 9\n;unsplash.access_key
+    = 1b0c89ac6fe3ac460b2ae6acdfd36030e8d039ea45612d62914813ca26aca7af\n;unsplash.app_id
+    = 59256\n;Database to Domain Filter Settings\n;db_name = False\n;dbfilter = ^%d$\n;db-filter=golibefestival\n;list_db
+    = False\nproxy_mode = True\nreport_url = ^%d$:8069"
+kind: ConfigMap
+metadata:
+  annotations:
+    field.cattle.io/description: odoo config file
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"odoo.conf":"[options]\naddons_path = /mnt/extra-addons\ndata_dir = /var/lib/odoo\nadmin_passwd = iNimDa345\ndb_maxconn = 64"},"kind":"ConfigMap","metadata":{"annotations":{"field.cattle.io/description":"odoo config file"},"managedFields":[{"apiVersion":"v1","fieldsType":"FieldsV1","fieldsV1":{"f:data":{},"f:metadata":{"f:annotations":{".":{},"f:field.cattle.io/description":{}}}},"manager":"agent","operation":"Update","time":"2021-12-16T13:27:43Z"},{"apiVersion":"v1","fieldsType":"FieldsV1","fieldsV1":{"f:data":{"f:odoo.conf":{}}},"manager":"rancher","operation":"Update","time":"2021-12-24T10:59:04Z"}],"name":"odoo.conf","namespace":"default","resourceVersion":"27822145"}}
+    objectset.rio.cattle.io/applied: H4sIAAAAAAAA/5SSzW7bOhCFX8WYtShbtCRbBO7qAt11l2bRKAiG5DBhI5OCSActBL17QTqxjaBp0JWg+ed3zgw42luagvUOBLxUUIDGiCBm8Nr7UnlnQMCdH6P1LtyveodaexceRoxPq/9W64OLa/oZJ2SnRO/SgAdtp5R9wWk9WLn2sBTwbJ0GAf97Z+zjVxyhgANFfFuIzvmIeU/6NZYGXSqMcaDS+rWmoCab7wCRr1upPGll7EBQwPNRkopDmb6To0ghtQ0YIsNxHCxpdmo4Tvg6Ze6vAPQgenipeij6DKEHMfcXDDl9BtG/AwEFePmDVAwUy8n6q8NtejQZ2WBDxFTV7llNumJ7hR3bS6ppi7Vu6zYxUhPl427sgULEwwgC+IZzVlWM7282G8Fb0ey+QwEDShoyqo82P2F4SrtpY5qukZJvK0NGcV1LWW9bozgn2RiJVas2WqX9B3T4SPpLgh9A3P3JIVmZcPNrJBBwqry9xG+rrJ54k7UEMS8FGHFlqHnJkWv1jXin/7nvr0Y4lfy79K8nfQDutemzMqvPT7mIUX7WdVJlXpblzHsCAfhILiYbjXT257dRY0zejvZAHzlhuS/AYc5fEJ9CYUSV4poMHoc0/ZjduN91utryjm0b1Kzm2DCk3Z41LVem28lu10lYlt8BAAD//7rsQF8fBAAA
+    objectset.rio.cattle.io/id: efb5a5ee-c168-4ed1-8ca9-8be4e3a4d646
+  creationTimestamp: "2023-01-04T03:09:59Z"
+  labels:
+    objectset.rio.cattle.io/hash: ee0f595bb231fefc2d4bb436fc22eb5fba16c0dc
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:data:
+        .: {}
+        f:odoo.conf: {}
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:field.cattle.io/description: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+          f:objectset.rio.cattle.io/applied: {}
+          f:objectset.rio.cattle.io/id: {}
+        f:labels:
+          .: {}
+          f:objectset.rio.cattle.io/hash: {}
+    manager: agent
+    operation: Update
+    time: "2022-11-28T00:26:57Z"
+  name: odoo.conf
+  namespace: clientName
+  uid: 26e021a7-9555-495a-9420-6fc2280d62a5
