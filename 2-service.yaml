@@ -9,4 +9,5 @@ spec:
   ports:
     - protocol: TCP
       targetPort: ssws-odoo
-      port: {}
+      port: 8069
+      name: ssws-odoo
