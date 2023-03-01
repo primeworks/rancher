@@ -4,7 +4,7 @@ metadata:
   annotations:
     field.cattle.io/creatorId: user-t5wpm
     meta.helm.sh/release-name: silicon
-    meta.helm.sh/release-namespace: clientName
+    meta.helm.sh/release-namespace: ssws-odoo
     objectset.rio.cattle.io/id: default-silicon
   creationTimestamp: "2022-08-27T23:22:43Z"
   generation: 3
@@ -13,7 +13,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
     objectset.rio.cattle.io/hash: dbb408b909497414f93be5e7a78a2f285d27b7e1
-    workload.user.cattle.io/workloadselector: statefulSet-default-db-clientName
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-ssws-odoo
   managedFields:
   - apiVersion: apps/v1
     fieldsType: FieldsV1
@@ -55,7 +55,7 @@ metadata:
           f:spec:
             f:affinity: {}
             f:containers:
-              k:{"name":"db-clientName"}:
+              k:{"name":"db-ssws-odoo"}:
                 .: {}
                 f:env:
                   .: {}
@@ -141,21 +141,21 @@ metadata:
               f:cattle.io/timestamp: {}
           f:spec:
             f:containers:
-              k:{"name":"db-clientName"}:
+              k:{"name":"db-ssws-odoo"}:
                 f:args: {}
     manager: rancher
     operation: Update
     time: "2022-09-04T02:49:37Z"
-  name: db-clientName
-  namespace: clientName
+  name: db-ssws-odoo
+  namespace: ssws-odoo
 spec:
   podManagementPolicy: OrderedReady
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: statefulSet-default-db-clientName
-  serviceName: db-clientName
+      workload.user.cattle.io/workloadselector: statefulSet-default-db-ssws-odoo
+  serviceName: db-ssws-odoo
   template:
     metadata:
       annotations:
@@ -163,7 +163,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: statefulSet-default-db-clientName
+        workload.user.cattle.io/workloadselector: statefulSet-default-db-ssws-odoo
     spec:
       affinity: {}
       containers:
@@ -179,7 +179,7 @@ spec:
           value: odoo
         image: postgres:12
         imagePullPolicy: IfNotPresent
-        name: db-clientName
+        name: db-ssws-odoo
         resources:  
           limits:
             cpu: "0.3"
@@ -215,7 +215,7 @@ spec:
 status:
   availableReplicas: 1
   collisionCount: 0
-  currentRevision: db-clientName-dc7fc6786
+  currentRevision: db-ssws-odoo-dc7fc6786
   observedGeneration: 3
   replicas: 1
-  updateRevision: db-clientName-dc7fc6786
+  updateRevision: db-ssws-odoo-dc7fc6786
