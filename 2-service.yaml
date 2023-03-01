@@ -8,5 +8,5 @@ spec:
     workload.user.cattle.io/workloadselector: deployment-default-ssws-odoo
   ports:
     - protocol: TCP
-      targetPort: 8069
-      port: ''
+      targetPort: ssws-odoo
+      port: {}
