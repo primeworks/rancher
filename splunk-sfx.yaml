@@ -192,7 +192,7 @@ spec:
         volumeMounts:
         - mountPath: /opt/splunk/etc
           name: splunk-sfx-vol-2
-          subPath: sfx-splunk-etc
+          subPath: sfxt-splunk-etc
         - mountPath: /opt/splunk/var
           name: splunk-sfx-vol-2
           subPath: sfxt-splunk-var
