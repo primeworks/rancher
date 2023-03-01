@@ -239,5 +239,5 @@ spec:
         name: conf
       - name: files
         persistentVolumeClaim:
-          claimName: odoo-ssws-odoo
+          claimName: ssws-odoo
 
