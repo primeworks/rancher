@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: odoo-clientName
-  namespace: clientName
+  name: odoo-ssws-odoo
+  namespace: ssws-odoo
   labels:
-    app: odoo-clientName
+    app: odoo-ssws-odoo
 spec:
   accessModes:
     - ReadWriteMany
