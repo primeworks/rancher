@@ -212,7 +212,7 @@ spec:
         name: odoo-ssws-odoo
         resources: 
           limits:
-            cpu: "0.8"
+            cpu: "1"
             memory: 4000Mi
         securityContext:
           allowPrivilegeEscalation: false
