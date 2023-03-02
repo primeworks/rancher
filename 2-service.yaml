@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ssws-odoo
-  namespace: ssws-odoo
+  name: sswss-odoo
+  namespace: sswss-odoo
 spec:
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-ssws-odoo
+    workload.user.cattle.io/workloadselector: deployment-default-sswss-odoo
   ports:
     - protocol: TCP
-      targetPort: ssws-odoo
+      targetPort: sswss-odoo
       port: 8069
-      name: ssws-odoo
+      name: sswss-odoo

@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ssws-odoo
-  namespace: ssws-odoo
+  name: sswss-odoo
+  namespace: sswss-odoo
   labels:
-    app: ssws-odoo
+    app: sswss-odoo
 spec:
   accessModes:
     - ReadWriteMany

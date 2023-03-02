@@ -1,20 +1,20 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ssws-odoo
-  namespace: ssws-odoo
+  name: sswss-odoo
+  namespace: sswss-odoo
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-  - host: ssws-odoo.webdiscode.com
+  - host: sswss-odoo.webdiscode.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ssws-odoo
+            name: sswss-odoo
             port:
               number: 8069
