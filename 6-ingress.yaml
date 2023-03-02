@@ -16,5 +16,6 @@ spec:
         backend:
           service:
             name: ssws-odoo
+            namespace: ssws-odoo
             port:
               number: 8069
