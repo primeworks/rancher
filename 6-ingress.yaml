@@ -1,20 +1,20 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: sswss-odoo
-  namespace: sswss-odoo
+  name: evoucher-odoo
+  
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-  - host: sswss-odoo.webdiscode.com
+  - host: evoucher-odoo.webdiscode.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: sswss-odoo
+            name: evoucher-odoo
             port:
               number: 8069

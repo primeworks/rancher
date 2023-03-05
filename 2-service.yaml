@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: sswss-odoo
-  namespace: sswss-odoo
+  name: evoucher-odoo
+  
 spec:
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-sswss-odoo
+    workload.user.cattle.io/workloadselector: deployment-default-evoucher-odoo
   ports:
     - protocol: TCP
-      targetPort: sswss-odoo
+      targetPort: evoucher-odoo
       port: 8069
-      name: sswss-odoo
+      name: evoucher-odoo
