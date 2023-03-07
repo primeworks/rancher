@@ -16,4 +16,4 @@ spec:
           service:
             name: splunk-sfxt
             port:
-              number: 8069
+              number: 8000
