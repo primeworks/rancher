@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: sfxt-splunk
+  name: splunk-sfxt
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
@@ -14,6 +14,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: sswss-odoo
+            name: splunk-sfxt
             port:
               number: 8069
