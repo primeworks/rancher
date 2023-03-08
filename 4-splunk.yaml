@@ -1,6 +1,14 @@
 clusterManager:
   additionalLabels: {}
-  affinity: {}
+  affinity: 
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - db
   appRepo: {}
   defaults: {}
   defaultsUrl: ''
@@ -32,7 +40,15 @@ image:
   repository: ''
 indexerCluster:
   additionalLabels: {}
-  affinity: {}
+  affinity: 
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - db
   defaults: {}
   defaultsUrl: ''
   enabled: true
@@ -103,7 +119,15 @@ monitoringConsole:
   volumes: []
 searchHeadCluster:
   additionalLabels: {}
-  affinity: {}
+  affinity: 
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - db
   appRepo: {}
   defaults: {}
   defaultsUrl: ''
@@ -130,7 +154,15 @@ splunk-operator:
   enabled: true
 standalone:
   additionalLabels: {}
-  affinity: {}
+  affinity: 
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - files
   appRepo: {}
   defaults: {}
   defaultsUrl: ''
