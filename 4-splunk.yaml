@@ -197,5 +197,5 @@ sva:
     indexerClusters: []
     searchHeadClusters: []
   s1:
-    enabled: true
+    enabled: false
     standalones: 1
