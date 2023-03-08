@@ -1,232 +1,169 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
-  managedFields:
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:annotations:
-          f:field.cattle.io/publicEndpoints: {}
-        f:labels:
-          .: {}
-          f:workload.user.cattle.io/workloadselector: {}
-      f:spec:
-        f:progressDeadlineSeconds: {}
-        f:replicas: {}
-        f:revisionHistoryLimit: {}
-        f:selector: {}
-        f:strategy:
-          f:rollingUpdate:
-            .: {}
-            f:maxSurge: {}
-            f:maxUnavailable: {}
-          f:type: {}
-        f:template:
-          f:metadata:
-            f:annotations:
-              .: {}
-              f:cattle.io/timestamp: {}
-            f:labels:
-              .: {}
-              f:workload.user.cattle.io/workloadselector: {}
-          f:spec:
-            f:affinity:
-              .: {}
-              f:nodeAffinity:
-                .: {}
-                f:requiredDuringSchedulingIgnoredDuringExecution: {}
-            f:containers:
-              k:{"name":"splunk-sfxt"}:
-                .: {}
-                f:env:
-                  .: {}
-                  k:{"name":"SPLUNK_PASSWORD"}:
-                    .: {}
-                    f:name: {}
-                    f:value: {}
-                  k:{"name":"SPLUNK_START_ARGS"}:
-                    .: {}
-                    f:name: {}
-                    f:value: {}
-                f:image: {}
-                f:imagePullPolicy: {}
-                f:name: {}
-                f:ports:
-                  .: {}
-                  k:{"containerPort":8000,"protocol":"TCP"}:
-                    .: {}
-                    f:containerPort: {}
-                    f:name: {}
-                    f:protocol: {}
-                f:resources:
-                  .: {}
-                  f:limits:
-                    .: {}
-                    f:cpu: {}
-                    f:memory: {}
-                f:terminationMessagePath: {}
-                f:terminationMessagePolicy: {}
-                f:volumeMounts:
-                  .: {}
-                  k:{"mountPath":"/opt/splunk/etc"}:
-                    .: {}
-                    f:mountPath: {}
-                    f:name: {}
-                    f:subPath: {}
-                  k:{"mountPath":"/opt/splunk/var"}:
-                    .: {}
-                    f:mountPath: {}
-                    f:name: {}
-                    f:subPath: {}
-                  k:{"mountPath":"/opt/splunk/var/sfx-data"}:
-                    .: {}
-                    f:mountPath: {}
-                    f:name: {}
-                    f:subPath: {}
-            f:dnsPolicy: {}
-            f:restartPolicy: {}
-            f:schedulerName: {}
-            f:securityContext: {}
-            f:terminationGracePeriodSeconds: {}
-            f:volumes:
-              .: {}
-              k:{"name":"sfx-data"}:
-                .: {}
-                f:name: {}
-                f:persistentVolumeClaim:
-                  .: {}
-                  f:claimName: {}
-              k:{"name":"splunk-sfx-vol-2"}:
-                .: {}
-                f:name: {}
-                f:persistentVolumeClaim:
-                  .: {}
-                  f:claimName: {}
-    manager: agent
-    operation: Update
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:metadata:
-        f:annotations:
-          .: {}
-          f:deployment.kubernetes.io/revision: {}
-      f:status:
-        f:availableReplicas: {}
-        f:conditions:
-          .: {}
-          k:{"type":"Available"}:
-            .: {}
-            f:lastTransitionTime: {}
-            f:lastUpdateTime: {}
-            f:message: {}
-            f:reason: {}
-            f:status: {}
-            f:type: {}
-          k:{"type":"Progressing"}:
-            .: {}
-            f:lastTransitionTime: {}
-            f:lastUpdateTime: {}
-            f:message: {}
-            f:reason: {}
-            f:status: {}
-            f:type: {}
-        f:observedGeneration: {}
-        f:readyReplicas: {}
-        f:replicas: {}
-        f:updatedReplicas: {}
-    manager: kube-controller-manager
-    operation: Update
-    subresource: status
-  name: splunk-sfxt
-  namespace: default
-spec:
-  progressDeadlineSeconds: 600
-  replicas: 1
-  revisionHistoryLimit: 10
-  selector:
-    matchLabels:
-      workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
-  template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
-    spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - files
-      containers:
-      - env:
-        - name: SPLUNK_START_ARGS
-          value: --accept-license
-        - name: SPLUNK_PASSWORD
-          value: i)24125114**A
-        image: splunk/splunk
-        imagePullPolicy: IfNotPresent
-        name: splunk-sfxt
-        ports:
-        - containerPort: 8000
-          name: 8000tcp
-          protocol: TCP
-        resources:
-          limits:
-            cpu: "1"
-            memory: 6000Mi
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-        volumeMounts:
-        - mountPath: /opt/splunk/etc
-          name: splunk-sfx-vol-2
-          subPath: sfx-splunk-etc
-        - mountPath: /opt/splunk/var
-          name: splunk-sfx-vol-2
-          subPath: sfxt-splunk-var
-        - mountPath: /opt/splunk/var/sfx-data
-          name: sfx-data
-          subPath: sfx-splunk-var/sfx-data
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
-      volumes:
-      - name: sfx-data
-        persistentVolumeClaim:
-          claimName: pvc-d8e1dded-830e-4c83-8389-5a46d9690bcd
-      - name: splunk-sfx-vol-2
-        persistentVolumeClaim:
-          claimName: splunk-sfx-vol-2
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2023-02-16T12:03:22Z"
-    lastUpdateTime: "2023-02-16T12:03:22Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2023-01-12T20:05:29Z"
-    lastUpdateTime: "2023-02-17T18:16:44Z"
-    message: ReplicaSet "splunk-sfxt-5d84d49c7b" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 61
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1
+clusterManager:
+  additionalLabels: {}
+  affinity: {}
+  appRepo: {}
+  defaults: {}
+  defaultsUrl: ''
+  defaultsUrlApps: ''
+  enabled: true
+  etcVolumeStorageConfig:
+    ephemeralStorage: false
+    storageCapacity: 10Gi
+  extraEnv: []
+  licenseUrl: ''
+  livenessInitialDelaySeconds: 300
+  name: cm
+  namespaceOverride: ''
+  readinessInitialDelaySeconds: 10
+  resources: {}
+  serviceAccount: ''
+  smartstore: {}
+  tolerations: []
+  varVolumeStorageConfig:
+    ephemeralStorage: false
+    storageCapacity: 100Gi
+  volumes: []
+existingClusterManager: {}
+existingLicenseManager: {}
+existingMonitoringConsole: {}
+image:
+  imagePullPolicy: ''
+  imagePullSecrets: []
+  repository: ''
+indexerCluster:
+  additionalLabels: {}
+  affinity: {}
+  defaults: {}
+  defaultsUrl: ''
+  enabled: true
+  etcVolumeStorageConfig:
+    ephemeralStorage: false
+    storageCapacity: 10Gi
+  extraEnv: []
+  licenseUrl: ''
+  livenessInitialDelaySeconds: 300
+  name: idxc
+  namespaceOverride: ''
+  readinessInitialDelaySeconds: 10
+  replicaCount: 1
+  resources: {}
+  serviceAccount: ''
+  tolerations: []
+  varVolumeStorageConfig:
+    ephemeralStorage: false
+    storageCapacity: 100Gi
+  volumes: []
+licenseManager:
+  additionalLabels: {}
+  affinity: {}
+  appRepo: {}
+  defaults: {}
+  defaultsUrl: ''
+  defaultsUrlApps: ''
+  enabled: false
+  etcVolumeStorageConfig:
+    ephemeralStorage: false
+    storageCapacity: 10Gi
+  extraEnv: []
+  licenseUrl: ''
+  livenessInitialDelaySeconds: 300
+  name: lm
+  namespaceOverride: ''
+  readinessInitialDelaySeconds: 10
+  resources: {}
+  serviceAccount: ''
+  tolerations: []
+  varVolumeStorageConfig:
+    ephemeralStorage: false
+    storageCapacity: 100Gi
+  volumes: []
+monitoringConsole:
+  additionalLabels: {}
+  affinity: {}
+  appRepo: {}
+  defaults: {}
+  defaultsUrl: ''
+  defaultsUrlApps: ''
+  enabled: false
+  etcVolumeStorageConfig:
+    ephemeralStorage: false
+    storageCapacity: 10Gi
+  extraEnv: []
+  licenseUrl: ''
+  livenessInitialDelaySeconds: 300
+  name: mc
+  namespaceOverride: ''
+  readinessInitialDelaySeconds: 10
+  resources: {}
+  serviceAccount: ''
+  tolerations: []
+  varVolumeStorageConfig:
+    ephemeralStorage: false
+    storageCapacity: 100Gi
+  volumes: []
+searchHeadCluster:
+  additionalLabels: {}
+  affinity: {}
+  appRepo: {}
+  defaults: {}
+  defaultsUrl: ''
+  defaultsUrlApps: ''
+  enabled: true
+  etcVolumeStorageConfig:
+    ephemeralStorage: false
+    storageCapacity: 10Gi
+  extraEnv: []
+  licenseUrl: ''
+  livenessInitialDelaySeconds: 300
+  name: shc
+  namespaceOverride: ''
+  readinessInitialDelaySeconds: 10
+  replicaCount: 1
+  resources: {}
+  serviceAccount: ''
+  tolerations: []
+  varVolumeStorageConfig:
+    ephemeralStorage: false
+    storageCapacity: 100Gi
+  volumes: []
+splunk-operator:
+  enabled: true
+standalone:
+  additionalLabels: {}
+  affinity: {}
+  appRepo: {}
+  defaults: {}
+  defaultsUrl: ''
+  defaultsUrlApps: ''
+  enabled: false
+  etcVolumeStorageConfig:
+    ephemeralStorage: false
+    storageCapacity: 10Gi
+  extraEnv: []
+  licenseUrl: ''
+  livenessInitialDelaySeconds: 300
+  name: stdln
+  namespaceOverride: ''
+  readinessInitialDelaySeconds: 10
+  replicaCount: 1
+  resources: {}
+  serviceAccount: ''
+  smartstore: {}
+  tolerations: []
+  varVolumeStorageConfig:
+    ephemeralStorage: false
+    storageCapacity: 100Gi
+  volumes: []
+sva:
+  c3:
+    enabled: false
+    indexerClusters: []
+    searchHeadClusters: []
+  m4:
+    clusterManager: {}
+    enabled: false
+    indexerClusters: []
+    searchHeadClusters: []
+  s1:
+    enabled: true
+    standalones: 1
