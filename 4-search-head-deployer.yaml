@@ -1,0 +1,406 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  creationTimestamp: "2023-03-09T18:06:55Z"
+  generation: 1
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:ownerReferences:
+          .: {}
+          k:{"uid":"aa743f4a-54ca-4fe6-b4a5-8f6c13458b68"}: {}
+      f:spec:
+        f:podManagementPolicy: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector: {}
+        f:serviceName: {}
+        f:template:
+          f:metadata:
+            f:annotations:
+              .: {}
+              f:meta.helm.sh/release-name: {}
+              f:meta.helm.sh/release-namespace: {}
+              f:traffic.sidecar.istio.io/excludeOutboundPorts: {}
+              f:traffic.sidecar.istio.io/includeInboundPorts: {}
+            f:labels:
+              .: {}
+              f:app.kubernetes.io/component: {}
+              f:app.kubernetes.io/instance: {}
+              f:app.kubernetes.io/managed-by: {}
+              f:app.kubernetes.io/name: {}
+              f:app.kubernetes.io/part-of: {}
+          f:spec:
+            f:affinity:
+              .: {}
+              f:podAntiAffinity:
+                .: {}
+                f:preferredDuringSchedulingIgnoredDuringExecution: {}
+            f:containers:
+              k:{"name":"splunk"}:
+                .: {}
+                f:env:
+                  .: {}
+                  k:{"name":"SPLUNK_CLUSTER_MASTER_URL"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SPLUNK_DECLARATIVE_ADMIN_PASSWORD"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SPLUNK_DEFAULTS_URL"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SPLUNK_HOME"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SPLUNK_HOME_OWNERSHIP_ENFORCEMENT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SPLUNK_OPERATOR_K8_LIVENESS_DRIVER_FILE_PATH"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SPLUNK_ROLE"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SPLUNK_SEARCH_HEAD_CAPTAIN_URL"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SPLUNK_SEARCH_HEAD_URL"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SPLUNK_START_ARGS"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:livenessProbe:
+                  .: {}
+                  f:exec:
+                    .: {}
+                    f:command: {}
+                  f:failureThreshold: {}
+                  f:initialDelaySeconds: {}
+                  f:periodSeconds: {}
+                  f:successThreshold: {}
+                  f:timeoutSeconds: {}
+                f:name: {}
+                f:ports:
+                  .: {}
+                  k:{"containerPort":8000,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:name: {}
+                    f:protocol: {}
+                  k:{"containerPort":8089,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:name: {}
+                    f:protocol: {}
+                f:readinessProbe:
+                  .: {}
+                  f:exec:
+                    .: {}
+                    f:command: {}
+                  f:failureThreshold: {}
+                  f:initialDelaySeconds: {}
+                  f:periodSeconds: {}
+                  f:successThreshold: {}
+                  f:timeoutSeconds: {}
+                f:resources:
+                  .: {}
+                  f:limits:
+                    .: {}
+                    f:cpu: {}
+                    f:memory: {}
+                  f:requests:
+                    .: {}
+                    f:cpu: {}
+                    f:memory: {}
+                f:startupProbe:
+                  .: {}
+                  f:exec:
+                    .: {}
+                    f:command: {}
+                  f:failureThreshold: {}
+                  f:initialDelaySeconds: {}
+                  f:periodSeconds: {}
+                  f:successThreshold: {}
+                  f:timeoutSeconds: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+                f:volumeMounts:
+                  .: {}
+                  k:{"mountPath":"/mnt/probes"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                  k:{"mountPath":"/mnt/splunk-secrets"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                  k:{"mountPath":"/opt/splunk/etc"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                  k:{"mountPath":"/opt/splunk/var"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+            f:dnsPolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext:
+              .: {}
+              f:fsGroup: {}
+              f:runAsNonRoot: {}
+              f:runAsUser: {}
+            f:terminationGracePeriodSeconds: {}
+            f:volumes:
+              .: {}
+              k:{"name":"mnt-splunk-secrets"}:
+                .: {}
+                f:name: {}
+                f:secret:
+                  .: {}
+                  f:defaultMode: {}
+                  f:secretName: {}
+              k:{"name":"splunk-default-probe-configmap"}:
+                .: {}
+                f:configMap:
+                  .: {}
+                  f:defaultMode: {}
+                  f:name: {}
+                f:name: {}
+        f:updateStrategy:
+          f:type: {}
+        f:volumeClaimTemplates: {}
+    manager: manager
+    operation: Update
+    time: "2023-03-09T18:06:55Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:availableReplicas: {}
+        f:collisionCount: {}
+        f:currentReplicas: {}
+        f:currentRevision: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updateRevision: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    subresource: status
+    time: "2023-03-09T18:10:19Z"
+  name: splunk-shc-deployer
+  namespace: default
+  ownerReferences:
+  - apiVersion: enterprise.splunk.com/v4
+    controller: true
+    kind: SearchHeadCluster
+    name: shc
+    uid: aa743f4a-54ca-4fe6-b4a5-8f6c13458b68
+  resourceVersion: "32200770"
+  uid: 38ae64a2-3236-47c3-85ca-55f282105683
+spec:
+  podManagementPolicy: Parallel
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: search-head
+      app.kubernetes.io/instance: splunk-shc-deployer
+      app.kubernetes.io/managed-by: splunk-operator
+      app.kubernetes.io/name: deployer
+      app.kubernetes.io/part-of: splunk-shc-search-head
+  serviceName: splunk-shc-deployer-headless
+  template:
+    metadata:
+      annotations:
+        meta.helm.sh/release-name: splunk-hub
+        meta.helm.sh/release-namespace: default
+        traffic.sidecar.istio.io/excludeOutboundPorts: 8089,8191,9997
+        traffic.sidecar.istio.io/includeInboundPorts: "8000"
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/component: search-head
+        app.kubernetes.io/instance: splunk-shc-deployer
+        app.kubernetes.io/managed-by: splunk-operator
+        app.kubernetes.io/name: deployer
+        app.kubernetes.io/part-of: splunk-shc-search-head
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                  - splunk-shc-deployer
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+      containers:
+      - env:
+        - name: SPLUNK_CLUSTER_MASTER_URL
+          value: splunk-cm-cluster-manager-service
+        - name: SPLUNK_DECLARATIVE_ADMIN_PASSWORD
+          value: "true"
+        - name: SPLUNK_DEFAULTS_URL
+          value: /mnt/splunk-secrets/default.yml
+        - name: SPLUNK_HOME
+          value: /opt/splunk
+        - name: SPLUNK_HOME_OWNERSHIP_ENFORCEMENT
+          value: "false"
+        - name: SPLUNK_OPERATOR_K8_LIVENESS_DRIVER_FILE_PATH
+          value: /tmp/splunk_operator_k8s/probes/k8_liveness_driver.sh
+        - name: SPLUNK_ROLE
+          value: splunk_deployer
+        - name: SPLUNK_SEARCH_HEAD_CAPTAIN_URL
+          value: splunk-shc-search-head-0.splunk-shc-search-head-headless.default.svc.cluster.local
+        - name: SPLUNK_SEARCH_HEAD_URL
+          value: splunk-shc-search-head-0.splunk-shc-search-head-headless.default.svc.cluster.local,splunk-shc-search-head-1.splunk-shc-search-head-headless.default.svc.cluster.local,splunk-shc-search-head-2.splunk-shc-search-head-headless.default.svc.cluster.local
+        - name: SPLUNK_START_ARGS
+          value: --accept-license
+        image: docker.io/splunk/splunk:9.0.3-a2
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command:
+            - /mnt/probes/livenessProbe.sh
+          failureThreshold: 3
+          initialDelaySeconds: 300
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 30
+        name: splunk
+        ports:
+        - containerPort: 8000
+          name: http-splunkweb
+          protocol: TCP
+        - containerPort: 8089
+          name: https-splunkd
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+            - /mnt/probes/readinessProbe.sh
+          failureThreshold: 3
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: "4"
+            memory: 8Gi
+          requests:
+            cpu: 100m
+            memory: 512Mi
+        startupProbe:
+          exec:
+            command:
+            - /mnt/probes/startupProbe.sh
+          failureThreshold: 12
+          initialDelaySeconds: 40
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 30
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /mnt/splunk-secrets
+          name: mnt-splunk-secrets
+        - mountPath: /opt/splunk/etc
+          name: pvc-etc
+        - mountPath: /opt/splunk/var
+          name: pvc-var
+        - mountPath: /mnt/probes
+          name: splunk-default-probe-configmap
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        fsGroup: 41812
+        runAsNonRoot: true
+        runAsUser: 41812
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: mnt-splunk-secrets
+        secret:
+          defaultMode: 420
+          secretName: splunk-shc-deployer-secret-v1
+      - configMap:
+          defaultMode: 365
+          name: splunk-default-probe-configmap
+        name: splunk-default-probe-configmap
+  updateStrategy:
+    type: OnDelete
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/component: search-head
+        app.kubernetes.io/instance: splunk-shc-deployer
+        app.kubernetes.io/managed-by: splunk-operator
+        app.kubernetes.io/name: deployer
+        app.kubernetes.io/part-of: splunk-shc-search-head
+      name: pvc-etc
+      namespace: default
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+      volumeMode: Filesystem
+    status:
+      phase: Pending
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/component: search-head
+        app.kubernetes.io/instance: splunk-shc-deployer
+        app.kubernetes.io/managed-by: splunk-operator
+        app.kubernetes.io/name: deployer
+        app.kubernetes.io/part-of: splunk-shc-search-head
+      name: pvc-var
+      namespace: default
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Gi
+      volumeMode: Filesystem
+    status:
+      phase: Pending
+status:
+  availableReplicas: 1
+  collisionCount: 0
+  currentReplicas: 1
+  currentRevision: splunk-shc-deployer-8677cdb7bd
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updateRevision: splunk-shc-deployer-8677cdb7bd
+  updatedReplicas: 1
