@@ -218,7 +218,6 @@ metadata:
     kind: SearchHeadCluster
     name: shc
     uid: aa743f4a-54ca-4fe6-b4a5-8f6c13458b68
-  resourceVersion: "32203659"
   uid: c2888c08-0f7d-458c-b3e7-c6dfd3f65579
 spec:
   podManagementPolicy: Parallel

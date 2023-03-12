@@ -215,7 +215,6 @@ metadata:
     kind: IndexerCluster
     name: idxc
     uid: 04cf54bc-b4d7-45b7-a057-c9f2afcab4db
-  resourceVersion: "32929257"
   uid: 2b149b1d-0e7d-4597-b429-2727b82797f8
 spec:
   podManagementPolicy: Parallel
