@@ -151,4 +151,3 @@ metadata:
     time: "2023-02-09T17:31:27Z"
   name: splunk-default-probe-configmap
   namespace: default
-  uid: 4868c553-413c-433e-982b-ac2871492a62
