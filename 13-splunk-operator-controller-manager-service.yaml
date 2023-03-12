@@ -47,7 +47,6 @@ metadata:
     time: "2023-03-12T20:17:53Z"
   name: splunk-operator-controller-manager-service
   namespace: default
-  resourceVersion: "34474323"
 spec:
   clusterIP: 10.43.235.9
   clusterIPs:

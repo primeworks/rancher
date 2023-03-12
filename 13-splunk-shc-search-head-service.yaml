@@ -60,7 +60,6 @@ metadata:
     kind: SearchHeadCluster
     name: shc
     uid: 5012bf7a-e225-4b59-97fb-dc34c6da7490
-  resourceVersion: "34474711"
 spec:
   clusterIP: 10.43.81.170
   clusterIPs:
