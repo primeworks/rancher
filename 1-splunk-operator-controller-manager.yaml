@@ -34,4 +34,3 @@ metadata:
     time: "2023-03-12T22:56:03Z"
   name: splunk-operator-controller-manager
   namespace: default
-  uid: 242232eb-52d7-4a94-bebb-52b9ff2026f4
