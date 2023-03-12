@@ -330,23 +330,3 @@ spec:
       - name: app-staging
         persistentVolumeClaim:
           claimName: splunk-operator-app-download
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2023-03-09T17:26:13Z"
-    lastUpdateTime: "2023-03-09T17:26:51Z"
-    message: ReplicaSet "splunk-operator-controller-manager-595bb7bd8c" has successfully
-      progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  - lastTransitionTime: "2023-03-11T20:50:20Z"
-    lastUpdateTime: "2023-03-11T20:50:20Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  observedGeneration: 3
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1
