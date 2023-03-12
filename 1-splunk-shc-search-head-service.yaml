@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: main-splunk
+    meta.helm.sh/release-namespace: default
+  creationTimestamp: "2023-03-12T20:18:34Z"
+  labels:
+    app.kubernetes.io/component: search-head
+    app.kubernetes.io/instance: splunk-shc-search-head
+    app.kubernetes.io/managed-by: splunk-operator
+    app.kubernetes.io/name: search-head
+    app.kubernetes.io/part-of: splunk-shc-search-head
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:meta.helm.sh/release-name: {}
+          f:meta.helm.sh/release-namespace: {}
+        f:labels:
+          .: {}
+          f:app.kubernetes.io/component: {}
+          f:app.kubernetes.io/instance: {}
+          f:app.kubernetes.io/managed-by: {}
+          f:app.kubernetes.io/name: {}
+          f:app.kubernetes.io/part-of: {}
+        f:ownerReferences:
+          .: {}
+          k:{"uid":"5012bf7a-e225-4b59-97fb-dc34c6da7490"}: {}
+      f:spec:
+        f:internalTrafficPolicy: {}
+        f:ports:
+          .: {}
+          k:{"port":8000,"protocol":"TCP"}:
+            .: {}
+            f:name: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+          k:{"port":8089,"protocol":"TCP"}:
+            .: {}
+            f:name: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+        f:selector: {}
+        f:sessionAffinity: {}
+        f:type: {}
+    manager: manager
+    operation: Update
+    time: "2023-03-12T20:18:34Z"
+  name: splunk-shc-search-head-service
+  namespace: default
+  ownerReferences:
+  - apiVersion: enterprise.splunk.com/v4
+    controller: true
+    kind: SearchHeadCluster
+    name: shc
+    uid: 5012bf7a-e225-4b59-97fb-dc34c6da7490
+  resourceVersion: "34474711"
+spec:
+  clusterIP: 10.43.81.170
+  clusterIPs:
+  - 10.43.81.170
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: http-splunkweb
+    port: 8000
+    protocol: TCP
+    targetPort: 8000
+  - name: https-splunkd
+    port: 8089
+    protocol: TCP
+    targetPort: 8089
+  selector:
+    app.kubernetes.io/component: search-head
+    app.kubernetes.io/instance: splunk-shc-search-head
+    app.kubernetes.io/managed-by: splunk-operator
+    app.kubernetes.io/name: search-head
+    app.kubernetes.io/part-of: splunk-shc-search-head
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

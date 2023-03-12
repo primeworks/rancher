@@ -1,0 +1,107 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: main-splunk
+    meta.helm.sh/release-namespace: default
+  creationTimestamp: "2023-03-12T20:18:34Z"
+  labels:
+    app.kubernetes.io/component: indexer
+    app.kubernetes.io/managed-by: splunk-operator
+    app.kubernetes.io/name: indexer
+    app.kubernetes.io/part-of: splunk-cm-indexer
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:meta.helm.sh/release-name: {}
+          f:meta.helm.sh/release-namespace: {}
+        f:labels:
+          .: {}
+          f:app.kubernetes.io/component: {}
+          f:app.kubernetes.io/managed-by: {}
+          f:app.kubernetes.io/name: {}
+          f:app.kubernetes.io/part-of: {}
+        f:ownerReferences:
+          .: {}
+          k:{"uid":"c09d3bbe-6407-44e2-9b46-5fd83301cb4e"}: {}
+      f:spec:
+        f:internalTrafficPolicy: {}
+        f:ports:
+          .: {}
+          k:{"port":8000,"protocol":"TCP"}:
+            .: {}
+            f:name: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+          k:{"port":8088,"protocol":"TCP"}:
+            .: {}
+            f:name: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+          k:{"port":8089,"protocol":"TCP"}:
+            .: {}
+            f:name: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+          k:{"port":9997,"protocol":"TCP"}:
+            .: {}
+            f:name: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+        f:selector: {}
+        f:sessionAffinity: {}
+        f:type: {}
+    manager: manager
+    operation: Update
+    time: "2023-03-12T20:18:33Z"
+  name: splunk-cm-indexer-service
+  namespace: default
+  ownerReferences:
+  - apiVersion: enterprise.splunk.com/v4
+    controller: true
+    kind: ClusterManager
+    name: cm
+    uid: c09d3bbe-6407-44e2-9b46-5fd83301cb4e
+  resourceVersion: "34474702"
+spec:
+  clusterIP: 10.43.58.20
+  clusterIPs:
+  - 10.43.58.20
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: http-splunkweb
+    port: 8000
+    protocol: TCP
+    targetPort: 8000
+  - name: http-hec
+    port: 8088
+    protocol: TCP
+    targetPort: 8088
+  - name: https-splunkd
+    port: 8089
+    protocol: TCP
+    targetPort: 8089
+  - name: tcp-s2s
+    port: 9997
+    protocol: TCP
+    targetPort: 9997
+  selector:
+    app.kubernetes.io/component: indexer
+    app.kubernetes.io/managed-by: splunk-operator
+    app.kubernetes.io/name: indexer
+    app.kubernetes.io/part-of: splunk-cm-indexer
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
