@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
+    workload.user.cattle.io/workloadselector: apps.deployment-default-main-splunk
   managedFields:
   - apiVersion: apps/v1
     fieldsType: FieldsV1
@@ -39,7 +39,7 @@ metadata:
                 .: {}
                 f:requiredDuringSchedulingIgnoredDuringExecution: {}
             f:containers:
-              k:{"name":"splunk-sfxt"}:
+              k:{"name":"main-splunk"}:
                 .: {}
                 f:env:
                   .: {}
@@ -141,7 +141,7 @@ metadata:
     manager: kube-controller-manager
     operation: Update
     subresource: status
-  name: splunk-sfxt
+  name: main-splunk
   namespace: default
 spec:
   progressDeadlineSeconds: 600
@@ -149,7 +149,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
+      workload.user.cattle.io/workloadselector: apps.deployment-default-main-splunk
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -159,7 +159,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
+        workload.user.cattle.io/workloadselector: apps.deployment-default-main-splunk
     spec:
       affinity:
         nodeAffinity:
@@ -178,7 +178,7 @@ spec:
           value: i)24125114**A
         image: splunk/splunk
         imagePullPolicy: IfNotPresent
-        name: splunk-sfxt
+        name: main-splunk
         ports:
         - containerPort: 8000
           name: 8000tcp
@@ -225,7 +225,7 @@ status:
     type: Available
   - lastTransitionTime: "2023-01-12T20:05:29Z"
     lastUpdateTime: "2023-02-17T18:16:44Z"
-    message: ReplicaSet "splunk-sfxt-5d84d49c7b" has successfully progressed.
+    message: ReplicaSet "main-splunk-5d84d49c7b" has successfully progressed.
     reason: NewReplicaSetAvailable
     status: "True"
     type: Progressing
