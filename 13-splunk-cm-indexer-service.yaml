@@ -70,7 +70,6 @@ metadata:
     kind: ClusterManager
     name: cm
     uid: c09d3bbe-6407-44e2-9b46-5fd83301cb4e
-  resourceVersion: "34474702"
 spec:
   clusterIP: 10.43.58.20
   clusterIPs:

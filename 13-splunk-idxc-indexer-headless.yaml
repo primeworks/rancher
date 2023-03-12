@@ -73,7 +73,6 @@ metadata:
     kind: IndexerCluster
     name: idxc
     uid: 670eec62-912e-491f-904e-ac435e2f872c
-  resourceVersion: "34474705"
 spec:
   clusterIP: None
   clusterIPs:
