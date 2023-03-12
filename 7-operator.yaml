@@ -218,7 +218,6 @@ metadata:
     time: "2023-03-11T20:50:20Z"
   name: splunk-operator-controller-manager
   namespace: default
-  uid: c1ea638c-4408-421b-8aa5-4224e76177fe
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
