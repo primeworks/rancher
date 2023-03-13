@@ -181,7 +181,7 @@ spec:
         name: main-splunk
         ports:
         - containerPort: 8000
-          name: 8000tcp
+          name: main-splunk
           protocol: TCP
         resources:
           limits:
