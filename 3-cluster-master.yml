@@ -84,6 +84,14 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
+      - configMap:
+          defaultMode: 365
+          name: splunk-default-probe-configmap
+        name: splunk-default-probe-configmap
+      - name: mnt-splunk-secrets
+        secret:
+          defaultMode: 420
+          secretName: splunk-cm-cluster-manager-secret-v1
       - name: cluster-master
         persistentVolumeClaim:
           claimName: cluster-master
