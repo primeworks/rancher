@@ -194,10 +194,10 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /opt/splunk/etc
-          name: splunk-sfx-vol-2
+          name: var
           subPath: sfx-splunk-etc
         - mountPath: /opt/splunk/var
-          name: splunk-sfx-vol-2
+          name: var
           subPath: sfxt-splunk-var
         - mountPath: /opt/splunk/var/sfx-data
           name: sfx-data
@@ -214,6 +214,9 @@ spec:
       - name: splunk-sfx-vol-2
         persistentVolumeClaim:
           claimName: splunk-sfx-vol-2
+      - name: var
+        persistentVolumeClaim:
+          claimName: sfx-var3
 status:
   availableReplicas: 1
   conditions:
