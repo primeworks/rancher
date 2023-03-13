@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: cluster-splunk
+  name: cluster-master
 spec:
   selector:
-    workload.user.cattle.io/workloadselector: apps.deployment-default-cluster-splunk
+    workload.user.cattle.io/workloadselector: apps.deployment-default-cluster-master
   ports:
     - protocol: TCP
-      targetPort: cluster-splunk
+      targetPort: cluster-master
       port: 8000
-      name: cluster-splunk
+      name: cluster-master
