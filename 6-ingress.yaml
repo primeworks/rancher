@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: msplunk.webdiscode.com
+  - host: cluster-splunk.webdiscode.com
     http:
       paths:
       - path: /
