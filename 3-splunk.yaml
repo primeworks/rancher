@@ -194,13 +194,13 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /opt/splunk/etc
-          name: splunk-sfx-vol-2
+          name: main-splunk
           subPath: main-splunk-etc
         - mountPath: /opt/splunk/var
-          name: splunk-sfx-vol-2
+          name: main-splunk
           subPath: main-splunk-var
         - mountPath: /opt/splunk/var/sfx-data
-          name: sfx-data
+          name: main-splunk
           subPath: sfx-splunk-var/sfx-data
       dnsPolicy: ClusterFirst
       restartPolicy: Always
@@ -208,12 +208,9 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-      - name: sfx-data
+      - name: main-splunk
         persistentVolumeClaim:
-          claimName: pvc-d8e1dded-830e-4c83-8389-5a46d9690bcd
-      - name: splunk-sfx-vol-2
-        persistentVolumeClaim:
-          claimName: splunk-sfx-vol-2
+          claimName: main-splunk
 status:
   availableReplicas: 1
   conditions:
