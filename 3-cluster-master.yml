@@ -34,10 +34,6 @@ spec:
                 - files
       containers:
       - env:
-        - name: SPLUNK_CLUSTER_MASTER_URL
-          value: localhost
-        - name: SPLUNK_DECLARATIVE_ADMIN_PASSWORD
-          value: "true"
         - name: SPLUNK_DEFAULTS_URL
           value: /mnt/splunk-secrets/default.yml
         - name: SPLUNK_HOME
