@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    workload.user.cattle.io/workloadselector: apps.deployment-default-cluster-splunk
+  name: cluster-splunk
+  namespace: default
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: apps.deployment-default-cluster-splunk
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: apps.deployment-default-cluster-splunk
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - files
+      containers:
+      - env:
+        - name: SPLUNK_CLUSTER_MASTER_URL
+          value: splunk-cm-cluster-manager-service
+        - name: SPLUNK_DECLARATIVE_ADMIN_PASSWORD
+          value: "true"
+        - name: SPLUNK_DEFAULTS_URL
+          value: /mnt/splunk-secrets/default.yml
+        - name: SPLUNK_HOME
+          value: /opt/splunk
+        - name: SPLUNK_HOME_OWNERSHIP_ENFORCEMENT
+          value: "false"
+        - name: SPLUNK_OPERATOR_K8_LIVENESS_DRIVER_FILE_PATH
+          value: /tmp/splunk_operator_k8s/probes/k8_liveness_driver.sh
+        - name: SPLUNK_ROLE
+          value: splunk_indexer
+        - name: SPLUNK_START_ARGS
+          value: --accept-license
+        - name: SPLUNK_PASSWORD
+          value: i)24125114**A
+        image: splunk/splunk
+        imagePullPolicy: IfNotPresent
+        name: cluster-splunk
+        ports:
+        - containerPort: 8000
+          name: cluster-splunk
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 6000Mi
+          requests:
+            cpu: 100m
+            memory: 512Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /opt/splunk/etc
+          name: cluster-splunk
+          subPath: cluster-splunk-etc
+        - mountPath: /opt/splunk/var
+          name: cluster-splunk
+          subPath: cluster-splunk-var
+        - mountPath: /opt/splunk/var/sfx-data
+          name: cluster-splunk
+          subPath: sfx-splunk-var/sfx-data
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: cluster-splunk
+        persistentVolumeClaim:
+          claimName: cluster-splunk
