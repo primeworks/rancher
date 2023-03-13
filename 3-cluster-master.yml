@@ -102,6 +102,10 @@ spec:
         - mountPath: /opt/splunk/var
           name: cluster-master
           subPath: cluster-master-var
+        - mountPath: /mnt/probes
+          name: splunk-default-probe-configmap
+        - mountPath: /mnt/splunk-secrets
+          name: mnt-splunk-secrets
         - mountPath: /opt/splunk/var/sfx-data
           name: cluster-master
           subPath: sfx-splunk-var/sfx-data
