@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    workload.user.cattle.io/workloadselector: apps.deployment-default-main-splunk
+    workload.user.cattle.io/workloadselector: apps.deployment-default-cluster-splunk
   managedFields:
   - apiVersion: apps/v1
     fieldsType: FieldsV1
@@ -39,7 +39,7 @@ metadata:
                 .: {}
                 f:requiredDuringSchedulingIgnoredDuringExecution: {}
             f:containers:
-              k:{"name":"main-splunk"}:
+              k:{"name":"cluster-splunk"}:
                 .: {}
                 f:env:
                   .: {}
@@ -141,7 +141,7 @@ metadata:
     manager: kube-controller-manager
     operation: Update
     subresource: status
-  name: main-splunk
+  name: cluster-splunk
   namespace: default
 spec:
   progressDeadlineSeconds: 600
@@ -149,7 +149,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: apps.deployment-default-main-splunk
+      workload.user.cattle.io/workloadselector: apps.deployment-default-cluster-splunk
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -159,7 +159,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: apps.deployment-default-main-splunk
+        workload.user.cattle.io/workloadselector: apps.deployment-default-cluster-splunk
     spec:
       affinity:
         nodeAffinity:
@@ -178,10 +178,10 @@ spec:
           value: i)24125114**A
         image: splunk/splunk
         imagePullPolicy: IfNotPresent
-        name: main-splunk
+        name: cluster-splunk
         ports:
         - containerPort: 8000
-          name: main-splunk
+          name: cluster-splunk
           protocol: TCP
         resources:
           limits:
@@ -194,13 +194,13 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /opt/splunk/etc
-          name: main-splunk
-          subPath: main-splunk-etc
+          name: cluster-splunk
+          subPath: cluster-splunk-etc
         - mountPath: /opt/splunk/var
-          name: main-splunk
-          subPath: main-splunk-var
+          name: cluster-splunk
+          subPath: cluster-splunk-var
         - mountPath: /opt/splunk/var/sfx-data
-          name: main-splunk
+          name: cluster-splunk
           subPath: sfx-splunk-var/sfx-data
       dnsPolicy: ClusterFirst
       restartPolicy: Always
@@ -208,9 +208,9 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-      - name: main-splunk
+      - name: cluster-splunk
         persistentVolumeClaim:
-          claimName: main-splunk
+          claimName: cluster-splunk
 status:
   availableReplicas: 1
   conditions:
@@ -222,7 +222,7 @@ status:
     type: Available
   - lastTransitionTime: "2023-01-12T20:05:29Z"
     lastUpdateTime: "2023-02-17T18:16:44Z"
-    message: ReplicaSet "main-splunk-5d84d49c7b" has successfully progressed.
+    message: ReplicaSet "cluster-splunk-5d84d49c7b" has successfully progressed.
     reason: NewReplicaSetAvailable
     status: "True"
     type: Progressing
