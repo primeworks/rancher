@@ -44,10 +44,6 @@ spec:
           value: /opt/splunk
         - name: SPLUNK_HOME_OWNERSHIP_ENFORCEMENT
           value: "false"
-        - name: SPLUNK_OPERATOR_K8_LIVENESS_DRIVER_FILE_PATH
-          value: /tmp/splunk_operator_k8s/probes/k8_liveness_driver.sh
-        - name: SPLUNK_ROLE
-          value: splunk_cluster_master
         - name: SPLUNK_START_ARGS
           value: --accept-license
         - name: SPLUNK_PASSWORD
@@ -112,7 +108,10 @@ spec:
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
-      securityContext: {}
+      securityContext:
+        fsGroup: 41812
+        runAsNonRoot: true
+        runAsUser: 41812
       terminationGracePeriodSeconds: 30
       volumes:
       - configMap:
