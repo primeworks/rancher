@@ -67,10 +67,6 @@ spec:
         - mountPath: /opt/splunk/var
           name: cluster-master
           subPath: cluster-master-var
-        - mountPath: /mnt/probes
-          name: splunk-default-probe-configmap
-        - mountPath: /mnt/splunk-secrets
-          name: mnt-splunk-secrets
         - mountPath: /opt/splunk/var/sfx-data
           name: cluster-master
           subPath: sfx-splunk-var/sfx-data
@@ -83,14 +79,6 @@ spec:
         runAsUser: 41812
       terminationGracePeriodSeconds: 30
       volumes:
-      - configMap:
-          defaultMode: 365
-          name: splunk-default-probe-configmap
-        name: splunk-default-probe-configmap
-      - name: mnt-splunk-secrets
-        secret:
-          defaultMode: 420
-          secretName: splunk-cm-cluster-manager-secret-v1
       - name: cluster-master
         persistentVolumeClaim:
           claimName: cluster-master
