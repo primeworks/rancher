@@ -49,9 +49,8 @@ spec:
         name: cluster-master
         ports:
         - containerPort: 8000
-          name: cluster-master
+          name: 8000tcp
           protocol: TCP
-        
         resources:
           limits:
             cpu: "1"
