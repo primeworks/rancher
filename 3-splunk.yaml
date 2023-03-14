@@ -198,6 +198,7 @@ spec:
           subPath: cluster-splunk-etc
         - mountPath: /opt/splunk/var
           name: cluster-splunk
+          # Edit this subpath to reset the clock
           subPath: cluster-splunk-var
         - mountPath: /opt/splunk/var/sfx-data
           name: cluster-splunk
