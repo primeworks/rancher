@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-basic
+    app: odoo-bukka-stag
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
-  name: odoo-basic
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-bukka-stag
+  name: odoo-bukka-stag
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-bukka-stag
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -26,7 +26,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-bukka-stag
     spec:
       affinity: {}
       containers:
@@ -39,7 +39,7 @@ spec:
           value: odoo
         image: odoo:13
         imagePullPolicy: IfNotPresent
-        name: odoo-basic
+        name: odoo-bukka-stag
         resources:
           limits:
             cpu: "1"
@@ -59,18 +59,21 @@ spec:
         tty: true
         ports:
             - containerPort: 8069
-              name: odoo-basic
+              name: odoo-bukka-stag
               protocol: TCP
         volumeMounts:
         # Edit the volume to match the existing mountPaths in the cluster
-        - mountPath: /var/lib/odoo
-          name: vol-7xe3r
-          subPath: odoo
-        - mountPath: /mnt/extra-addons
-          name: vol-7xe3r
-          subPath: odoo/addons
         - mountPath: /etc/odoo
           name: config
+        - mountPath: /var/lib/odoo
+          name: vol-7xe3r
+          subPath: odoo13
+        - mountPath: /mnt/extra-addons
+          name: vol-xjjsl
+          subPath: odoo/addons
+        - mountPath: /tmp
+          name: tmp
+          subPath: bukka
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -85,5 +88,11 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: tbv-repair
+          claimName: bukka-rec-stag
+      - name: vol-xjjsl
+        persistentVolumeClaim:
+          claimName: tbv-odoo-d
+      - hostPath:
+          path: /tmp
+          type: DirectoryOrCreate
 
