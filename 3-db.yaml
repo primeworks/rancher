@@ -58,6 +58,7 @@ spec:
         terminationMessagePolicy: File
         tty: true
         volumeMounts:
+        # Edit the volume to match the existing volumeMounts in the cluster
         - mountPath: /var/lib/postgresql/data
           name: vol-ytjxx
           subPath: database
@@ -70,6 +71,7 @@ spec:
       - emptyDir:
           medium: Memory
         name: dshm
+      # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
         persistentVolumeClaim:
           claimName: tbv-repair

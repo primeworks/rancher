@@ -62,6 +62,7 @@ spec:
               name: odoo-basic
               protocol: TCP
         volumeMounts:
+        # Edit the volume to match the existing mountPaths in the cluster
         - mountPath: /var/lib/odoo
           name: vol-7xe3r
           subPath: odoo
@@ -81,6 +82,7 @@ spec:
           name: odoo.conf
           optional: true
         name: config
+      # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
           claimName: tbv-repair
