@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-basic
+  name: odoo-bukka
 spec:
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-bukka
   ports:
     - protocol: TCP
-      targetPort: odoo-basic
+      targetPort: odoo-bukka
       port: 8069
-      name: odoo-basic
+      name: odoo-bukka

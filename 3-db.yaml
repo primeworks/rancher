@@ -74,7 +74,7 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
         persistentVolumeClaim:
-          claimName: tbv-repair
+          claimName: bukka-rec
   updateStrategy:
     type: RollingUpdate
 status:
