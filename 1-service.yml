@@ -22,4 +22,4 @@ spec:
     - protocol: TCP
       targetPort: db-bukka
       port: 42
-      name: odoo-bukka
+      name: db-bukka
