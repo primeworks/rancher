@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  generation: 3
   labels:
     app: db-basic
     app.kubernetes.io/managed-by: Helm
@@ -78,5 +77,4 @@ spec:
     type: RollingUpdate
 status:
   availableReplicas: 1
-  currentRevision: db-basic-dc7fc6786
   replicas: 1
