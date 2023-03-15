@@ -168,7 +168,6 @@ metadata:
     operation: Update
     time: "2021-11-09T18:59:38Z"
   name: odoo-basic
-  namespace: clientName
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
