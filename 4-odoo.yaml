@@ -1,28 +1,29 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   annotations:
+    deployment.kubernetes.io/revision: "26"
     field.cattle.io/creatorId: user-t5wpm
-    meta.helm.sh/release-name: silicon
-    meta.helm.sh/release-namespace: clientName
-    objectset.rio.cattle.io/id: default-silicon
-  creationTimestamp: "2022-08-27T23:22:43Z"
-  generation: 3
+    field.cattle.io/publicEndpoints: "null"
+  creationTimestamp: "2021-10-18T13:34:36Z"
+  generation: 33
   labels:
-    app: retail-odoo
-    app.kubernetes.io/managed-by: Helm
+    app: odoo-basic
+    tier: frontend
     cattle.io/creator: norman
-    objectset.rio.cattle.io/hash: dbb408b909497414f93be5e7a78a2f285d27b7e1
-    workload.user.cattle.io/workloadselector: statefulSet-default-db-clientName
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
   managedFields:
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
-      f:status:
-        f:collisionCount: {}
-    manager: kube-controller-manager
+      f:spec:
+        f:replicas: {}
+        f:template:
+          f:spec:
+            f:affinity: {}
+    manager: agent
     operation: Update
-    time: "2021-11-09T18:48:54Z"
+    time: "2021-11-09T18:43:29Z"
   - apiVersion: apps/v1
     fieldsType: FieldsV1
     fieldsV1:
@@ -30,44 +31,45 @@ metadata:
         f:annotations:
           .: {}
           f:field.cattle.io/creatorId: {}
-          f:meta.helm.sh/release-name: {}
-          f:meta.helm.sh/release-namespace: {}
-          f:objectset.rio.cattle.io/id: {}
+          f:field.cattle.io/publicEndpoints: {}
         f:labels:
           .: {}
-          f:app.kubernetes.io/managed-by: {}
           f:cattle.io/creator: {}
-          f:objectset.rio.cattle.io/hash: {}
           f:workload.user.cattle.io/workloadselector: {}
       f:spec:
-        f:podManagementPolicy: {}
+        f:progressDeadlineSeconds: {}
         f:revisionHistoryLimit: {}
         f:selector: {}
-        f:serviceName: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
         f:template:
           f:metadata:
             f:annotations:
               .: {}
+              f:cattle.io/timestamp: {}
               f:field.cattle.io/ports: {}
             f:labels:
               .: {}
               f:workload.user.cattle.io/workloadselector: {}
           f:spec:
-            f:affinity: {}
             f:containers:
-              k:{"name":"db-clientName"}:
+              k:{"name":"odoo-basic"}:
                 .: {}
                 f:env:
                   .: {}
-                  k:{"name":"POSTGRES_DB"}:
+                  k:{"name":"HOST"}:
                     .: {}
                     f:name: {}
                     f:value: {}
-                  k:{"name":"POSTGRES_PASSWORD"}:
+                  k:{"name":"PASSWORD"}:
                     .: {}
                     f:name: {}
                     f:value: {}
-                  k:{"name":"POSTGRES_USER"}:
+                  k:{"name":"USER"}:
                     .: {}
                     f:name: {}
                     f:value: {}
@@ -88,7 +90,15 @@ metadata:
                 f:tty: {}
                 f:volumeMounts:
                   .: {}
-                  k:{"mountPath":"/var/lib/postgresql/data"}:
+                  k:{"mountPath":"/etc/odoo"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                  k:{"mountPath":"/mnt/extra-addons"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                  k:{"mountPath":"/var/lib/odoo"}:
                     .: {}
                     f:mountPath: {}
                     f:name: {}
@@ -99,6 +109,14 @@ metadata:
             f:terminationGracePeriodSeconds: {}
             f:volumes:
               .: {}
+              k:{"name":"odoo-basic"}:
+                .: {}
+                f:configMap:
+                  .: {}
+                  f:defaultMode: {}
+                  f:name: {}
+                  f:optional: {}
+                f:name: {}
               k:{"name":"vol1"}:
                 .: {}
                 f:hostPath:
@@ -106,81 +124,85 @@ metadata:
                   f:path: {}
                   f:type: {}
                 f:name: {}
-        f:updateStrategy:
-          f:type: {}
-    manager: fleetagent
-    operation: Update
-    time: "2022-08-27T23:22:43Z"
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:spec:
-        f:replicas: {}
-    manager: agent
-    operation: Update
-    time: "2022-09-01T12:23:34Z"
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:status:
-        f:currentRevision: {}
-        f:observedGeneration: {}
-        f:replicas: {}
-        f:updateRevision: {}
-    manager: kube-controller-manager
-    operation: Update
-    subresource: status
-    time: "2022-09-04T02:49:37Z"
-  - apiVersion: apps/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:spec:
-        f:template:
-          f:metadata:
-            f:annotations:
-              f:cattle.io/timestamp: {}
-          f:spec:
-            f:containers:
-              k:{"name":"db-clientName"}:
-                f:args: {}
+              k:{"name":"vol3"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
     manager: rancher
     operation: Update
-    time: "2022-09-04T02:49:37Z"
-  name: db-clientName
+    time: "2021-11-09T18:59:35Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:deployment.kubernetes.io/revision: {}
+      f:status:
+        f:availableReplicas: {}
+        f:conditions:
+          .: {}
+          k:{"type":"Available"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Progressing"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    time: "2021-11-09T18:59:38Z"
+  name: odoo-basic
   namespace: clientName
 spec:
-  podManagementPolicy: OrderedReady
+  progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: statefulSet-default-db-clientName
-  serviceName: db-clientName
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
       annotations:
-        cattle.io/timestamp: "2022-09-04T02:49:36Z"
+        cattle.io/timestamp: "2021-11-09T18:59:34Z"
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: statefulSet-default-db-clientName
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
     spec:
       affinity: {}
       containers:
-      - args:
-        - -c
-        - max_connections=1200
-        env:
-        - name: POSTGRES_DB
-          value: postgres
-        - name: POSTGRES_PASSWORD
+      - env:
+        - name: HOST
+          value: db-odoo15
+        - name: PASSWORD
           value: odoo
-        - name: POSTGRES_USER
+        - name: USER
           value: odoo
-        image: postgres:12
+        image: odoo:15
         imagePullPolicy: IfNotPresent
-        name: db-clientName
-        resources:  
+        name: odoo-basic
+        resources: 
           limits:
             cpu: "0.3"
             memory: 2000Mi
@@ -194,28 +216,28 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         tty: true
+        ports:
+            - containerPort: 8069
+              name: odoo-basic
+              protocol: TCP
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data
-          name: data
-          subPath: database
+        - mountPath: /etc/odoo
+          name: conf
+        - mountPath: /var/lib/odoo
+          name: files
+          subPath: odoo
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-      - emptyDir:
-          medium: Memory
-        name: dshm
-      - name: data
+      - configMap:
+          defaultMode: 493
+          name: odoo.conf
+          optional: true
+        name: conf
+      - name: files
         persistentVolumeClaim:
-          claimName: retail-odoo
-  updateStrategy:
-    type: RollingUpdate
-status:
-  availableReplicas: 1
-  collisionCount: 0
-  currentRevision: db-clientName-dc7fc6786
-  observedGeneration: 3
-  replicas: 1
-  updateRevision: db-clientName-dc7fc6786
+          claimName: odoo-basic
+
