@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-basic
+  name: odoo-silverflow
 spec:
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-silverflow
   ports:
     - protocol: TCP
-      targetPort: odoo-basic
+      targetPort: odoo-silverflow
       port: 8069
-      name: odoo-basic
+      name: odoo-silverflow
