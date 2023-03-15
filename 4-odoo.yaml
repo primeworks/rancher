@@ -194,18 +194,21 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-odoo15
+          value: db-basic
         - name: PASSWORD
           value: odoo
         - name: USER
           value: odoo
-        image: odoo:15
+        image: odoo:13
         imagePullPolicy: IfNotPresent
         name: odoo-basic
-        resources: 
+        resources:
           limits:
-            cpu: "0.3"
-            memory: 2000Mi
+            cpu: "1"
+            memory: 6000Mi
+          requests:
+            cpu: 100m
+            memory: 512Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities: {}
@@ -221,11 +224,14 @@ spec:
               name: odoo-basic
               protocol: TCP
         volumeMounts:
-        - mountPath: /etc/odoo
-          name: conf
         - mountPath: /var/lib/odoo
-          name: files
+          name: vol-7xe3r
           subPath: odoo
+        - mountPath: /mnt/extra-addons
+          name: vol-7xe3r
+          subPath: odoo/addons
+        - mountPath: /etc/odoo
+          name: config
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -233,11 +239,11 @@ spec:
       terminationGracePeriodSeconds: 30
       volumes:
       - configMap:
-          defaultMode: 493
+          defaultMode: 509
           name: odoo.conf
           optional: true
-        name: conf
-      - name: files
+        name: config
+      - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: odoo-basic
+          claimName: tbv-repair
 

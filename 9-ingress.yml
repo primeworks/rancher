@@ -16,4 +16,4 @@ spec:
           service:
             name: odoo-basic
             port:
-              number: 8000
+              number: 8069

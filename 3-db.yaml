@@ -147,7 +147,6 @@ metadata:
     operation: Update
     time: "2022-09-04T02:49:37Z"
   name: db-basic
-  namespace: clientName
 spec:
   podManagementPolicy: OrderedReady
   replicas: 1
@@ -180,10 +179,13 @@ spec:
         image: postgres:12
         imagePullPolicy: IfNotPresent
         name: db-basic
-        resources:  
+        resources:
           limits:
-            cpu: "0.3"
-            memory: 2000Mi
+            cpu: "1"
+            memory: 6000Mi
+          requests:
+            cpu: 100m
+            memory: 512Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities: {}
@@ -196,7 +198,7 @@ spec:
         tty: true
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
-          name: data
+          name: vol-ytjxx
           subPath: database
       dnsPolicy: ClusterFirst
       restartPolicy: Always
@@ -207,9 +209,9 @@ spec:
       - emptyDir:
           medium: Memory
         name: dshm
-      - name: data
+      - name: vol-ytjxx
         persistentVolumeClaim:
-          claimName: retail-odoo
+          claimName: tbv-repair
   updateStrategy:
     type: RollingUpdate
 status:
