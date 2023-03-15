@@ -82,10 +82,7 @@ spec:
           claimName: tbv-repair
   updateStrategy:
     type: RollingUpdate
-
+status:
   availableReplicas: 1
-  collisionCount: 0
   currentRevision: db-basic-dc7fc6786
-  observedGeneration: 3
   replicas: 1
-  updateRevision: db-basic-dc7fc6786
