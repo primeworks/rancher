@@ -32,7 +32,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-basic
+          value: db-bukka
         - name: PASSWORD
           value: odoo
         - name: USER
