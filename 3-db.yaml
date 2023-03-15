@@ -61,7 +61,7 @@ spec:
         # Edit the volume to match the existing volumeMounts in the cluster
         - mountPath: /var/lib/postgresql/data
           name: vol-ytjxx
-          subPath: database
+          subPath: database16
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -74,7 +74,7 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
         persistentVolumeClaim:
-          claimName: tbv-repair
+          claimName: hhpei-odoo
   updateStrategy:
     type: RollingUpdate
 status:

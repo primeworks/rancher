@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-basic
+  name: odoo-hhpei
 spec:
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-hhpei
   ports:
     - protocol: TCP
-      targetPort: odoo-basic
+      targetPort: odoo-hhpei
       port: 8069
-      name: odoo-basic
+      name: odoo-hhpei
