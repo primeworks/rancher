@@ -11,7 +11,6 @@ metadata:
   generateName: db-bukka-
   labels:
     controller-revision-hash: db-bukka-6f9c97cc68
-    statefulset.kubernetes.io/pod-name: db-bukka-0
     workload.user.cattle.io/workloadselector: statefulSet-default-db-bukka
   managedFields:
   - apiVersion: v1
@@ -160,16 +159,8 @@ metadata:
     operation: Update
     subresource: status
     time: "2023-03-14T14:32:01Z"
-  name: db-bukka-0
   namespace: default
-  ownerReferences:
-  - apiVersion: apps/v1
-    blockOwnerDeletion: true
-    controller: true
-    kind: StatefulSet
-    name: db-bukka
-    uid: d136565c-b478-49ea-9e0f-f5d36e00195b
-  resourceVersion: "35569901"
+  esourceVersion: "35569901"
   uid: c7ba2039-afe1-4656-9628-fca7575ae0e8
 spec:
   affinity:
@@ -220,7 +211,6 @@ spec:
       readOnly: true
   dnsPolicy: ClusterFirst
   enableServiceLinks: true
-  hostname: db-bukka-0
   nodeName: vmi1147231
   preemptionPolicy: PreemptLowerPriority
   priority: 0
