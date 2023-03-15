@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-basic
+    app: odoo-helptest
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
-  name: odoo-basic
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-helptest
+  name: odoo-helptest
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-helptest
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -26,7 +26,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-helptest
     spec:
       affinity: {}
       containers:
@@ -39,7 +39,7 @@ spec:
           value: odoo
         image: odoo:13
         imagePullPolicy: IfNotPresent
-        name: odoo-basic
+        name: odoo-helptest
         resources:
           limits:
             cpu: "1"
@@ -59,18 +59,18 @@ spec:
         tty: true
         ports:
             - containerPort: 8069
-              name: odoo-basic
+              name: odoo-helptest
               protocol: TCP
         volumeMounts:
         # Edit the volume to match the existing mountPaths in the cluster
-        - mountPath: /var/lib/odoo
-          name: vol-7xe3r
-          subPath: odoo
-        - mountPath: /mnt/extra-addons
-          name: vol-7xe3r
-          subPath: odoo/addons
         - mountPath: /etc/odoo
           name: config
+        - mountPath: /var/lib/odoo
+          name: vol-7xe3r
+          subPath: odoo13
+        - mountPath: /mnt/extra-addons
+          name: vol-xjnem
+          subPath: odoo/addons
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -85,5 +85,8 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: tbv-repair
+          claimName: pvc-35b715b7-f277-4025-9b8a-7a0d012a88ae
+      - name: vol-xjnem
+        persistentVolumeClaim:
+          claimName: tbv-odoo-d
 
