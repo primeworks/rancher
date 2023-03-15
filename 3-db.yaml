@@ -74,7 +74,7 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
         persistentVolumeClaim:
-          claimName: tbv-repair
+          claimName: pvc-ae76e204-8f15-4383-a18f-b2f3b4dbd43c
   updateStrategy:
     type: RollingUpdate
 status:
