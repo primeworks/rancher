@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: db-basic
+    app: db-tbv
     app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
     objectset.rio.cattle.io/hash: dbb408b909497414f93be5e7a78a2f285d27b7e1
-    workload.user.cattle.io/workloadselector: statefulSet-default-db-basic
-  name: db-basic
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-tbv
+  name: db-tbv
 spec:
   podManagementPolicy: OrderedReady
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: statefulSet-default-db-basic
-  serviceName: db-basic
+      workload.user.cattle.io/workloadselector: statefulSet-default-db-tbv
+  serviceName: db-tbv
   template:
     metadata:
       annotations:
@@ -23,7 +23,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: statefulSet-default-db-basic
+        workload.user.cattle.io/workloadselector: statefulSet-default-db-tbv
     spec:
       affinity: {}
       containers:
@@ -39,7 +39,7 @@ spec:
           value: odoo
         image: postgres:12
         imagePullPolicy: IfNotPresent
-        name: db-basic
+        name: db-tbv
         resources:
           limits:
             cpu: "1"
