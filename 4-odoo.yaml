@@ -1,10 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "26"
-    field.cattle.io/creatorId: user-t5wpm
-    field.cattle.io/publicEndpoints: "null"
   creationTimestamp: "2021-10-18T13:34:36Z"
   generation: 33
   labels:
