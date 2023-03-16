@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-basic
+    app: odoo-rec
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
-  name: odoo-basic
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-rec
+  name: odoo-rec
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-rec
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -26,7 +26,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-rec
     spec:
       affinity:
         nodeAffinity:
@@ -40,14 +40,14 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-basic
+          value: db-rec
         - name: PASSWORD
           value: odoo
         - name: USER
           value: odoo
         image: odoo:13
         imagePullPolicy: IfNotPresent
-        name: odoo-basic
+        name: odoo-rec
         resources:
           limits:
             cpu: "1"
@@ -67,7 +67,7 @@ spec:
         tty: true
         ports:
             - containerPort: 8069
-              name: odoo-basic
+              name: odoo-rec
               protocol: TCP
         volumeMounts:
         # Edit the volume to match the existing mountPaths in the cluster
