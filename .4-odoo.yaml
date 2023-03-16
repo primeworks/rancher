@@ -71,14 +71,14 @@ spec:
               protocol: TCP
         volumeMounts:
         # Edit the volume to match the existing mountPaths in the cluster
-        - mountPath: /var/lib/odoo
-          name: vol-7xe3r
-          subPath: odoo
-        - mountPath: /mnt/extra-addons
-          name: vol-7xe3r
-          subPath: odoo/addons
         - mountPath: /etc/odoo
           name: config
+        - mountPath: /var/lib/odoo
+          name: vol-7xe3r
+          subPath: odoo13
+        - mountPath: /mnt/extra-addons
+          name: vol-xjnem
+          subPath: odoo/addons
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
