@@ -10,3 +10,27 @@ spec:
       targetPort: odoo-bukka
       port: 8069
       name: odoo-bukka
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-bukka
+spec:
+  clusterIP: None
+  clusterIPs:
+  - None
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: default
+    port: 42
+    protocol: TCP
+    targetPort: 42
+  selector:
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-bukka
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
