@@ -82,7 +82,7 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
         persistentVolumeClaim:
-          claimName: bukka-new
+          claimName: bukka-n
   updateStrategy:
     type: RollingUpdate
 status:
