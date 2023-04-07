@@ -90,5 +90,5 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: pvc-e757b8ba-5c5c-4982-9b65-07ec72e0edbe
+          claimName: odoo-lighthouse
 
