@@ -7,6 +7,15 @@ metadata:
     workload.cattle.io/workloadPortBased: "true"
     name: db-lighthouse
 spec:
+  sessionAffinity: None
+  type: ClusterIP
+  clusterIP: None
+  clusterIPs:
+  - None
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
   selector:
     workload.user.cattle.io/workloadselector: statefulSet-default-db-lighthouse
   ports:
