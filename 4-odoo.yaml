@@ -40,7 +40,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-basic
+          value: db-lighthouse
         - name: PASSWORD
           value: odoo
         - name: USER
