@@ -11,5 +11,5 @@ spec:
   ports:
     - protocol: TCP
       targetPort: db-lighthouse
-      port: 8069
+      port: 42
       name: db-lighthouse
