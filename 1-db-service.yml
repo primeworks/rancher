@@ -17,6 +17,6 @@ spec:
     workload.user.cattle.io/workloadselector: statefulSet-default-db-lighthouse
   ports:
     - protocol: TCP
-      targetPort: 42
+      targetPort: db-lighthouse
       port: 42
       name: db-lighthouse
