@@ -31,7 +31,7 @@ spec:
               - key: app
                 operator: In
                 values:
-                - sfx
+                - files
       containers:
       - env:
         - name: SPLUNK_START_ARGS
