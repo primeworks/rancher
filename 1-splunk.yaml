@@ -60,7 +60,8 @@ spec:
           subPath: sfx-splunk-etc
         - mountPath: /opt/splunk/var
           name: var
-          subPath: sfx-splunk-var-230413
+          # Edit this subpath to reset the clock
+          subPath: sfxt-splunk-var-230413B
         - mountPath: /opt/splunk/var/sfx-data
           name: sfx-data
           subPath: sfx-splunk-var/sfx-data
