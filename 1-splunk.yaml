@@ -79,7 +79,7 @@ spec:
           claimName: splunk-sfx-vol-2
       - name: var
         persistentVolumeClaim:
-          claimName: sfx-var3
+          claimName: sfx-var4
 status:
   availableReplicas: 1
   conditions:
