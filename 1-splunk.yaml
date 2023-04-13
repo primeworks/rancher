@@ -31,7 +31,7 @@ spec:
               - key: app
                 operator: In
                 values:
-                - files
+                - sfx
       containers:
       - env:
         - name: SPLUNK_START_ARGS
@@ -56,10 +56,10 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /opt/splunk/etc
-          name: var
+          name: sfx-data
           subPath: sfx-splunk-etc
         - mountPath: /opt/splunk/var
-          name: var
+          name: sfx-data
           # Edit this subpath to reset the clock
           subPath: sfxt-splunk-var-230412
         - mountPath: /opt/splunk/var/sfx-data
@@ -73,13 +73,7 @@ spec:
       volumes:
       - name: sfx-data
         persistentVolumeClaim:
-          claimName: pvc-d8e1dded-830e-4c83-8389-5a46d9690bcd
-      - name: splunk-sfx-vol-2
-        persistentVolumeClaim:
-          claimName: splunk-sfx-vol-2
-      - name: var
-        persistentVolumeClaim:
-          claimName: sfx-var3
+          claimName: splunk-sfx-data
 status:
   availableReplicas: 1
   conditions:
