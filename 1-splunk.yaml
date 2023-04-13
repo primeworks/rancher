@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
-  name: splunk-sfxt
+  name: splunk-sfxtb
   namespace: default
 spec:
   progressDeadlineSeconds: 600
@@ -40,7 +40,7 @@ spec:
           value: i)24125114**A
         image: splunk/splunk
         imagePullPolicy: IfNotPresent
-        name: splunk-sfxt
+        name: splunk-sfxtb
         ports:
         - containerPort: 8000
           name: 8000tcp
