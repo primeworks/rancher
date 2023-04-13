@@ -58,6 +58,9 @@ spec:
         - mountPath: /opt/splunk/etc
           name: var
           subPath: sfx-splunk-etc
+        - mountPath: /opt/splunk/var
+          name: var
+          subPath: sfx-splunk-var-230413
         - mountPath: /opt/splunk/var/sfx-data
           name: sfx-data
           subPath: sfx-splunk-var/sfx-data
