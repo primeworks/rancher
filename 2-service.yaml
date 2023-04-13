@@ -4,7 +4,7 @@ metadata:
   name: splunk-sfx
 spec:
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-splunk-sfx
+    workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
   ports:
     - protocol: TCP
       targetPort: splunk-sfx
