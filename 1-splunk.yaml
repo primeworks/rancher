@@ -72,15 +72,15 @@ spec:
       terminationGracePeriodSeconds: 30
       volumes:
       - hostPath:
-          path: /mnt/sfx-data
+          path: /mnt/data/sfx-data
           type: DirectoryOrCreate
         name: data
       - hostPath:
-          path: /mnt/sfx-etc
+          path: /mnt/data/sfx-etc
           type: DirectoryOrCreate
         name: etc
       - hostPath:
-          path: /mnt/sfx-var
+          path: /mnt/data/sfx-var
           type: DirectoryOrCreate
         name: sfx-var
 status:
