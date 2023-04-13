@@ -43,7 +43,7 @@ spec:
         name: splunk-sfx
         ports:
         - containerPort: 8000
-          name: 8000tcp
+          name: splunk-sfx
           protocol: TCP
         resources:
           limits:
