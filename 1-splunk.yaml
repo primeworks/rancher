@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
-  name: splunk-sfxtb
+    workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
+  name: splunk-sfx
   namespace: default
 spec:
   progressDeadlineSeconds: 600
@@ -11,7 +11,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
+      workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -21,7 +21,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
+        workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
     spec:
       affinity:
         nodeAffinity:
@@ -40,7 +40,7 @@ spec:
           value: i)24125114**A
         image: splunk/splunk
         imagePullPolicy: IfNotPresent
-        name: splunk-sfxtb
+        name: splunk-sfx
         ports:
         - containerPort: 8000
           name: 8000tcp
