@@ -55,10 +55,10 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
-        - mountPath: /opt/splunk/var
-          name: sfx-var
+        - mountPath: /opt/splunk/etc
+          name: sfx-etc
           # Edit this subpath to reset the clock
-          subPath: var
+          subPath: etc
         - mountPath: /opt/splunk/var/sfx-data
           name: sfx-data
           subPath: sfx-data
