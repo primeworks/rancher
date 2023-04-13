@@ -55,28 +55,25 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
-        - mountPath: /opt/splunk/etc
-          name: sfx-etc
-          # Edit this subpath to reset the clock
-          subPath: etc
         - mountPath: /opt/splunk/var/sfx-data
-          name: sfx-data
+          name: sfx-vds
           subPath: sfx-data
+        - mountPath: /opt/splunk/etc
+          name: sfx-vds
+          subPath: etc
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-      - name: sfx-data
+      - hostPath:
+          path: /opt/splunk
+          type: DirectoryOrCreate
+        name: data
+      - name: sfx-vds
         persistentVolumeClaim:
-          claimName: sfx-data
-      - name: sfx-etc
-        persistentVolumeClaim:
-          claimName: sfx-etc
-      - name: sfx-var
-        persistentVolumeClaim:
-          claimName: sfx-var5
+          claimName: sfx-vds
 status:
   availableReplicas: 1
   conditions:
