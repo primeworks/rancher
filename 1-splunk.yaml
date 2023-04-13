@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
-  name: splunk-sfxt
+    workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
+  name: splunk-sfx
   namespace: default
 spec:
   progressDeadlineSeconds: 600
@@ -11,7 +11,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
+      workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -21,7 +21,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfxt
+        workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
     spec:
       affinity:
         nodeAffinity:
@@ -40,7 +40,7 @@ spec:
           value: i)24125114**A
         image: splunk/splunk
         imagePullPolicy: IfNotPresent
-        name: splunk-sfxt
+        name: splunk-sfx
         ports:
         - containerPort: 8000
           name: 8000tcp
@@ -55,31 +55,34 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
+        - mountPath: /opt/splunk/var/sfx-data
+          name: data
+          subPath: sfx-splunk-var/sfx-data
         - mountPath: /opt/splunk/etc
-          name: var
+          name: etc
           subPath: sfx-splunk-etc
         - mountPath: /opt/splunk/var
-          name: var
+          name: sfx-var
           # Edit this subpath to reset the clock
-          subPath: sfxt-splunk-var-230412
-        - mountPath: /opt/splunk/var/sfx-data
-          name: sfx-data
-          subPath: sfx-splunk-var/sfx-data
+          subPath: sfxtt-splunk-var
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-      - name: sfx-data
-        persistentVolumeClaim:
-          claimName: pvc-d8e1dded-830e-4c83-8389-5a46d9690bcd
-      - name: splunk-sfx-vol-2
-        persistentVolumeClaim:
-          claimName: splunk-sfx-vol-2
-      - name: var
-        persistentVolumeClaim:
-          claimName: sfx-var3
+      - hostPath:
+          path: /mnt/sfx-data
+          type: DirectoryOrCreate
+        name: data
+      - hostPath:
+          path: /mnt/sfx-etc
+          type: DirectoryOrCreate
+        name: etc
+      - hostPath:
+          path: /mnt/sfx-var
+          type: DirectoryOrCreate
+        name: sfx-var
 status:
   availableReplicas: 1
   conditions:
@@ -91,7 +94,7 @@ status:
     type: Available
   - lastTransitionTime: "2023-01-12T20:05:29Z"
     lastUpdateTime: "2023-02-17T18:16:44Z"
-    message: ReplicaSet "splunk-sfxt-5d84d49c7b" has successfully progressed.
+    message: ReplicaSet "splunk-sfx-5d84d49c7b" has successfully progressed.
     reason: NewReplicaSetAvailable
     status: "True"
     type: Progressing
