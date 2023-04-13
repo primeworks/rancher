@@ -59,7 +59,7 @@ spec:
           name: sfx-data
           subPath: sfx-splunk-etc
         - mountPath: /opt/splunk/var
-          name: sfx-data
+          name: sfx-var
           # Edit this subpath to reset the clock
           subPath: sfxt-splunk-var-230412
         - mountPath: /opt/splunk/var/sfx-data
@@ -73,7 +73,13 @@ spec:
       volumes:
       - name: sfx-data
         persistentVolumeClaim:
-          claimName: splunk-sfx-data
+          claimName: sfx-data
+      - name: sfx-etc
+        persistentVolumeClaim:
+          claimName: sfx-etc
+      - name: sfx-var
+        persistentVolumeClaim:
+          claimName: sfx-var5
 status:
   availableReplicas: 1
   conditions:
