@@ -56,7 +56,7 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /opt/splunk/etc
-          name: sfx-data
+          name: sfx-var
           subPath: sfx-splunk-etc
         - mountPath: /opt/splunk/var
           name: sfx-var
