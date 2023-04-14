@@ -56,11 +56,9 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /opt/splunk/var/sfx-data
-          name: sfx-vds
-          subPath: sfx-data
+          name: data
         - mountPath: /opt/splunk/etc
-          name: sfx-vds
-          subPath: etc
+          name: etc
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -68,12 +66,13 @@ spec:
       terminationGracePeriodSeconds: 30
       volumes:
       - hostPath:
-          path: /opt/splunk
+          path: /opt/splunk/etc
+          type: DirectoryOrCreate
+        name: etc
+      - hostPath:
+          path: /opt/splunk/data
           type: DirectoryOrCreate
         name: data
-      - name: sfx-vds
-        persistentVolumeClaim:
-          claimName: sfx-vds
 status:
   availableReplicas: 1
   conditions:
