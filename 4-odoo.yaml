@@ -78,8 +78,8 @@ spec:
         - mountPath: /mnt/extra-addons
           name: vol-7xe3r
           subPath: odoo/addons
-        - mountPath: /etc/odoo
-          name: config
+        # - mountPath: /etc/odoo
+        #   name: config
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
