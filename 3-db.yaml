@@ -34,6 +34,20 @@ spec:
                 operator: In
                 values:
                 - db
+      initContainers:
+      - name: change-ownership-container
+        image: busybox
+        command: ["/bin/chown","-R","1000:1000", "/home/jovyan/work"]
+        securityContext:
+          runAsUser: 0
+          privileged: true
+        volumeMounts:
+        - name: vol-ytjxx
+          mountPath: /home/agg/work
+      volumes:
+      - name: vol-ytjxx
+        persistentVolumeClaim:
+          claimName: agg-odoo
       containers:
       - args:
         - -c
