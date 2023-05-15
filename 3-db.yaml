@@ -82,7 +82,7 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
         persistentVolumeClaim:
-          claimName: agg-odoo-d
+          claimName: agg-odoo
   updateStrategy:
     type: RollingUpdate
 status:
