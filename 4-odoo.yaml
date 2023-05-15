@@ -80,17 +80,6 @@ spec:
           subPath: odoo/addons
         - mountPath: /etc/odoo
           name: config
-      initContainers:
-      - name: busybox
-        image: busybox
-        command: ["/bin/chown","-R","1000:1000", "/home/agg/work"]
-        securityContext:
-          runAsUser: 0
-          privileged: true
-        volumeMounts:
-        - name: vol-7xe3r
-          mountPath: /home/agg/work
-      
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
