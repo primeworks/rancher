@@ -61,6 +61,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: false
           runAsNonRoot: false
+          runAsUser: 1000
         stdin: true
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
