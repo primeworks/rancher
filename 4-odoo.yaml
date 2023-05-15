@@ -45,7 +45,7 @@ spec:
           value: odoo
         - name: USER
           value: odoo
-        image: odoo:16
+        image: odoo:16.0
         imagePullPolicy: IfNotPresent
         name: odoo-agg
         resources:
