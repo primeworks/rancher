@@ -45,7 +45,7 @@ spec:
           value: odoo
         - name: USER
           value: odoo
-        image: odoo:15
+        image: odoo:16.0
         imagePullPolicy: IfNotPresent
         name: odoo-agg
         resources:
@@ -88,7 +88,7 @@ spec:
       volumes:
       - configMap:
           defaultMode: 509
-          name: odoo.conf
+          name: odoob.conf
           optional: true
         name: config
       # Edit the volume to match the existing pv in the cluster
