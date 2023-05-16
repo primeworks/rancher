@@ -33,7 +33,7 @@ spec:
               - key: app
                 operator: In
                 values:
-                - db
+                - sfx
       
       containers:
       - args:
