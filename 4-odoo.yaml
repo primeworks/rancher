@@ -48,20 +48,20 @@ spec:
         image: odoo:16
         imagePullPolicy: IfNotPresent
         name: odoo-agg
-        resources:
-          limits:
-            cpu: "1"
-            memory: 6000Mi
-          requests:
-            cpu: 500m
-            memory: 512Mi
+        # resources:
+        #   limits:
+        #     cpu: "1"
+        #     memory: 6000Mi
+        #   requests:
+        #     cpu: 500m
+        #     memory: 512Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities: {}
           privileged: false
           readOnlyRootFilesystem: false
           runAsNonRoot: false
-          # runAsUser: 1000
+          runAsUser: 1000
         stdin: true
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
