@@ -83,6 +83,7 @@ spec:
       initContainers:
       - name: busybox
         image: busybox
+        imagePullPolicy: IfNotPresent
         command: ["/bin/chown","-R","1000:1000", "/home/agg/work"]
         securityContext:
           runAsUser: 0
