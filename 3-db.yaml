@@ -51,11 +51,11 @@ spec:
         name: db-agg
         resources:
           limits:
-            cpu: ""
-            memory: ""
+            cpu: "1"
+            memory: 6000Mi
           requests:
-            cpu: ""
-            memory: ""
+            cpu: 500m
+            memory: 512Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities: {}
