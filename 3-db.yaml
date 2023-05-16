@@ -72,16 +72,7 @@ spec:
         - mountPath: /var/lib/postgresql/data
           name: vol-ytjxx
           subPath: database
-      initContainers:
-      - name: busybox
-        image: busybox
-        command: ["/bin/chown","-R","1000:1000", "/home/agg/work"]
-        securityContext:
-          runAsUser: 0
-          privileged: true
-        volumeMounts:
-        - name: vol-ytjxx
-          mountPath: /home/agg/work
+      
       volumes:
       - name: vol-ytjxx
         persistentVolumeClaim:
@@ -89,7 +80,8 @@ spec:
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
-      securityContext: {}
+      securityContext:
+        fsGroup: 1000
       terminationGracePeriodSeconds: 30
       volumes:
       - emptyDir:
