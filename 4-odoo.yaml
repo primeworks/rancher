@@ -36,7 +36,7 @@ spec:
               - key: app
                 operator: In
                 values:
-                - files
+                - sfx
       containers:
       - env:
         - name: HOST
