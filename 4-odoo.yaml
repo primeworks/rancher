@@ -87,8 +87,8 @@ spec:
       terminationGracePeriodSeconds: 30
       volumes:
       - configMap:
-          defaultMode: 400
-          name: odoo.conf
+          defaultMode: 509
+          name: odoob.conf
           optional: true
         name: config
       # Edit the volume to match the existing pv in the cluster
