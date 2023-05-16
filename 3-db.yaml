@@ -46,7 +46,7 @@ spec:
           value: odoo
         - name: POSTGRES_USER
           value: odoo
-        image: postgres:12
+        image: postgres
         imagePullPolicy: IfNotPresent
         name: db-agg
         # resources:
