@@ -48,13 +48,13 @@ spec:
         image: odoo:16
         imagePullPolicy: IfNotPresent
         name: odoo-agg
-        # resources:
+        resources:
         #   limits:
         #     cpu: "1"
         #     memory: 6000Mi
-        #   requests:
-        #     cpu: 500m
-        #     memory: 512Mi
+          requests:
+            cpu: 500m
+            memory: 512Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities: {}
