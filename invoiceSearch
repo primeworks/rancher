@@ -1,0 +1,51 @@
+index="sfx" source="/opt/splunk/var/sfx-data/sfx-invoices/*.csv"
+
+| eval Province=coalesce('State_ Prov', 'Prov_ST Abb', 'Prov'), Country=case(Province="ON", "Canada", Province="NB", "Canada", Province="PE", "Canada", Province="SK", "Canada", Province="AB", "Canada", Province="BC", "Canada", Province="MB", "Canada", Province="NS", "Canada", Province="QC", "Canada", Province="NL", "Canada", Province="YT", "Canada", Province="NT", "Canada", Province="NU", "Canada")
+
+| fillnull value="USA" Country
+
+| eval _time=_time, Date=strftime(_time, "%m-%d-%y"), Time=strftime(_time, "%H:%M"), pCost=(Montant/Quantit), Provider =case(source LIKE "%bvd%" AND UOM="G", "Loves", source LIKE "%flying%" AND Country="USA", "Flying J US", source LIKE "%shell%", "Shell", source LIKE "%bvd%", "BVD", source LIKE "%flying%" AND Country="Canada", "Flying J", source LIKE "%irving%" AND Country="Canada", "Irving", source LIKE "%irving%" AND Country="USA", "Irving US", source LIKE "%pipe%", "Pipeline")
+
+| join type=outer Date
+[search index="sfx" CITY=MISSISSAUGA SITE=58062 | eval Date=strftime(_time, "%m-%d-%y") | rename "FUEL PRICE" as MissCost | fields MissCost Date]
+
+| eval 
+Unit=coalesce('Unit', 'Driver Id'), 
+Cost=coalesce('Unit Price', 'Billed PPU', 'pCost'), 
+Price=coalesce('Amt', 'PreTax AMT', 'Montant'), 
+Location=coalesce('Location Name', 'Site', 'No site'), 
+Description=coalesce('Item', 'Fuel Code', 'Produit'), 
+City=coalesce('Site City', 'City', 'Description site'), 
+Volume=coalesce('Qty', 'Quantity', 'Quantit'), 
+
+Liters=if('UOM'="G", Volume*3.78451, Volume),
+Gallons=Liters/3.78451,
+Gallons=round((Gallons),2),
+Liters=round((Liters),2),
+
+Price=round((Price),2),
+
+Cost=case('Provider' = "Loves", (((Cost/3.78451)*$exrt$)+1.50000), 'Provider'="Flying J US",(Volume/Price), 'Provider'="Irving US",(Volume/Price)), 
+
+Cost=round((Cost),2),
+MissCost=round((MissCost),2),
+
+Spillover=case(City="Bordentown" AND Gallons>100, (Gallons-100),City!="Bordentown" AND Gallons>51, (Gallons-50), Province="QC" AND Liters>230, ((Liters/3.785)-61), City="CORNWALL" AND Liters>230, ((Liters/3.785)-61)), 
+Overage=case(City="BRAMPTON", 0, City="MISSISSAUGA", 0, Province="ON" AND Liters>400, (Cost-MissCost)*(Liters-400), City="CORNWALL" AND Liters>230, (Cost-MissCost)*(Liters-230), Province="QC" AND Liters>230, (Cost-MissCost)*(Liters-230), City="Bordentown" AND Gallons>100, (Cost-MissCost)*(Liters-379), City!="BORDENTOWN" AND Gallons>51, (Cost-MissCost)*(Liters-190)), 
+Overage=tonumber(Overage),
+Spillover=tonumber(Spillover),
+Overage=if(Overage<=-0.90, 0, Overage),
+Spillover=if(Spillover<=-0.90, 0, Spillover),
+desc_final=case(Description="DEFD", "Non Truck",Description="ULSR", "Non Truck",Description="DF", "Non Truck")
+
+| fillnull value="0" Overage
+| fillnull value="0" Spillover
+| fillnull value="Truck" desc_final
+| rex field=Unit "(?<Unit>\d{3})"
+| lookup "driver_list" "Unit" as "Unit" OUTPUT "Name"
+| lookup "driver_list" "Unit" as "Unit" OUTPUT "Phone"
+| lookup "driver_list" "Unit" as "Unit" OUTPUT "Make"
+| lookup "driver_list" "Unit" as "Unit" OUTPUT "Year"
+| lookup "pipeline-cards" "Card number" as "No Carte" OUTPUT Unit
+| rename "Name" as Driver
+| fields _time, Provider, Cost, Price, Province, Location, City, Date,Time, Liters, Country, Description, Unit, Gallons, Overage, Spillover, Phone, Driver, MissCost, Make, desc_final
