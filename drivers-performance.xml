@@ -1,0 +1,67 @@
+<form version="1.1" theme="dark">
+  <label>View Drivers Performance</label>
+  <search id="base">
+    <query>
+     | savedsearch driverSearch
+</query>
+    <earliest>$purchasedate.earliest$</earliest>
+    <latest>$purchasedate.latest$</latest>
+  </search>
+  <search id="truck">
+    <query>
+     | savedsearch truckSearch
+</query>
+    <earliest>$purchasedate.earliest$</earliest>
+    <latest>$purchasedate.latest$</latest>
+  </search>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="purchasedate">
+      <label></label>
+      <default>
+        <earliest>-1mon@mon</earliest>
+        <latest>@mon</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>DRIVERS FUEL ECONOMY</title>
+      <table>
+        <search id="top" base="base">
+          <query>| table  "Driver" "Distance Travelled" "Fuel Saved" | Convert num("Fuel Saved") as "Fuel Saved" | sort "Fuel Saved"</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="number" field="IntIdl"></format>
+        <format type="color" field="IntIdl">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">15,70,100</scale>
+        </format>
+        <format type="color" field="Intertrip Idle %">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">15,70,100</scale>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <title>DRIVERS IDLE PERFORMANCE</title>
+      <table>
+        <search id="topidle" base="base">
+          <query>| table Driver "Idle Fuel" | sort "Idle Fuel"</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <title>DRIVERS MILEAGE PERFORMANCE</title>
+      <table>
+        <search id="topmpg" base="truck">
+          <query>| table Driver "Miles per Gallon" "Fuel Spend In USD" | sort "Miles per Gallon"</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>
