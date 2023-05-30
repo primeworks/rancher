@@ -1,0 +1,63 @@
+| multisearch 
+
+[ search index="sfx" source="/opt/splunk/var/sfx-data/sfx-invoices/SHELL*.csv" Unit != "*Andy*" AND Unit != "*Jonath*" AND Unit != "*Steph*" 
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost, "Tran Date" as TranDate, "Tran Time" as TranTime, "Item" as Description
+| eval Provider="Shell", Date=strftime(_time, "%y-%m-%d"), DateTime=TranDate +" "+ TranTime 
+| fields Unit, Provider, Card, Price, Province, City, Location, Date, Quantity, Cost, Country, DateTime, Description ] 
+
+[ search index="sfx" source="/opt/splunk/var/sfx-data/sfx-invoices/FLYINGJ*.csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost, "Tran Date" as TranDate, "Tran Time" as TranTime, "Item" as Description 
+| eval Provider="Flying J", Cost=Price/Quantity, Date=strftime(_time, "%y-%m-%d"), DateTime=TranDate +" "+ TranTime 
+| fields Unit, Provider, Card, Price, Province, City, Location, Date, Quantity, Cost, Country, DateTime, Description ]
+
+[ search index="sfx" source="/opt/splunk/var/sfx-data/sfx-invoices/IRVING*.csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost, "Tran Date" as TranDate, "Tran Time" as TranTime, "Item" as Description 
+| eval Provider="Irving", Cost=Price/Quantity, Date=strftime(_time, "%y-%m-%d"), DateTime=TranDate +" "+ TranTime 
+| fields Unit, Provider, Card, Price, Province, City, Location, Date, Quantity, Cost, Country, DateTime, Description ]
+
+[ search index="sfx" source="/opt/splunk/var/sfx-data/sfx-invoices/BVD*.csv" UOM="L"
+| rename "Driver Id" as Unit
+| eval Provider="BVD", Date=strftime(_time, "%y-%m-%d"), DateTime=Date +" "+ Time, pCost=Cost, DateTime=strftime(strptime(DateTime, "%y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M") 
+| rename "PreTax AMT" as Price, "Prov_ST Abb" as Province, "Site City" as City, "Site" as Location, "Billed PPU" as Cost, "Fuel Code" as Description
+| fields Unit, Provider, Card, Price, Province, City, Location, Date, Quantity, Cost, Country, DateTime, Description ]
+
+[ search index="sfx" source="/opt/splunk/var/sfx-data/sfx-invoices/BVD*.csv" UOM="L" City="CORNWALL"
+| eval Provider="BVD", Date=strftime(_time, "%y-%m-%d"), DateTime=Date +" "+ Time
+| rename "Billed PPU" as pCost
+| fields pCost ]
+
+[ search index="sfx" source="/opt/splunk/var/sfx-data/sfx-invoices/BVD*.csv" UOM="G"
+| rename "Driver Id" as Unit, "PreTax AMT" as Price, "Prov_ST Abb" as Province, "Site City" as City, "Site" as Location, "Billed PPU" as Cost, "Exchange Rate" as exchange, "Fuel Code" as Description
+| eval Provider="Loves", Date=strftime(_time, "%y-%m-%d"), Gallons=sum(Quantity), volume-g=Gallons*3.78541, Quantity=Quantity*3.78541, DateTime=Date +" "+ Time, DateTime=strftime(strptime(DateTime, "%y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M")  
+| fields Unit, Provider, Card, Price, Province, City, Location, Date, Quantity, Cost, exchange, exr, Country, DateTime, Description ]
+
+[ search index="sfx" source="/opt/splunk/var/sfx-data/sfx-invoices/PIPELINE*.csv"
+| eval Cost=(Montant/Quantit)
+| lookup "pipeline-cards" "Card number" as "No Carte" OUTPUT Unit
+| rename Montant as Price, Prov as Province, "Description site" as City, Quantit as Quantity, "Date trans" as DateTime, "No Carte" as Card, "Produit" as Description 
+| eval Provider="Pipeline", Date=strftime(_time, "%y-%m-%d")
+| fields Provider, Cost, Card, Price, Province, City, Location, Date, Quantity, Country, DateTime, Description, Unit ]
+
+
+
+| join type=inner Date
+[search index="sfx" CITY=MISSISSAUGA SITE=58062 | eval Date=strftime(_time, "%y-%m-%d") | rename "FUEL PRICE" as MissCost | fields MissCost Date]
+
+| eval Date=strftime(_time, "%y-%m-%d"), Gallons=Quantity/3.785, Compliant=case(City="MONCTON", "Yes", City="WOODSTOCK*", "Yes", City="HOULTON", "Yes", City="AULAC", "Yes", City="ENFIELD", "Yes", City="Bordentown", "Yes", City="Binghamton", "Yes", City="WILLINGTON", "Yes", City="NIAGARA", "Yes", City="MILTON", "Yes", City="MISSISSAUGA", "Yes", City="BRAMPTON", "Yes", City="KINGSTON", "Yes", City="CORNWALL", "Yes", City="STE JULIE", "Yes", City="WOODSTOCK FIRST NATION", "Yes", City="EDMUNDSTON", "Yes", City="BEARDSLEY", "Yes", City="KITCHENER", "Yes"), Country=case(Province="ON", "Canada", Province="NB", "Canada", Province="PE", "Canada", Province="SK", "Canada", Province="AB", "Canada", Province="BC", "Canada", Province="MB", "Canada", Province="NS", "Canada", Province="QC", "Canada", Province="NL", "Canada", Province="YT", "Canada", Province="NT", "Canada", Province="NU", "Canada"), Cost=if('Provider' = "Loves", (((Cost/3.78451)*$exrt$)+1.50000), 'Cost'), oQuantity=((Quantity/3.785)-50), Gallons=(Quantity/3.785)
+
+| rex field=Unit "(?<Unit>\d{3})"
+| lookup "driver_list" "Unit" as "Unit" OUTPUT "Name"
+| lookup "driver_list" "Unit" as "Unit" OUTPUT "Phone"
+| lookup "driver_list" "Unit" as "Unit" OUTPUT "Make"
+| lookup "driver_list" "Unit" as "Unit" OUTPUT "Year"
+| fillnull value="USA" Country
+| eval Diff=case(City="BRAMPTON", 0, City="MISSISSAUGA", 0, Province="ON" AND Quantity>400, (Cost-MissCost)*(Quantity-400), City="CORNWALL" AND Quantity>230, (Cost-MissCost)*(Quantity-230), Province="QC" AND Quantity>230, (Cost-MissCost)*(Quantity-230), City="Bordentown" AND Gallons>100, (Cost-MissCost)*(Quantity-379), City!="BORDENTOWN" AND Gallons>51, (Cost-MissCost)*(Quantity-190)), Overage=tonumber(Diff)
+| eval oQuantity=case(City="Bordentown" AND Gallons>100, ((Quantity/3.785)-100), Country!="Canada" AND Gallons>51, ((Quantity/3.785)-50), Province="QC" AND Quantity>230, ((Quantity/3.785)-61), City="CORNWALL" AND Quantity>230, ((Quantity/3.785)-61))
+| rename "Name" as Driver, oQuantity as Spillover, Quantity as Liters
+| fillnull value="No" Compliant 
+| fillnull value="0" Overage
+| fillnull value="0" Spillover
+| eval Overage=if(Overage<=-0.90, 0, Overage)
+| fields Provider, Cost, Card, Price, Province, City, Location, Date, Liters, Country, DateTime, Description, Unit, Compliant, Gallons, Overage, Spillover, Phone, Driver, MissCost, Make
+| eval desc_final=case(Description="DEFD", "Non Truck",Description="ULSR", "Non Truck",Description="DF", "Non Truck"), Time=strftime(_time, "%H:%M")
+| fillnull value="Truck" desc_final
