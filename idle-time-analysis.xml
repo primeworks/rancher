@@ -1,0 +1,40 @@
+<form version="1.1" theme="dark">
+  <label>Idle Time Analysis</label>
+  <description>View Idle Time Analysis</description>
+  <search id="base">
+    <query>
+index="main"
+| eval fuelLtrs=FulUsd*3.78541, IdlFulLtrs=IdlFul*3.78541
+| fields Unit, Drv, Dist, FulUsd, fuelLtrs IdlFul TotIdlTm IntIdlTm OprIdlTm ShtIdlTm ExtIdlTm IdlFulLtrs
+    </query>
+    <earliest>$globaltime.earliest$</earliest>
+    <latest>$globaltime.latest$</latest>
+    <refresh>10m</refresh>
+    <refreshType>delay</refreshType>
+  </search>
+  <fieldset submitButton="false">
+    <input type="time" token="globaltime" searchWhenChanged="true">
+      <label></label>
+      <default>
+        <earliest>-30d@d</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>index="main" source="*-Diesel_Combined_Analysis.csv"  | sort "IntIdl" | fields "_time", "Drv", "Dist", "DrvMPG", "DrvTm", "EngTm", "ExtIdl", "ExtIdlTm", "FulMPG", "FulUsd", "IdlFul", "IntIdl", "IntIdlTm", "OprIdl", "OprIdlTm", "ShtIdl", "ShtIdlTm", "TotIdl", "TotIdlTm" | sort "IntIdl" | lookup "driver_list" "Login Name" as "Drv" OUTPUT "Driver ID" | lookup "driver_list" "Driver ID" as "Drv" OUTPUT "Login Name", "Driver ID" | fields - "Drv"
+
+| rename "Login Name" as "Driver", IntIdlTm as "Intertrip Idle Time", IntIdl as "Intertrip Idle %"
+| table "Driver" "Intertrip Idle Time" "Intertrip Idle %"</query>
+          <earliest>$globaltime.earliest$</earliest>
+          <latest>$globaltime.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>
