@@ -1,0 +1,136 @@
+<form version="1.1" theme="dark">
+  <label>Average Costs</label>
+  <description>Check average fuel spend by Week, Month and Year.</description>
+  <search id="base">
+    <query>
+      | savedsearch invoiceSearch exrt="$exrt$"
+</query>
+    <earliest>$purchasedate.earliest$</earliest>
+    <latest>$purchasedate.latest$</latest>
+  </search>
+  <search id="base2">
+    <query>
+      | savedsearch invoiceSearch exrt="$exrt$"
+</query>
+    <earliest>0</earliest>
+    <latest></latest>
+  </search>
+  <fieldset submitButton="false">
+    <input type="text" token="exrt" searchWhenChanged="true">
+      <label>Exchange Rate</label>
+      <default>0.38</default>
+      <initialValue>0.38</initialValue>
+    </input>
+    <input type="time" token="purchasedate" searchWhenChanged="true">
+      <label></label>
+      <default>
+        <earliest>-30d@d</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="provider" searchWhenChanged="true">
+      <label>Provider</label>
+      <fieldForLabel>Provider</fieldForLabel>
+      <fieldForValue>Provider</fieldForValue>
+      <search id="providers" base="base">
+        <query>| dedup Provider
+| table Provider</query>
+      </search>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>AVERAGE COST FOR SELECTED PERIOD</title>
+      <single>
+        <search id="period" base="base">
+          <query>| search Cost&gt;1
+| fields Date Provider City Cost
+| stats avg(Cost)</query>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[1.6,1.8,2]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="underLabel">Cost per liter</option>
+        <option name="unit">/liter</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>AVERAGE COST FOR SELECTED PERIOD PER PROVIDER</title>
+      <single>
+        <search id="shell" base="base">
+          <query>| eval Date=strftime(_time, "%y-%m-%d")
+| search Cost&gt;1 Provider="$provider$"
+| fields Date Provider City Cost
+| stats avg(Cost)</query>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[1.6,1.8,2]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="underLabel">Cost per liter</option>
+        <option name="unit">/liter</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>ALL-TIME AVERAGE COST</title>
+      <single>
+        <search id="allperiod" base="base2">
+          <query>| eval Date=strftime(_time, "%y-%m-%d")
+| search Cost&gt;1
+| fields Date Provider City Cost
+| stats avg(Cost)</query>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[1.6,1.8,2]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="underLabel">All-time cost per liter</option>
+        <option name="unit">/liter</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>ALL-TIME COST AVERAGE TREND</title>
+      <chart>
+        <search id="alltrend" base="base">
+          <query>
+
+| eval Date=strftime(_time, "%y-%m-%d")
+| search Cost&gt;1
+| fields Date Provider City Cost
+| timechart avg(Cost) AS "Avg Cost" span=1w</query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>ALL-TIME COST AVERAGE TREND</title>
+      <chart>
+        <search id="allbar" base="base">
+          <query>| eval Date=strftime(_time, "%y-%m-%d")
+| search Cost&gt;1
+| fields Date Provider City Cost
+| timechart avg(Cost) AS "Avg Cost" span=1y</query>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>
