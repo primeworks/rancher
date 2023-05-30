@@ -1,0 +1,306 @@
+<form version="1.1" theme="dark">
+  <label>Full Analytics</label>
+  <description>Analyze diesel consumption</description>
+  <search id="base2">
+    <query>
+      | savedsearch canadaCost
+</query>
+    <earliest>$purchasedate.earliest$</earliest>
+    <latest>$purchasedate.latest$</latest>
+  </search>
+  <search id="base">
+    <query>
+     | savedsearch analyseSearch
+</query>
+    <earliest>$purchasedate.earliest$</earliest>
+    <latest>$purchasedate.latest$</latest>
+  </search>
+  <search id="base3">
+    <query>
+     | savedsearch allSearch exrt="$exrt$" prov="$prov$" cit="$cit$" uni="$uni$" provin="$provin$" desc_final="$desc_final$"
+</query>
+    <earliest>$purchasedate.earliest$</earliest>
+    <latest>$purchasedate.latest$</latest>
+  </search>
+  <search id="base4">
+    <query>
+      | savedsearch invoiceSearch exrt="$exrt$" uni="$uni$"
+</query>
+    <earliest>$purchasedate.earliest$</earliest>
+    <latest>$purchasedate.latest$</latest>
+  </search>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="purchasedate" searchWhenChanged="true">
+      <label>Period</label>
+      <default>
+        <earliest>-3d@d</earliest>
+        <latest>@d</latest>
+      </default>
+    </input>
+    <input type="text" token="exrt" searchWhenChanged="true">
+      <label>Exchange Rate</label>
+      <default>0.375</default>
+      <initialValue>0.375</initialValue>
+    </input>
+    <input type="dropdown" token="prov" searchWhenChanged="true">
+      <label>Provider</label>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <fieldForLabel>Provider</fieldForLabel>
+      <fieldForValue>Provider</fieldForValue>
+      <search id="provider" base="base">
+        <query>
+| eval Dates=strftime(_time,"%m/%d/%y")
+|dedup Provider
+| table Provider</query>
+      </search>
+    </input>
+    <input type="dropdown" token="cit" searchWhenChanged="true">
+      <label>City</label>
+      <choice value="*">All</choice>
+      <fieldForLabel>City</fieldForLabel>
+      <fieldForValue>City</fieldForValue>
+      <search id="cit" base="base">
+        <query>
+| search Provider ="$prov$"
+| eval Dates=strftime(_time,"%m/%d/%y")
+|dedup City
+| table City</query>
+      </search>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="dropdown" token="provin" searchWhenChanged="true">
+      <label>Province</label>
+      <choice value="*">All</choice>
+      <fieldForLabel>Province</fieldForLabel>
+      <fieldForValue>Province</fieldForValue>
+      <search id="provin" base="base">
+        <query>
+| search Provider ="$prov$"
+| eval Dates=strftime(_time,"%m/%d/%y")
+|dedup Province
+| table Province</query>
+      </search>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="dropdown" token="uni" searchWhenChanged="true">
+      <label>Unit</label>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <fieldForLabel>Unit</fieldForLabel>
+      <fieldForValue>Unit</fieldForValue>
+      <search id="unit" base="base">
+        <query>
+| search Provider ="$prov$"
+| eval Dates=strftime(_time,"%m/%d/%y")
+|dedup Unit
+| table Unit</query>
+      </search>
+    </input>
+    <input type="dropdown" token="desc_final" searchWhenChanged="true">
+      <label>Fill Type</label>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <fieldForLabel>desc_final</fieldForLabel>
+      <fieldForValue>desc_final</fieldForValue>
+      <search id="desc_final" base="base3">
+        <query>| search Provider ="$prov$"
+| eval Dates=strftime(_time,"%m/%d/%y")
+|dedup desc_final
+| table desc_final</query>
+      </search>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>TOTAL SPEND</title>
+      <single>
+        <search id="totalspend" base="base4">
+          <query>
+| stats sum(Price)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="unit">$</option>
+        <option name="unitPosition">before</option>
+        <option name="useColors">0</option>
+      </single>
+    </panel>
+    <panel>
+      <title>DIESEL VOLUME</title>
+      <single>
+        <search id="dieselvol" base="base4">
+          <query>
+| stats sum(Liters)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="unit">L</option>
+      </single>
+    </panel>
+    <panel>
+      <title>CURRENT MONTH'S DIESEL SPEND</title>
+      <single>
+        <search id="currentmonth" base="base4">
+          <query>| timechart span=30d sum(Price) as FuelPrice</query>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trendColorInterpretation">inverse</option>
+        <option name="trendInterval">-1mon</option>
+        <option name="unit">$</option>
+        <option name="unitPosition">before</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>TOP SPENDING TRUCK</title>
+      <single>
+        <search id="topspend" base="base4">
+          <query>
+| table Unit
+| sort - Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="unitPosition">before</option>
+      </single>
+    </panel>
+    <panel>
+      <title>MOST USED PROVIDER</title>
+      <single>
+        <search id="topprovider" base="base4">
+          <query>| eventstats max(Liters) as Volume by Unit 
+| where Volume=Liters 
+| stats count("Provider") by Provider
+| sort count("Provider") desc</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <title>AVERAGE DIESEL CONSUMPTION</title>
+      <single>
+        <search id="averageburn" base="base">
+          <query>| stats avg("Liters")</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="unit">L</option>
+      </single>
+    </panel>
+    <panel>
+      <title>TOTAL DIESEL USED</title>
+      <single>
+        <search id="totalused" base="base">
+          <query>
+
+| stats sum(Price) as fuelus, sum(Price) as fuelca, sum(tBurn) as enBurn
+| eval trueUS=fuelus*3.78541, trueBurn=enBurn*3.78541, trueTotal=fuelca+trueUS, reefer=trueTotal-trueBurn
+
+| table trueBurn</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="unit">L</option>
+      </single>
+    </panel>
+    <panel>
+      <title>ESTIMATED REEFER FUEL USED</title>
+      <single>
+        <search id="reeferfuel" base="base">
+          <query>
+| stats sum(totalFuelus) as fuelus, sum(totalFuelca) as fuelca, sum(tBurn) as enBurn
+| eval trueUS=fuelus*3.78541, trueBurn=enBurn*3.78541, trueTotal=fuelca+trueUS, reefer=trueTotal-trueBurn
+
+| table reefer</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="unit">L</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>MONTHLY DIESEL SPEND TREND</title>
+      <chart>
+        <search id="dieseltrend" base="base">
+          <query>| timechart sum(Price) as "Monthly Spend" span=30d</query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>WEEKLY DIESEL SPEND TREND</title>
+      <chart>
+        <search id="weekdiesel" base="base">
+          <query>
+| timechart sum(Price) span=1d</query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>WEEKLY SPEND</title>
+      <chart>
+        <search id="weekspend" base="base4">
+          <query>
+| timechart sum(Price) span=7d | timewrap w</query>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>COST PER LITER TREND</title>
+      <chart>
+        <search id="costliter" base="base4">
+          <query>| timechart max(Cost) AS "Spend" span=1w</query>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>DIESEL USAGE</title>
+      <table>
+        <search id="dieseluse" base="base3">
+          <query>| search Liters&gt;0
+| table Unit, Provider, City, Province, Date, Quantity, Price
+| sort - _time</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>
