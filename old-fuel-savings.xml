@@ -1,0 +1,247 @@
+<form version="1.1" theme="dark">
+  <label>Old Fuel Savings</label>
+  <description>Track fuel savings</description>
+  <search id="base">
+    <query>
+      | multisearch 
+
+[ search index="sfx-invoices" source="/opt/splunk/var/sfx-data/sfx-invoices/SHELL*.csv" Unit != "*Andy*" AND Unit != "*Jonath*" AND Unit != "*Steph*" 
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost, "Tran Date" as TranDate, "Tran Time" as TranTime, "Item" as Description
+| eval Provider="Shell", Date=strftime(_time, "%y-%m-%d"), DateTime=TranDate +" "+ TranTime 
+| fields Unit, Provider, Card, Price, Province, City, Location, Date, Quantity, Cost, Country, DateTime, Description ] 
+
+[ search index="sfx-invoices" source="/opt/splunk/var/sfx-data/sfx-invoices/FLYINGJ*.csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost, "Tran Date" as TranDate, "Tran Time" as TranTime, "Item" as Description 
+| eval Provider="Flying J", Date=strftime(_time, "%y-%m-%d"), DateTime=TranDate +" "+ TranTime 
+| fields Unit, Provider, Card, Price, Province, City, Location, Date, Quantity, Cost, Country, DateTime, Description ]
+
+[ search index="sfx-invoices" source="/opt/splunk/var/sfx-data/sfx-invoices/IRVING*.csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost, "Tran Date" as TranDate, "Tran Time" as TranTime, "Item" as Description 
+| eval Provider="Irving", Date=strftime(_time, "%y-%m-%d"), DateTime=TranDate +" "+ TranTime 
+| fields Unit, Provider, Card, Price, Province, City, Location, Date, Quantity, Cost, Country, DateTime, Description ]
+
+[ search index="sfx-invoices" source="/opt/splunk/var/sfx-data/sfx-invoices/BVD*.csv" UOM="L"
+| rename "Driver Id" as Units
+| rex field=Units "(?&lt;Unit&gt;\d{3})"
+| eval Provider="BVD", Date=strftime(_time, "%y-%m-%d"), DateTime=Date +" "+ Time, pCost=Cost
+| rename "PreTax AMT" as Price, "Prov_ST Abb" as Province, "Site City" as City, "Site" as Location, "Billed PPU" as Cost, "Fuel Code" as Description
+| fields Unit, Provider, Card, Price, Province, City, Location, Date, Quantity, Cost, Country, DateTime, Description ]
+
+[ search index="sfx-invoices" source="/opt/splunk/var/sfx-data/sfx-invoices/BVD*.csv" UOM="L" City="CORNWALL"
+| eval Provider="BVD", Date=strftime(_time, "%y-%m-%d"), DateTime=Date +" "+ Time
+| rename "Billed PPU" as pCost
+| fields pCost ]
+
+[ search index="sfx-invoices" source="/opt/splunk/var/sfx-data/sfx-invoices/BVD*.csv" UOM="G"
+| rename "Driver Id" as Units, "PreTax AMT" as Price, "Prov_ST Abb" as Province, "Site City" as City, "Site" as Location, "Billed PPU" as uCost, "Exchange Rate" as exchange, "Fuel Code" as Description
+| rex field=Units "(?&lt;Unit&gt;\d{3})"
+| eval Provider="Loves", Date=strftime(_time, "%y-%m-%d"), Gallons=sum(Quantity), volume-g=Gallons*3.78541, exr=exchange-1, Cost=(((uCost/3.78451)*$exrt$)+1.50000), Quantity=Quantity*3.78541, DateTime=Date +" "+ Time 
+| fields Unit, Provider, Card, Price, Province, City, Location, Date, Quantity, Cost, exchange, exr, Country, DateTime, Description ]
+
+[ search index="sfx-invoices" source="/opt/splunk/var/sfx-data/sfx-invoices/PIPELINE*.csv"
+| eval Cost=(Montant/Quantit)
+| lookup "pipeline-cards" "Card number" as "No Carte" OUTPUT Unit
+| rename Montant as Price, Prov as Province, "Description site" as City, Quantit as Quantity, "Date trans" as DateTime, "No Carte" as Card, "Produit" as Description 
+| eval Provider="Pipeline", Date=strftime(_time, "%y-%m-%d")
+| fields Provider, Cost, Card, Price, Province, City, Location, Date, Quantity, Country, DateTime, Description, Unit ]
+
+
+| eval Date=strftime(_time, "%y-%m-%d"), Gallons=Quantity/3.785, Diff=((Cost-$cacost$)*(Quantity-190)), Compliant=case(City="MONCTON", "Yes", City="WOODSTOCK*", "Yes", City="HOULTON", "Yes", City="AULAC", "Yes", City="ENFIELD", "Yes", City="Bordentown", "Yes", City="Binghamton", "Yes", City="WILLINGTON", "Yes", City="NIAGARA", "Yes", City="MILTON", "Yes", City="MISSISSAUGA", "Yes", City="BRAMPTON", "Yes", City="KINGSTON", "Yes", City="CORNWALL", "Yes", City="STE JULIE", "Yes", City="WOODSTOCK FIRST NATION", "Yes", City="EDMUNDSTON", "Yes", City="BEARDSLEY", "Yes", City="KITCHENER", "Yes"), Country=case(Province="ON", "Canada", Province="NB", "Canada", Province="PE", "Canada", Province="SK", "Canada", Province="AB", "Canada", Province="BC", "Canada", Province="MB", "Canada", Province="NS", "Canada", Province="QC", "Canada", Province="NL", "Canada", Province="YT", "Canada", Province="NT", "Canada", Province="NU", "Canada")
+
+| fillnull value="No" Compliant 
+| fillnull value="United States" Country
+</query>
+    <earliest>$purchasedate.earliest$</earliest>
+    <latest>$purchasedate.latest$</latest>
+  </search>
+  <fieldset submitButton="false" autoRun="true"></fieldset>
+  <row>
+    <panel>
+      <input type="time" token="purchasedate" searchWhenChanged="true">
+        <label></label>
+        <default>
+          <earliest>-1d@d</earliest>
+          <latest>@d</latest>
+        </default>
+      </input>
+      <input type="text" token="exrt" searchWhenChanged="true">
+        <label>Exchange Rate</label>
+        <default>0.38</default>
+        <initialValue>0.38</initialValue>
+      </input>
+      <input type="text" token="cacost" searchWhenChanged="true">
+        <label>Canada Cost</label>
+        <default>1.439</default>
+        <initialValue>1.439</initialValue>
+      </input>
+      <input type="dropdown" token="compliant" searchWhenChanged="true">
+        <label>Compliant</label>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+        <fieldForLabel>Compliant</fieldForLabel>
+        <fieldForValue>Compliant</fieldForValue>
+        <search id="compliant" base="base">
+          <query>
+| eval Dates=strftime(_time,"%m/%d/%y")
+|dedup Compliant
+| table Compliant</query>
+        </search>
+      </input>
+      <input type="dropdown" token="prov" searchWhenChanged="true">
+        <label>Provider</label>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+        <fieldForLabel>Provider</fieldForLabel>
+        <fieldForValue>Provider</fieldForValue>
+        <search id="provider" base="base">
+          <query>
+| eval Dates=strftime(_time,"%m/%d/%y")
+|dedup Provider
+| table Provider</query>
+        </search>
+      </input>
+      <input type="dropdown" token="uni" searchWhenChanged="true">
+        <label>Unit</label>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+        <fieldForLabel>Unit</fieldForLabel>
+        <fieldForValue>Unit</fieldForValue>
+        <search id="unit" base="base">
+          <query>
+| search Provider ="$prov$"
+| eval Dates=strftime(_time,"%m/%d/%y")
+|dedup Unit
+| table Unit</query>
+        </search>
+      </input>
+      <input type="dropdown" token="provin" searchWhenChanged="true">
+        <label>Province</label>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+        <fieldForLabel>Province</fieldForLabel>
+        <fieldForValue>Province</fieldForValue>
+        <search id="province" base="base">
+          <query>
+| search Provider ="$prov$"
+| eval Dates=strftime(_time,"%m/%d/%y")
+|dedup Province
+| table Province</query>
+        </search>
+      </input>
+      <input type="dropdown" token="cit" searchWhenChanged="true">
+        <label>City</label>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+        <fieldForLabel>City</fieldForLabel>
+        <fieldForValue>City</fieldForValue>
+        <search id="city" base="base">
+          <query>
+| search Provider ="$prov$"
+| eval Dates=strftime(_time,"%m/%d/%y")
+|dedup City
+| table City</query>
+        </search>
+      </input>
+      <input type="dropdown" token="country" searchWhenChanged="true">
+        <label>Country</label>
+        <choice value="*">All</choice>
+        <default>United States</default>
+        <initialValue>United States</initialValue>
+        <fieldForLabel>Country</fieldForLabel>
+        <fieldForValue>Country</fieldForValue>
+        <search id="country" base="base">
+          <query>| search Provider ="$prov$"
+| eval Dates=strftime(_time,"%m/%d/%y")
+|dedup Country
+| table Country</query>
+        </search>
+      </input>
+      <table>
+        <search id="comp" base="base">
+          <query>| lookup "driver_list" "Notes" as "Unit" OUTPUT "Name"
+| lookup "driver_list" "Notes" as "Unit" OUTPUT "Phone 1 - Value"
+| eval oQuantity=((Quantity/3.785)-50)
+| rename "Name" as Driver, "Phone 1 - Value" as Phone, Diff as Overage, oQuantity as Spillover
+| search Overage &lt; 0.0 Provider="$prov$" City="$cit$" Compliant="$compliant$" Unit="$uni$" Province="$provin$" Country="$country$"
+| sort - Overage
+| table DateTime, Unit, Gallons, Spillover, Overage, Quantity, Cost, Price, Description, Driver, Phone, Card, Provider, Province, City, Location, Country</query>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">true</option>
+        <option name="wrap">false</option>
+        <format type="color" field="Quantity">
+          <colorPalette type="list">[#118832,#D41F1F]</colorPalette>
+          <scale type="threshold">190</scale>
+        </format>
+        <format type="color" field="Cost">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Cost">
+          <option name="precision">4</option>
+        </format>
+        <format type="number" field="Diff">
+          <option name="precision">3</option>
+          <option name="unit">$</option>
+          <option name="unitPosition">before</option>
+        </format>
+        <format type="number" field="Overage">
+          <option name="precision">3</option>
+          <option name="unit">$</option>
+          <option name="unitPosition">before</option>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <single>
+        <search id="overage" base="base">
+          <query>| lookup "driver_list" "Notes" as "Unit" OUTPUT "Name"
+| lookup "driver_list" "Notes" as "Unit" OUTPUT "Phone 1 - Value"
+| rename "Name" as Driver, "Phone 1 - Value" as Phone, Diff as Overage
+| search Overage &lt; 0.0 Provider="$prov$" City="$cit$" Compliant="$compliant$" Unit="$uni$" Province="$provin$" Country="$country$"
+| stats sum(Overage)</query>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="underLabel">Spent over approved limit overall</option>
+        <option name="unit">$</option>
+        <option name="unitPosition">before</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <search id="volume" base="base">
+          <query>| lookup "driver_list" "Notes" as "Unit" OUTPUT "Name"
+| lookup "driver_list" "Notes" as "Unit" OUTPUT "Phone 1 - Value"
+| rename "Name" as Driver, "Phone 1 - Value" as Phone, Diff as Overage
+| search Overage &lt; 0.0 Provider="$prov$" City="$cit$" Compliant="$compliant$" Unit="$uni$" Province="$provin$" Country="$country$"
+| eval oQuantity=(Quantity-190)
+| stats sum(oQuantity)</query>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,200,300,400]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="underLabel">Fueled over approved limit overall</option>
+        <option name="unit">L</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+</form>
