@@ -1,0 +1,239 @@
+<form version="1.1" theme="dark">
+  <label>True Price Verifier</label>
+  <description>Verify the true price of Diesel</description>
+  <search id="base">
+    <query>
+      | multisearch
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="*pipeline*.csv" OR source="Proto_ContractPriceList*.csv"
+| rename Sous_Total as Price, Prov as Province, Diesel as City, "No_ Site" as Location
+| eval Provider="Pipeline"
+]
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="pcn-cad-*.csv" OR source="*bvd-ca*.csv"
+| rename "FUEL PRICE" as Price, PROV as Province, "CITY" as City, SITE as Location
+| eval Provider="BVD"
+]
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="*irving-ca*.csv" OR source="CPNRFuturePricingReportCAN*.csv"
+| rename State as Province, "Site Name" as City, "Base Price" as bp, "Federal Excise Tax" as fet, "Provincial Road Tax" as prt, "Sales Tax" as st
+| eval Price=sum(bp,fet,prt,st)
+| eval Provider="Irving"
+]
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="*shell*.csv"
+| rename State as Province, "Site Name" as City, Cost as bp, "Excise Tax" as fet, "PRT" as prt, "Taxes" as st, "Carbon Tax" as ct
+| eval PriceA=sum(bp,fet,prt,st,ct), Price=(((Total-0.06)*bp)/Total)
+| eval Provider="Shell"
+]
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="*flyingj-ca*.csv" OR source="cp151316*.csv"
+| rename Prov as Province, "Fuel Price" as Price, Site as Location
+| eval Provider="Flying J"
+]
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="pcn-usd*.csv" OR source="*bvd-us*.csv"
+| rename "YOUR PRICE" as PriceUs, STATE as Province, CITY as City, SITE as Location
+| eval Provider="BVD Loves", Price=(((PriceUs/3.78451)*$exchange$)+1.5)
+]
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="*irving-us*.csv" OR source="CPNRFuturetPricingReportUSA*.csv"
+| rename Total as PriceUs, State as Province, "Site Name" as City
+| eval Provider="Irving US", Price=(((PriceUs/3.78451)*$exchange$)+1.5)
+]
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="*flyingj-us*.csv" OR source="cp-us-151316*.csv"
+| rename "Total Cost" as PriceUs, ST as Province, "City" as City, Site as Location
+| eval Provider="Flying J US", Price=(((PriceUs/3.78451)*$exchange$)+1.5)
+]
+
+| fields Provider City Province
+</query>
+    <earliest>0</earliest>
+    <latest></latest>
+  </search>
+  <fieldset submitButton="false">
+    <input type="text" token="exchange" searchWhenChanged="true">
+      <label>Exchange Rate</label>
+      <default>0.38</default>
+      <initialValue>0.38</initialValue>
+    </input>
+    <input type="time" token="field1" searchWhenChanged="true">
+      <label></label>
+      <default>
+        <earliest>-30d@d</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="provider" searchWhenChanged="true">
+      <label>Provider</label>
+      <choice value="*">All</choice>
+      <default>Shell</default>
+      <initialValue>Shell</initialValue>
+      <fieldForLabel>Provider</fieldForLabel>
+      <fieldForValue>Provider</fieldForValue>
+      <search id="provider" base="base">
+        <query>
+| dedup Provider
+| table Provider</query>
+      </search>
+    </input>
+    <input type="dropdown" token="city" searchWhenChanged="true">
+      <label>City</label>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <fieldForLabel>City</fieldForLabel>
+      <fieldForValue>City</fieldForValue>
+      <search id="city" base="base">
+        <query>
+| dedup City
+| table City</query>
+      </search>
+    </input>
+    <input type="dropdown" token="province" searchWhenChanged="true">
+      <label>Province</label>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <fieldForLabel>Province</fieldForLabel>
+      <fieldForValue>Province</fieldForValue>
+      <search id="province" base="base">
+        <query>
+| dedup Province
+| table Province</query>
+      </search>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Invoiced Diesel Cost</title>
+      <table>
+        <search>
+          <query>| multisearch
+
+[ search source="*bvd*.csv" index="sfx-invoices" sourcetype="csv"
+| rename "PreTax AMT" as Price, "Prov_ST Abb" as Province, "Site City" as City, "Site" as Location, "Billed PPU" as Cost
+| where UOM="L"
+| eval Provider="BVD", Date=strftime(_time, "%y-%m-%d"), Country=case(Province="ON", "Canada", Province="NB", "Canada", Province="PE", "Canada", Province="SK", "Canada", Province="AB", "Canada", Province="BC", "Canada", Province="MB", "Canada", Province="NS", "Canada", Province="QC", "Canada", Province="NL", "Canada", Province="YT", "Canada", Province="NT", "Canada", Province="NU", "Canada")
+| fields Unit, Provider, Price, Province, City, Location, Date, Quantity, Cost, Country
+]
+
+[ search source="*bvd*.csv" index="sfx-invoices" sourcetype="csv"
+| rename "PreTax AMT" as Price, "Prov_ST Abb" as Province, "Site City" as City, "Site" as Location, "Billed PPU" as uCost, "Exchange Rate" as exchange
+| where UOM="G"
+| eval Provider="BVD Loves", Date=strftime(_time, "%y-%m-%d"), Gallons=sum(Quantity), volume-g=Gallons*3.78541, exr=exchange-1, Cost=(((uCost/3.78451)*exr)+1.5), Country=case(Province="ON", "Canada", Province="NB", "Canada", Province="PE", "Canada", Province="SK", "Canada", Province="AB", "Canada", Province="BC", "Canada", Province="MB", "Canada", Province="NS", "Canada", Province="QC", "Canada", Province="NL", "Canada", Province="YT", "Canada", Province="NT", "Canada", Province="NU", "Canada")
+
+| fields Unit, Provider, Price, Province, City, Location, Date, Quantity, Cost, exchange, exr, Country
+]
+
+[ search source="*irving*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost
+| eval Provider="Irving", Date=strftime(_time, "%y-%m-%d"), Country=case(Province="ON", "Canada", Province="NB", "Canada", Province="PE", "Canada", Province="SK", "Canada", Province="AB", "Canada", Province="BC", "Canada", Province="MB", "Canada", Province="NS", "Canada", Province="QC", "Canada", Province="NL", "Canada", Province="YT", "Canada", Province="NT", "Canada", Province="NU", "Canada")
+| fields Unit, Provider, Price, Province, City, Location, Date, Quantity, Cost, Country
+]
+
+[ search source="*shell*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost
+| eval Provider="Shell", Date=strftime(_time, "%y-%m-%d"), Country=case(Province="ON", "Canada", Province="NB", "Canada", Province="PE", "Canada", Province="SK", "Canada", Province="AB", "Canada", Province="BC", "Canada", Province="MB", "Canada", Province="NS", "Canada", Province="QC", "Canada", Province="NL", "Canada", Province="YT", "Canada", Province="NT", "Canada", Province="NU", "Canada")
+| fields Unit, Provider, Price, Province, City, Location, Date, Quantity, Cost, Country
+]
+
+[ search source="*flyingj*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost
+| eval Provider="Flying J", Date=strftime(_time, "%y-%m-%d"), Country=case(Province="ON", "Canada", Province="NB", "Canada", Province="PE", "Canada", Province="SK", "Canada", Province="AB", "Canada", Province="BC", "Canada", Province="MB", "Canada", Province="NS", "Canada", Province="QC", "Canada", Province="NL", "Canada", Province="YT", "Canada", Province="NT", "Canada", Province="NU", "Canada")
+| fields Unit, Provider, Price, Province, City, Location, Date, Quantity, Cost, Country
+]
+
+[ search source="*pipeline*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Montant as Price, Prov as Province, "Description site" as City, "Description site" as Location, Quantit as Quantity
+| eval Provider="Pipeline", Date=strftime(_time, "%y-%m-%d"), Country=case(Province="ON", "Canada", Province="NB", "Canada", Province="PE", "Canada", Province="SK", "Canada", Province="AB", "Canada", Province="BC", "Canada", Province="MB", "Canada", Province="NS", "Canada", Province="QC", "Canada", Province="NL", "Canada", Province="YT", "Canada", Province="NT", "Canada", Province="NU", "Canada")
+| fields Unit, Provider, Price, Province, City, Location, Date, Quantity, Country
+]
+
+| eval Date=strftime(_time, "%y-%m-%d")
+| eventstats max(Cost) as Price by City 
+| where Price=Cost
+| search Provider="$provider$" City="$city$" Province="$province$"
+| where Cost &gt; 1
+| rename Price AS Cost
+| table Date Provider City Cost</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <condition field="Provider">
+            <set token="provider-t">$row.Provider$</set>
+            <set token="city-t">$row.City$</set>
+            <set token="enable_pop_up"></set>
+            <unset token="form.hide_panel"></unset>
+          </condition>
+        </drilldown>
+      </table>
+    </panel>
+    <panel>
+      <title>Proposed Diesel Cost</title>
+      <table>
+        <search>
+          <query>| multisearch
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="*pipeline*.csv" OR source="Proto_ContractPriceList*.csv"
+| rename Sous_Total as Price, Prov as Province, Diesel as City, "No_ Site" as Location
+| eval Provider="Pipeline"
+]
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="pcn-cad-*.csv" OR source="*bvd-ca*.csv"
+| rename "FUEL PRICE" as Price, PROV as Province, "CITY" as City, SITE as Location
+| eval Provider="BVD"
+]
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="*irving-ca*.csv" OR source="CPNRFuturePricingReportCAN*.csv"
+| rename State as Province, "Site Name" as City, "Base Price" as bp, "Federal Excise Tax" as fet, "Provincial Road Tax" as prt, "Sales Tax" as st
+| eval Price=sum(bp,fet,prt,st)
+| eval Provider="Irving"
+]
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="*shell*.csv"
+| rename State as Province, "Site Name" as City, Cost as bp, "Excise Tax" as fet, "PRT" as prt, "Taxes" as st, "Carbon Tax" as ct
+| eval PriceA=sum(bp,fet,prt,st,ct), Price=(((Total-0.06)*bp)/Total)
+| eval Provider="Shell"
+]
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="*flyingj-ca*.csv" OR source="cp151316*.csv"
+| rename Prov as Province, "Fuel Price" as Price, Site as Location
+| eval Provider="Flying J"
+]
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="pcn-usd*.csv" OR source="*bvd-us*.csv"
+| rename "YOUR PRICE" as PriceUs, STATE as Province, CITY as City, SITE as Location
+| eval Provider="BVD Loves", Price=(((PriceUs/3.78451)*$exchange$)+1.5)
+]
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="*irving-us*.csv" OR source="CPNRFuturetPricingReportUSA*.csv"
+| rename Total as PriceUs, State as Province, "Site Name" as City
+| eval Provider="Irving US", Price=(((PriceUs/3.78451)*$exchange$)+1.5)
+]
+
+[ search (index="sfxt-diesel" OR index="sfx-diesel") source="*flyingj-us*.csv" OR source="cp-us-151316*.csv"
+| rename "Total Cost" as PriceUs, ST as Province, "City" as City, Site as Location
+| eval Provider="Flying J US", Price=(((PriceUs/3.78451)*$exchange$)+1.5)
+]
+
+| eval Date=strftime(_time, "%y-%m-%d")
+| fields Date Provider City Price Province
+| eventstats max(Price) as Cost by City 
+| where Cost=Price
+| rename Cost AS Price
+| search Provider="$provider$" City="*$city$*"
+| table Date Provider City Price</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>
