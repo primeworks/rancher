@@ -1,0 +1,402 @@
+<form version="1.1" theme="dark">
+  <label>Check Daily and Selected Dates Fuel Prices</label>
+  <description>Track fuel prices from all Providers</description>
+  <search id="baseSearch">
+    <query>| savedsearch fuelSearch exchange="$exchange$"
+</query>
+    <earliest>$pricedate.earliest$</earliest>
+    <latest>$pricedate.latest$</latest>
+  </search>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="text" token="exchange" searchWhenChanged="true">
+      <label>Exchange Rate</label>
+      <default>0.375</default>
+      <initialValue>0.375</initialValue>
+    </input>
+    <input type="time" token="pricedate" searchWhenChanged="true">
+      <label>Price Date</label>
+      <default>
+        <earliest>-1d@d</earliest>
+        <latest>@d</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>EDMUNDSTON, WOODSTOCK &amp; HOULTON</title>
+      <table>
+        <search id="woodstock" base="baseSearch">
+          <query>| search City="*WOODSTOCK*" OR City="*EDMUNDSTON*" OR City="HOULTON IRVING BIG S" AND Province="ME" OR Province="NB"
+| table Date Price Location Provider City Province
+| sort -Date, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">3</option>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <title>MONCTON</title>
+      <table>
+        <search id="moncton" base="baseSearch">
+          <query>
+| search City="*MONCTON*"
+| where Province="NB"
+| table Date Price Location Provider City Province
+| sort -Date, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">3</option>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>AULAC</title>
+      <table>
+        <search id="aulac" base="baseSearch">
+          <query>
+
+| search City="*AULAC*" AND Province="NB"
+| table Date Price Location Provider City Province
+| sort -Date, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">3</option>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <title>ENFIELD</title>
+      <table>
+        <search id="enfield" base="baseSearch">
+          <query>
+
+| search City="*ENFIELD*" AND Province="NS"
+| table Date Price Location Provider City Province
+| sort -Date, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">3</option>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>BORDENTOWN</title>
+      <table>
+        <search id="bordentown" base="baseSearch">
+          <query>
+
+| search City="BORDENTOWN" AND Province="NJ"
+| table Date Price Location Provider City Province
+| sort -Date, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">4</option>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <title>BINGHAMTON &amp; NEW MILFORD</title>
+      <table>
+        <search id="binghamton" base="baseSearch">
+          <query>
+
+| search City="*BINGHAMTON*" OR City="NEW MILFORD" AND Province="NY" OR Province="PA"
+| table Date Price Location Provider City Province
+| sort -Date, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">4</option>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>WILLINGTON</title>
+      <table>
+        <search id="willington" base="baseSearch">
+          <query>
+
+| search City="*WILLINGTON*" AND Province="CT"
+| table Date Price Location Provider City Province
+| sort -Date, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">4</option>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <title>NIAGARA</title>
+      <table>
+        <search id="niagara" base="baseSearch">
+          <query>
+
+| search City="*NIAGARA*" AND Province="ON"
+| table Date Price Location Provider City Province
+| sort -Date, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">3</option>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>MILTON</title>
+      <table>
+        <search id="milton" base="baseSearch">
+          <query>
+
+| search City="MILTON" AND Province="ON"
+| table Date Price Location Provider City Province
+| sort -Date, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">3</option>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <title>MISSISSAUGA</title>
+      <table>
+        <search id="mississauga" base="baseSearch">
+          <query>
+
+| search City="*MISSISSAUGA*" AND Province="ON"
+| table Date Price Location Provider City Province
+| sort -Date, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">3</option>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>BRAMPTON</title>
+      <table>
+        <search id="brampton" base="baseSearch">
+          <query>
+
+| search City="*BRAMPTON*" AND Province="ON"
+| table Date Price Location Provider City Province
+| sort -Date, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">3</option>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <title>KINGSTON &amp; NAPANEE</title>
+      <table>
+        <search id="kingston" base="baseSearch">
+          <query>
+
+| search City="*KINGSTON*" OR City="NAPANEE" AND Province="ON"
+| table Date Price Location Provider City Province
+| sort -Date, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">3</option>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>CORNWALL &amp; LANCASTER</title>
+      <table>
+        <search id="cornwall" base="baseSearch">
+          <query>
+
+| search City="*CORNWAL*" OR City="LANCASTER" AND Province="ON"
+| table Date Price Location Provider City Province
+| sort -Date, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">3</option>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <title>STE JULIE &amp; ST JEAN-PORT JOLI</title>
+      <table>
+        <search id="julie" base="baseSearch">
+          <query>| search City="*JULIE*" OR City="*ST JEAN-PORT JOLI*" AND Province="QC"
+| table Date Price Location Provider City Province
+| sort -Date, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">3</option>
+        </format>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>PROVIDER PRICES ACROSS CITIES</title>
+      <input type="dropdown" token="provider" searchWhenChanged="true">
+        <label>Provider</label>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+        <fieldForLabel>Provider</fieldForLabel>
+        <fieldForValue>Provider</fieldForValue>
+        <search id="provider1" base="baseSearch">
+          <query>
+|dedup Provider
+| table Provider</query>
+        </search>
+      </input>
+      <input type="dropdown" token="province" searchWhenChanged="true">
+        <label>Province</label>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+        <fieldForLabel>Province</fieldForLabel>
+        <fieldForValue>Province</fieldForValue>
+        <search id="province1" base="baseSearch">
+          <query>
+|search Provider="$provider$"
+|dedup Province
+| table Province</query>
+        </search>
+      </input>
+      <input type="dropdown" token="city" searchWhenChanged="true">
+        <label>City</label>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+        <fieldForLabel>City</fieldForLabel>
+        <fieldForValue>City</fieldForValue>
+        <search id="city1" base="baseSearch">
+          <query>
+|search Provider="$provider$"
+|dedup City
+| table City</query>
+        </search>
+      </input>
+      <input type="dropdown" token="price" searchWhenChanged="true">
+        <label>Price</label>
+        <fieldForLabel>Price</fieldForLabel>
+        <fieldForValue>Price</fieldForValue>
+        <search id="price" base="baseSearch">
+          <query>|search Provider="$provider$" Province="$province$"
+| eval Price=round(Price, 2)
+|dedup Price
+| sort Price
+| table Price</query>
+        </search>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+      </input>
+      <table>
+        <search id="fullList" base="baseSearch">
+          <query>| search Provider="$provider$" Province="$province$" City="$city$"  Price="$price$"
+| eval Dates=strftime(_time,"%y-%m-%d")
+| table Dates Price Location Provider City Province
+
+| sort -Dates, +Price</query>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="Price">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Price">
+          <option name="precision">3</option>
+        </format>
+        <drilldown>
+          <condition field="Provider">
+            <set token="provider-t">$row.Provider$</set>
+            <set token="province">$row.Province$</set>
+            <set token="city">$row.City$</set>
+            <set token="enable_pop_up"></set>
+            <unset token="form.hide_panel"></unset>
+          </condition>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+</form>
