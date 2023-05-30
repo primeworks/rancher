@@ -1,0 +1,65 @@
+<form version="1.1" theme="dark">
+  <label>Trailer Tracker</label>
+  <fieldset submitButton="false"></fieldset>
+  <row>
+    <panel>
+      <input type="time" token="trailtime" searchWhenChanged="true">
+        <label></label>
+        <default>
+          <earliest>-30d@d</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <input type="dropdown" token="trailer" searchWhenChanged="true">
+        <label>Trailer</label>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+        <fieldForLabel>PICK_UP_TRAILER</fieldForLabel>
+        <fieldForValue>PICK_UP_TRAILER</fieldForValue>
+        <search>
+          <query>index="sfx-trailers" | fields "_time", "ACTUAL_DELIVERY", "ACTUAL_PICKUP", "BILL_NUMBER", "BILL_OF_LADING", "BILL_TO_CODE", "BILL_TO_NAME", "CARE_OF", "CHASSIS", "COMMODITY", "DELIVER_BY", "DELIVER_BY_END", "DELIVERY_DRIVER", "DELIVERY_PUNIT", "DELIVERY_TRAILER", "DELIVERY_TRIP", "DESTCITY", "DESTINATION", "DESTNAME", "DESTPROV", "DISTANCE", "END_LOC", "END_ZONE", "INT_PAYABLE_AMT", "INTERLINER_ID", "INTERLINER_NAME", "INTERLINER_PHONE", "LENGTH_1", "NO_STOPS", "ORIGCITY", "ORIGIN", "ORIGNAME", "ORIGPROV", "PALLETS", "PICK_UP_BY", "PICK_UP_BY_END", "PICK_UP_DRIVER", "PICK_UP_TRAILER", "PICK_UP_TRIP", "PICKUP_AT", "PIECES", "START_LOC", "START_ZONE", "SUM_LENGTH", "timeendpos", "timestartpos", "TOTAL_CHARGES", "TRACE_NO", "TRIP_NUMBER", "USER10", "WEIGHT", "XCHARGES" | search "PICK_UP_TRAILER" != "&lt;null&gt;" | dedup "PICK_UP_TRAILER" 
+| table "PICK_UP_TRAILER"</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+      </input>
+      <input type="dropdown" token="destname">
+        <label>Location</label>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+        <fieldForLabel>DESTNAME</fieldForLabel>
+        <fieldForValue>DESTNAME</fieldForValue>
+        <search>
+          <query>index="sfx-trailers" | fields "_time", "ACTUAL_DELIVERY", "ACTUAL_PICKUP", "BILL_NUMBER", "BILL_OF_LADING", "BILL_TO_CODE", "BILL_TO_NAME", "CARE_OF", "CHASSIS", "COMMODITY", "DELIVER_BY", "DELIVER_BY_END", "DELIVERY_DRIVER", "DELIVERY_PUNIT", "DELIVERY_TRAILER", "DELIVERY_TRIP", "DESTCITY", "DESTINATION", "DESTNAME", "DESTPROV", "DISTANCE", "END_LOC", "END_ZONE", "INT_PAYABLE_AMT", "INTERLINER_ID", "INTERLINER_NAME", "INTERLINER_PHONE", "LENGTH_1", "NO_STOPS", "ORIGCITY", "ORIGIN", "ORIGNAME", "ORIGPROV", "PALLETS", "PICK_UP_BY", "PICK_UP_BY_END", "PICK_UP_DRIVER", "PICK_UP_TRAILER", "PICK_UP_TRIP", "PICKUP_AT", "PIECES", "START_LOC", "START_ZONE", "SUM_LENGTH", "timeendpos", "timestartpos", "TOTAL_CHARGES", "TRACE_NO", "TRIP_NUMBER", "USER10", "WEIGHT", "XCHARGES" | search "DESTNAME" != "&lt;null&gt;" "PICK_UP_TRAILER"="$trailer$" | dedup "DESTNAME" 
+| table "DESTNAME"</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+      </input>
+      <input type="dropdown" token="driver">
+        <label>Driver</label>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+        <fieldForLabel>Login Name</fieldForLabel>
+        <fieldForValue>Login Name</fieldForValue>
+        <search>
+          <query>index="sfx-trailers" | fields "_time", "ACTUAL_DELIVERY", "ACTUAL_PICKUP", "BILL_NUMBER", "BILL_OF_LADING", "BILL_TO_CODE", "BILL_TO_NAME", "CARE_OF", "CHASSIS", "COMMODITY", "DELIVER_BY", "DELIVER_BY_END", "DELIVERY_DRIVER", "DELIVERY_PUNIT", "DELIVERY_TRAILER", "DELIVERY_TRIP", "DESTCITY", "DESTINATION", "DESTNAME", "DESTPROV", "DISTANCE", "END_LOC", "END_ZONE", "INT_PAYABLE_AMT", "INTERLINER_ID", "INTERLINER_NAME", "INTERLINER_PHONE", "LENGTH_1", "NO_STOPS", "ORIGCITY", "ORIGIN", "ORIGNAME", "ORIGPROV", "PALLETS", "PICK_UP_BY", "PICK_UP_BY_END", "PICK_UP_DRIVER", "PICK_UP_TRAILER", "PICK_UP_TRIP", "PICKUP_AT", "PIECES", "START_LOC", "START_ZONE", "SUM_LENGTH", "timeendpos", "timestartpos", "TOTAL_CHARGES", "TRACE_NO", "TRIP_NUMBER", "USER10", "WEIGHT", "XCHARGES" | lookup "driver_list" "Driver ID" as "PICK_UP_DRIVER" OUTPUT "Login Name" | search "PICK_UP_TRAILER" != "&lt;null&gt;" "PICK_UP_TRAILER" = "$trailer$" "DESTNAME" = "$destname$" | dedup "Login Name" | table "PICK_UP_DRIVER" "Login Name"</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+      </input>
+      <table>
+        <search>
+          <query>index="sfx-trailers" | fields "_time", "ACTUAL_DELIVERY", "ACTUAL_PICKUP", "BILL_NUMBER", "BILL_OF_LADING", "BILL_TO_CODE", "BILL_TO_NAME", "CARE_OF", "CHASSIS", "COMMODITY", "DELIVER_BY", "DELIVER_BY_END", "DELIVERY_DRIVER", "DELIVERY_PUNIT", "DELIVERY_TRAILER", "DELIVERY_TRIP", "DESTCITY", "DESTINATION", "DESTNAME", "DESTPROV", "DISTANCE", "END_LOC", "END_ZONE", "INT_PAYABLE_AMT", "INTERLINER_ID", "INTERLINER_NAME", "INTERLINER_PHONE", "LENGTH_1", "NO_STOPS", "ORIGCITY", "ORIGIN", "ORIGNAME", "ORIGPROV", "PALLETS", "PICK_UP_BY", "PICK_UP_BY_END", "PICK_UP_DRIVER", "PICK_UP_TRAILER", "PICK_UP_TRIP", "PICKUP_AT", "PIECES", "START_LOC", "START_ZONE", "SUM_LENGTH", "timeendpos", "timestartpos", "TOTAL_CHARGES", "TRACE_NO", "TRIP_NUMBER", "USER10", "WEIGHT", "XCHARGES"  | lookup "driver_list" "Driver ID" as "PICK_UP_DRIVER" OUTPUT "Login Name"  | search "PICK_UP_TRAILER" != "&lt;null&gt;" "PICK_UP_TRAILER" = "$trailer$" "DESTNAME" = "$destname$" "Login Name" = "$driver$" | rename ACTUAL_DELIVERY AS RootObject.ACTUAL_DELIVERY ACTUAL_PICKUP AS RootObject.ACTUAL_PICKUP BILL_NUMBER AS RootObject.BILL_NUMBER BILL_OF_LADING AS RootObject.BILL_OF_LADING BILL_TO_CODE AS RootObject.BILL_TO_CODE BILL_TO_NAME AS RootObject.BILL_TO_NAME CARE_OF AS RootObject.CARE_OF CHASSIS AS RootObject.CHASSIS COMMODITY AS RootObject.COMMODITY DELIVERY_DRIVER AS RootObject.DELIVERY_DRIVER DELIVERY_PUNIT AS RootObject.DELIVERY_PUNIT DELIVERY_TRAILER AS RootObject.DELIVERY_TRAILER DELIVERY_TRIP AS RootObject.DELIVERY_TRIP DELIVER_BY AS RootObject.DELIVER_BY DELIVER_BY_END AS RootObject.DELIVER_BY_END DESTCITY AS RootObject.DESTCITY DESTINATION AS RootObject.DESTINATION DESTNAME AS RootObject.DESTNAME DESTPROV AS RootObject.DESTPROV DISTANCE AS RootObject.DISTANCE END_LOC AS RootObject.END_LOC END_ZONE AS RootObject.END_ZONE INTERLINER_ID AS RootObject.INTERLINER_ID INTERLINER_NAME AS RootObject.INTERLINER_NAME INTERLINER_PHONE AS RootObject.INTERLINER_PHONE INT_PAYABLE_AMT AS RootObject.INT_PAYABLE_AMT LENGTH_1 AS RootObject.LENGTH_1 "Login Name" AS "RootObject.Login Name" NO_STOPS AS RootObject.NO_STOPS ORIGCITY AS RootObject.ORIGCITY ORIGIN AS RootObject.ORIGIN ORIGNAME AS RootObject.ORIGNAME ORIGPROV AS RootObject.ORIGPROV PALLETS AS RootObject.PALLETS PICKUP_AT AS RootObject.PICKUP_AT PICK_UP_BY AS RootObject.PICK_UP_BY PICK_UP_BY_END AS RootObject.PICK_UP_BY_END PICK_UP_DRIVER AS RootObject.PICK_UP_DRIVER PICK_UP_TRAILER AS RootObject.PICK_UP_TRAILER PICK_UP_TRIP AS RootObject.PICK_UP_TRIP PIECES AS RootObject.PIECES START_LOC AS RootObject.START_LOC START_ZONE AS RootObject.START_ZONE SUM_LENGTH AS RootObject.SUM_LENGTH TOTAL_CHARGES AS RootObject.TOTAL_CHARGES TRIP_NUMBER AS RootObject.TRIP_NUMBER USER10 AS RootObject.USER10 WEIGHT AS RootObject.WEIGHT XCHARGES AS RootObject.XCHARGES | fields "_time" "host" "source" "sourcetype" "RootObject.ACTUAL_DELIVERY" "RootObject.ACTUAL_PICKUP" "RootObject.BILL_NUMBER" "RootObject.BILL_OF_LADING" "RootObject.BILL_TO_CODE" "RootObject.BILL_TO_NAME" "RootObject.CARE_OF" "RootObject.CHASSIS" "RootObject.COMMODITY" "RootObject.DELIVERY_DRIVER" "RootObject.DELIVERY_PUNIT" "RootObject.DELIVERY_TRAILER" "RootObject.DELIVERY_TRIP" "RootObject.DELIVER_BY" "RootObject.DELIVER_BY_END" "RootObject.DESTCITY" "RootObject.DESTINATION" "RootObject.DESTNAME" "RootObject.DESTPROV" "RootObject.DISTANCE" "RootObject.END_LOC" "RootObject.END_ZONE" "RootObject.INTERLINER_ID" "RootObject.INTERLINER_NAME" "RootObject.INTERLINER_PHONE" "RootObject.INT_PAYABLE_AMT" "RootObject.LENGTH_1" "RootObject.Login Name" "RootObject.NO_STOPS" "RootObject.ORIGCITY" "RootObject.ORIGIN" "RootObject.ORIGNAME" "RootObject.ORIGPROV" "RootObject.PALLETS" "RootObject.PICKUP_AT" "RootObject.PICK_UP_BY" "RootObject.PICK_UP_BY_END" "RootObject.PICK_UP_DRIVER" "RootObject.PICK_UP_TRAILER" "RootObject.PICK_UP_TRIP" "RootObject.PIECES" "RootObject.START_LOC" "RootObject.START_ZONE" "RootObject.SUM_LENGTH" "RootObject.TOTAL_CHARGES" "RootObject.TRIP_NUMBER" "RootObject.USER10" "RootObject.WEIGHT" "RootObject.XCHARGES" | stats dedup_splitvals=t values("RootObject.Login Name") AS DRIVER values(RootObject.DESTNAME) AS "DELIVERY LOCATION" values(RootObject.DELIVER_BY) AS DATE  by RootObject.DELIVERY_TRAILER | sort limit=100 RootObject.DELIVERY_TRAILER | fields - _span  | rename RootObject.DELIVERY_TRAILER AS TRAILER  | fields TRAILER, DRIVER, "DELIVERY LOCATION", DATE</query>
+          <earliest>$trailtime.earliest$</earliest>
+          <latest>$trailtime.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>
