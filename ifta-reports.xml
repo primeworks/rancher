@@ -1,0 +1,97 @@
+<form version="1.1" theme="dark">
+  <label>IFTA Reports</label>
+  <description>Generate receipt reports for Tax Manager</description>
+  <fieldset submitButton="false">
+    <input type="time" token="taxtime" searchWhenChanged="true">
+      <label></label>
+      <default>
+        <earliest>-3mon@mon</earliest>
+        <latest>@mon</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>SHELL</title>
+      <table>
+        <search>
+          <query>index="main" source="/opt/splunk/var/sfx-data/sfx-invoices/shell*.csv" | search "Qty"&gt;90 | fields "_time", "Amt", "Currency", "Qty", "State_ Prov", "Tran Date", "Tran Time", "Unit", "Item", "Card " | replace "CAD/Liters" with "Liters" in "Currency"  | replace "500" with "492" in "Unit" | replace "504" with "491" in "Unit" | replace "530" with "Moncton" in "Unit" | rename "Tran Date" AS "Date", "State_ Prov" AS Prov/State, Unit AS Vehicle, Currency AS Units, "Qty" AS "Volume", "Card " AS "Card Number" | eval Date=strftime(_time, "%m/%d/%Y"), Time=strftime(_time, "%H:%M"), Vendor="Shell" | table "Date", "Time", "Vehicle", "Prov/State", "Volume", "Units", "Vendor", "Card Number", "City", "Invoice", "Total Price", "Site", "Comments"</query>
+          <earliest>$taxtime.earliest$</earliest>
+          <latest>$taxtime.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>IRVING</title>
+      <table>
+        <search>
+          <query>index="main" sourcetype="csv" source="/opt/splunk/var/sfx-data/sfx-invoices/irving*.csv" Currency="*Liters*" | search "Qty"&gt;90 | fields "_time", "Amt", "Currency", "Qty", "State_ Prov", "Tran Date", "Tran Time", "Unit", "Item", "Card " | replace "CAD/Liters" with "Liters" in "Currency" | rename "Tran Date" AS "Date", "State_ Prov" AS Prov/State, Unit AS Vehicle, Currency AS Units, "Qty" AS "Volume", "Card " AS "Card Number" | eval Date=strftime(_time, "%m/%d/%Y"), Time=strftime(_time, "%H:%M"), Vendor="Irving" | table "Date", "Time", "Vehicle", "Prov/State", "Volume", "Units", "Vendor", "Card Number", "City", "Invoice", "Total Price", "Site", "Comments"</query>
+          <earliest>$taxtime.earliest$</earliest>
+          <latest>$taxtime.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>BVD</title>
+      <table>
+        <search>
+          <query>index="main" sourcetype="csv" source="/opt/splunk/var/sfx-data/sfx-invoices/bvd*.csv" | search "UOM"="L" "Quantity"&gt;90 | fields "_time", "Date", "Final Amount", "Prov_ST Abb", "Quantity", "Time", "Unit_ at POS", "UOM", "Driver Id", Card | rename "Driver Id" as Units
+| rex field=Units "(?&lt;Vehicle&gt;\d{3})" | eval "Date"=strftime(_time, "%m/%d/%Y"), "Time"=strftime(_time, "%H:%M"), Vendor="BVD" | rename "Prov_ST Abb" AS "Prov/State", "UOM" AS "Units", Quantity AS Volume, Card AS "Card Number" | replace "L" with "Liters" in "Units" | replace "4670" with "467" in "Vehicle" | replace "4380" with "438" in "Vehicle" | replace "4300" with "430" in "Vehicle" | replace "4120" with "412" in "Vehicle" | replace "43.2" with "432" in "Vehicle" | table "Date", "Time", "Vehicle", "Prov/State", "Volume", "Units", "Vendor", "Card Number",	"City",	"Invoice", "Total Price", "Site", "Comments"</query>
+          <earliest>$taxtime.earliest$</earliest>
+          <latest>$taxtime.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+    <panel>
+      <title>LOVES</title>
+      <table>
+        <search>
+          <query>index="main" sourcetype="csv" source="/opt/splunk/var/sfx-data/sfx-invoices/bvd*.csv" | search "UOM"="G" "Quantity"&gt;23 | fields "_time", "Date", "Final Amount", "Prov_ST Abb", "Quantity", "Time", "Unit_ at POS", "UOM", "Driver Id", Card | rename "Driver Id" as Units
+| rex field=Units "(?&lt;Vehicle&gt;\d{3})" | eval "Date"=strftime(_time, "%m/%d/%Y"), "Time"=strftime(_time, "%H:%M"), Vendor="Loves", gal=Quantity*3.785 | rename "Prov_ST Abb" AS "Prov/State", "UOM" AS "Units", gal AS Volume, Card AS "Card Number" | replace "G" with "Liters" in "Units" | replace "4670" with "467" in "Vehicle" | replace "4380" with "438" in "Vehicle" | replace "4300" with "430" in "Vehicle" | replace "4120" with "412" in "Vehicle" | replace "43.2" with "432" in "Vehicle" | table "Date", "Time", "Vehicle", "Prov/State", "Volume", "Units", "Vendor", "Card Number",	"City",	"Invoice", "Total Price", "Site", "Comments"</query>
+          <earliest>$taxtime.earliest$</earliest>
+          <latest>$taxtime.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>PIPELINE</title>
+      <table>
+        <search>
+          <query>index="main" sourcetype="csv" source="/opt/splunk/var/sfx-data/sfx-invoices/pipe*.csv" | search "Quantit"&gt;90 | fields "_time", "Date trans", "Montant", "No Carte", "Prov", "Quantit" | lookup "pipeline-cards" "Card number" as "No Carte" OUTPUT "Unit" | rename "Unit" AS "Vehicle" | rename "Prov" AS "Prov/State" | rename "gal" AS "Volume" | rename "UOM" AS "Units" | rename "No Carte" AS "Card Number", "Quantit" AS "Volume" | eval Date=strftime(_time, "%m/%d/%Y"), Time=strftime(_time, "%H:%M"), "Vendor"="Pipeline", Units="Liters", gal=Quantit/3.785 | table "Date", "Time", "Vehicle", "Prov/State", "Volume", "Units", "Vendor", "Card Number", "City",	"Invoice", "Total Price", "Site", "Comments"</query>
+          <earliest>$taxtime.earliest$</earliest>
+          <latest>$taxtime.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>FLYING J</title>
+      <table>
+        <search>
+          <query>index="main" sourcetype="csv" source="/opt/splunk/var/sfx-data/sfx-invoices/flyingj*.csv" Currency="*Liters*" | search "Qty"&gt;90 | fields "_time", "Amt", "Currency", "Qty", "State_ Prov", "Tran Date", "Tran Time", "Unit", "Item", "Card " | replace "CAD/Liters" with "Liters" in "Currency" | rename "Tran Date" AS "Date", "State_ Prov" AS Prov/State, Unit AS Vehicle, Currency AS Units, "Qty" AS "Volume", "Card " AS "Card Number" | eval Date=strftime(_time, "%m/%d/%Y"), Time=strftime(_time, "%H:%M"), Vendor="FlyingJ" | table "Date", "Time", "Vehicle", "Prov/State", "Volume", "Units", "Vendor", "Card Number", "City", "Invoice", "Total Price", "Site", "Comments"</query>
+          <earliest>$taxtime.earliest$</earliest>
+          <latest>$taxtime.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</form>
