@@ -1,0 +1,38 @@
+<form version="1.1" theme="dark">
+  <label>Driver Analysis</label>
+  <fieldset submitButton="false">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>index="main" 
+| fields "_time", "DriverID", "IntertipIdleTimeMinutes", "Sum of IdleFuelImperialGallons" 
+| fields - "Sum of IdleFuelImperialGallons" 
+| stats sum(IntertipIdleTimeMinutes) by DriverID 
+| sort -"sum(IntertipIdleTimeMinutes)" 
+| rename "DriverID" AS "Drivers" 
+| rename "sum(IntertipIdleTimeMinutes)" AS "IntertripIdleTime"
+
+| table "Drivers" "IntertripIdleTime"</query>
+          <earliest>$globaltime.earliest$</earliest>
+          <latest>$globaltime.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="number" field="IntIdl"></format>
+        <format type="color" field="IntIdl">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">15,70,100</scale>
+        </format>
+      </table>
+    </panel>
+  </row>
+</form>
