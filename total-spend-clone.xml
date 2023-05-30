@@ -1,0 +1,197 @@
+<form version="1.1" theme="dark">
+  <label>Total Spend Clone</label>
+  <description>Check total fuel spend by Week, Month and Year.</description>
+  <search id="base">
+    <query>
+      | multisearch
+
+[ search source="*shell*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost
+| eval Provider="Shell"
+]
+
+[ search source="*flyingj*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost
+| eval Provider="Flying J"
+]
+
+[ search source="*irving*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost
+| eval Provider="Irving"
+]
+
+[ search source="*pipeline*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Montant as Price, Prov as Province, "Description site" as City, "Description site" as Location, Quantit as Quantity
+| eval Provider="Pipeline"
+]
+
+[ search source="*bvd*.csv" index="sfx-invoices" sourcetype="csv"
+| rename "Final Amount" as Price, "Prov_ST Abb" as Province, "Site City" as City, "Site" as Location, "Billed PPU" as Cost
+| where UOM="L"
+| eval Provider="BVD"
+]
+
+[ search source="*bvd*.csv" index="sfx-invoices" sourcetype="csv"
+| rename "Prov_ST Abb" as Province, "Site City" as City, "Site" as Location, "Final Amount" as uCost
+| where UOM="G"
+| eval Provider="BVD Loves", Date=strftime(_time, "%y-%m-%d"), Gallons=sum(Quantity), volume-g=Gallons*3.78541, exchange=$exchange$+1, exr=exchange-1, Price=uCost*exchange
+]
+
+| fields Price Provider
+</query>
+    <earliest>$timer.earliest$</earliest>
+    <latest>$timer.latest$</latest>
+  </search>
+  <search id="allbase">
+    <query>
+      | multisearch
+
+[ search source="*shell*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost
+| eval Provider="Shell"
+]
+
+[ search source="*flyingj*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost
+| eval Provider="Flying J"
+]
+
+[ search source="*irving*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost
+| eval Provider="Irving"
+]
+
+[ search source="*pipeline*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Montant as Price, Prov as Province, "Description site" as City, "Description site" as Location, Quantit as Quantity
+| eval Provider="Pipeline"
+]
+
+[ search source="*bvd*.csv" index="sfx-invoices" sourcetype="csv"
+| rename "Final Amount" as Price, "Prov_ST Abb" as Province, "Site City" as City, "Site" as Location, "Billed PPU" as Cost
+| where UOM="L"
+| eval Provider="BVD"
+]
+
+[ search source="*bvd*.csv" index="sfx-invoices" sourcetype="csv"
+| rename "Prov_ST Abb" as Province, "Site City" as City, "Site" as Location, "Final Amount" as uCost, "Exchange Rate" as exchange
+| where UOM="G"
+| eval Provider="BVD Loves", Date=strftime(_time, "%y-%m-%d"), Gallons=sum(Quantity), volume-g=Gallons*3.78541, exchange=$exchange$+1, exr=exchange-1, Price=uCost*exchange
+]
+
+| fields Price
+</query>
+    <earliest>0</earliest>
+    <latest></latest>
+  </search>
+  <fieldset submitButton="false">
+    <input type="text" token="exchange" searchWhenChanged="true">
+      <label>Exchange Rate</label>
+      <default>0.38</default>
+      <initialValue>0.38</initialValue>
+    </input>
+    <input type="time" token="timer" searchWhenChanged="true">
+      <label></label>
+      <default>
+        <earliest>-30d@d</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="provider" searchWhenChanged="true">
+      <label>Provider</label>
+      <fieldForLabel>Provider</fieldForLabel>
+      <fieldForValue>Provider</fieldForValue>
+      <search id="providers" base="base">
+        <query>| dedup Provider
+| table Provider</query>
+      </search>
+      <choice value="*">All</choice>
+      <default>Shell</default>
+      <initialValue>Shell</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>TOTAL SPEND FOR THE SELECTED PERIOD</title>
+      <single>
+        <search id="spend" base="base">
+          <query>| stats sum(Price)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <title>TOTAL SPEND FOR THE SELECTED PERIOD PER PROVIDER</title>
+      <single>
+        <search id="providerspend" base="base">
+          <query>| search Provider="$provider$"
+| stats sum(Price)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+    <panel>
+      <title>ALL-TIME TOTAL SPEND</title>
+      <single>
+        <search id="alltimespend" base="allbase">
+          <query>| stats sum(Price)</query>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>ALL-TIME FUEL SPEND TREND</title>
+      <chart>
+        <search>
+          <query>| multisearch
+
+[ search source="*shell*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost
+| eval Provider="Shell"
+]
+
+[ search source="*flyingj*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost
+| eval Provider="Flying J"
+]
+
+[ search source="*irving*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Amt as Price, "State_ Prov" as Province, "Location Name" as Location, Qty as Quantity, "Unit Price" as Cost
+| eval Provider="Irving"
+]
+
+[ search source="*pipeline*.csv" index="sfx-invoices" sourcetype="csv"
+| rename Montant as Price, Prov as Province, "Description site" as City, "Description site" as Location, Quantit as Quantity
+| eval Provider="Pipeline"
+]
+
+[ search source="*bvd*.csv" index="sfx-invoices" sourcetype="csv"
+| rename "Final Amount" as Price, "Prov_ST Abb" as Province, "Site City" as City, "Site" as Location, "Billed PPU" as Cost
+| where UOM="L"
+| eval Provider="BVD"
+]
+
+[ search source="*bvd*.csv" index="sfx-invoices" sourcetype="csv"
+| rename "Prov_ST Abb" as Province, "Site City" as City, "Site" as Location, "Final Amount" as uCost, "Exchange Rate" as exchange
+| where UOM="G"
+| eval Provider="BVD Loves", Date=strftime(_time, "%y-%m-%d"), Gallons=sum(Quantity), volume-g=Gallons*3.78541, exr=exchange-1, Price=uCost*exchange
+]
+
+| eval Date=strftime(_time, "%y-%m-%d")
+| search Cost&gt;1
+| fields Date Provider City Cost Price
+| timechart sum(Price) AS "Spend" span=1w</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>
