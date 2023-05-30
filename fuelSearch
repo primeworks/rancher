@@ -1,0 +1,48 @@
+| multisearch
+
+[ search (index="sfx") source="/opt/splunk/var/sfx-data/sfx-diesel/pipeline*.csv" 
+| rename Sous_Total as Price, Prov as Province, Diesel as City, "No_ Site" as Location
+| eval Provider="Pipeline"
+]
+
+[ search (index="sfx") source="/opt/splunk/var/sfx-data/sfx-diesel/bvd-ca*.csv"
+| rename "FUEL PRICE" as Price, PROV as Province, "CITY" as City, SITE as Location
+| eval Provider="BVD"
+]
+
+[ search (index="sfx") source="/opt/splunk/var/sfx-data/sfx-diesel/irving-ca*.csv"
+| rename State as Province, "Site Name" as City, "Base Price" as bp, "Federal Excise Tax" as fet, "Provincial Road Tax" as prt, "Sales Tax" as st
+| eval Price=sum(bp,fet,prt,st)
+| eval Provider="Irving"
+]
+
+[ search index="sfx" source="/opt/splunk/var/sfx-data/sfx-diesel/shell*.csv"
+| rename State as Province, "Site Name" as City, Cost as bp, "Excise Tax" as fet, "PRT" as prt, "Taxes" as st, "Carbon Tax" as ct
+| eval PriceA=sum(bp,fet,prt,st,ct), Price=(((Total-0.06)*bp)/Total)
+| eval Provider="Shell"
+]
+
+[ search (index="sfx") source="/opt/splunk/var/sfx-data/sfx-diesel/flyingj-ca*.csv"
+| rename "Retail Disount" as Price, State as Province, Site as Location
+| eval Provider="Flying J"
+]
+
+[ search (index="sfx") source="/opt/splunk/var/sfx-data/sfx-diesel/bvd-us*.csv"
+| rename "YOUR PRICE" as PriceUs, STATE as Province, CITY as City, SITE as Location
+| eval Provider="Loves", Price=(((PriceUs/3.78451)*$exchange$)+1.50000000)
+]
+
+[ search (index="sfx") source="/opt/splunk/var/sfx-data/sfx-diesel/irving-us*.csv"
+| rename Total as PriceUs, State as Province, "Site Name" as City
+| eval Provider="Irving US", Price=(((PriceUs/3.78451)*$exchange$)+1.50000000)
+]
+
+[ search (index="sfx") source="/opt/splunk/var/sfx-data/sfx-diesel/flyingj-us*.csv"
+| rename "Retail Disount" as PriceUs, State as Province, Site as Location
+| eval Provider="Flying J US", Price=(((PriceUs/3.78451)*$exchange$)+1.50000000)
+]
+
+| eval Date=strftime(_time, "%y-%m-%d")
+| filldown Date
+| where isnotnull(Price)
+| fields Date Province City Provider Location Price
