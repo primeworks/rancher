@@ -1,0 +1,284 @@
+<form version="1.1" theme="dark">
+  <label>Price Comparison</label>
+  <description>Used for comparing prices by Date and Provider</description>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <input type="time" token="comptime" searchWhenChanged="true">
+        <label></label>
+        <default>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </default>
+      </input>
+      <input type="dropdown" token="provider-c" searchWhenChanged="true">
+        <label>Provider C</label>
+        <default>BVD</default>
+        <initialValue>BVD</initialValue>
+        <fieldForLabel>Provider</fieldForLabel>
+        <fieldForValue>Provider</fieldForValue>
+        <search>
+          <query>| multisearch
+
+[ search index="sfx-diesel" source="*pipeline*.csv"
+| rename Sous_Total as Price, Prov as Province, Diesel as City
+| eval Provider="Pipeline"
+]
+
+[ search index="sfx-diesel" source="*bvd*.csv"
+| rename "FUEL PRICE" as Price, PROV as Province, "CITY" as City
+| eval Provider="BVD"
+]
+
+[ search index="sfx-diesel" source="*irving*.csv"
+| rename State as Province, "Site Name" as City, "Base Price" as bp, "Federal Excise Tax" as fet, "Provincial Road Tax" as prt, "Sales Tax" as st
+| eval Price=sum(bp,fet,prt,st)
+| eval Provider="Irving"
+]
+
+[ search index="sfx-diesel" source="*flyingj*.csv"
+| rename Prov as Province, "Fuel Price" as Price, "Rack City" as City
+| eval Provider="Flying J"
+]
+
+[ search index="sfx-diesel" source="*bvd*.csv"
+| rename "YOUR PRICE" as PriceUs, STATE as Province, CITY as City
+| eval Provider="BVD Loves", Price=(((PriceUs/3.78451)*0.36)+1.5)
+]
+
+[ search index="sfx-diesel" source="*irving*.csv"
+| rename Total as PriceUs, State as Province, "Site Name" as City
+| eval Provider="Irving US", Price=(((PriceUs/3.78451)*0.36)+1.5)
+]
+
+[ search index="sfx-diesel" source="*flyingj*.csv"
+| rename "Total Cost" as PriceUs, ST as Province, "City" as City
+| eval Provider="Flying J US", Price=(((PriceUs/3.78451)*0.36)+1.5)
+]
+
+| eval Dates=strftime(_time,"%m/%d/%y")
+|dedup Provider
+| table Provider</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+      </input>
+      <input type="dropdown" token="provider-d" searchWhenChanged="true">
+        <label>Provider D</label>
+        <fieldForLabel>Provider</fieldForLabel>
+        <fieldForValue>Provider</fieldForValue>
+        <search>
+          <query>| multisearch
+
+[ search index="sfx-diesel" source="*pipeline*.csv"
+| rename Sous_Total as Price, Prov as Province, Diesel as City
+| eval Provider="Pipeline"
+]
+
+[ search index="sfx-diesel" source="*bvd*.csv"
+| rename "FUEL PRICE" as Price, PROV as Province, "CITY" as City
+| eval Provider="BVD"
+]
+
+[ search index="sfx-diesel" source="*irving*.csv"
+| rename State as Province, "Site Name" as City, "Base Price" as bp, "Federal Excise Tax" as fet, "Provincial Road Tax" as prt, "Sales Tax" as st
+| eval Price=sum(bp,fet,prt,st)
+| eval Provider="Irving"
+]
+
+[ search index="sfx-diesel" source="*flyingj*.csv"
+| rename Prov as Province, "Fuel Price" as Price, "Rack City" as City
+| eval Provider="Flying J"
+]
+
+[ search index="sfx-diesel" source="*bvd*.csv"
+| rename "YOUR PRICE" as PriceUs, STATE as Province, CITY as City
+| eval Provider="BVD Loves", Price=(((PriceUs/3.78451)*0.36)+1.5)
+]
+
+[ search index="sfx-diesel" source="*irving*.csv"
+| rename Total as PriceUs, State as Province, "Site Name" as City
+| eval Provider="Irving US", Price=(((PriceUs/3.78451)*0.36)+1.5)
+]
+
+[ search index="sfx-diesel" source="*flyingj*.csv"
+| rename "Total Cost" as PriceUs, ST as Province, "City" as City
+| eval Provider="Flying J US", Price=(((PriceUs/3.78451)*0.36)+1.5)
+]
+
+| eval Dates=strftime(_time,"%m/%d/%y")
+|dedup Provider
+| table Provider</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <default>Irving</default>
+        <initialValue>Irving</initialValue>
+      </input>
+      <input type="text" token="city" searchWhenChanged="true">
+        <label>City</label>
+        <initialValue>*</initialValue>
+        <default>*</default>
+      </input>
+      <input type="dropdown" token="province" searchWhenChanged="true">
+        <label>Province</label>
+        <choice value="*">All</choice>
+        <default>*</default>
+        <initialValue>*</initialValue>
+        <fieldForLabel>Province</fieldForLabel>
+        <fieldForValue>Province</fieldForValue>
+        <search>
+          <query>| multisearch
+
+[ search index="sfx-diesel" source="*pipeline*.csv"
+| rename Sous_Total as Price, Prov as Province, Diesel as City
+| eval Provider="Pipeline"
+]
+
+[ search index="sfx-diesel" source="*bvd*.csv"
+| rename "FUEL PRICE" as Price, PROV as Province, "CITY" as City
+| eval Provider="BVD"
+]
+
+[ search index="sfx-diesel" source="*irving*.csv"
+| rename State as Province, "Site Name" as City, "Base Price" as bp, "Federal Excise Tax" as fet, "Provincial Road Tax" as prt, "Sales Tax" as st
+| eval Price=sum(bp,fet,prt,st)
+| eval Provider="Irving"
+]
+
+[ search index="sfx-diesel" source="*flyingj*.csv"
+| rename Prov as Province, "Fuel Price" as Price, "Rack City" as City
+| eval Provider="Flying J"
+]
+
+[ search index="sfx-diesel" source="*bvd*.csv"
+| rename "YOUR PRICE" as PriceUs, STATE as Province, CITY as City
+| eval Provider="BVD Loves", Price=(((PriceUs/3.78451)*0.36)+1.5)
+]
+
+[ search index="sfx-diesel" source="*irving*.csv"
+| rename Total as PriceUs, State as Province, "Site Name" as City
+| eval Provider="Irving US", Price=(((PriceUs/3.78451)*0.36)+1.5)
+]
+
+[ search index="sfx-diesel" source="*flyingj*.csv"
+| rename "Total Cost" as PriceUs, ST as Province, "City" as City
+| eval Provider="Flying J US", Price=(((PriceUs/3.78451)*0.36)+1.5)
+]
+
+| eval Dates=strftime(_time,"%m/%d/%y")
+|dedup Province
+| table Province</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+      </input>
+      <table>
+        <title>Pricing Difference</title>
+        <search>
+          <query>| multisearch 
+    [ search index="sfx-diesel" source="*pipeline*.csv" 
+    | rename Sous_Total as Price, Prov as Province, Diesel as City 
+    | eval Provider="Pipeline"
+        ] 
+    [ search index="sfx-diesel" source="*bvd*.csv" 
+    | rename "FUEL PRICE" as Price, PROV as Province, "CITY" as City 
+    | eval Provider="BVD"
+        ] 
+    [ search index="sfx-diesel" source="*irving*.csv" 
+    | rename State as Province, "Site Name" as City, "Base Price" as bp, "Federal Excise Tax" as fet, "Provincial Road Tax" as prt, "Sales Tax" as st 
+    | eval Price=sum(bp,fet,prt,st) 
+    | eval Provider="Irving"
+        ] 
+    [ search index="sfx-diesel" source="*flyingj*.csv" 
+    | rename Prov as Province, "Fuel Price" as Price, "Rack City" as City 
+    | eval Provider="Flying J"
+        ] 
+    [ search index="sfx-diesel" source="*bvd*.csv" 
+    | rename "YOUR PRICE" as PriceUs, STATE as Province, CITY as City 
+    | eval Provider="BVD Loves", Price=(((PriceUs/3.78451)*0.36)+1.5)
+        ] 
+    [ search index="sfx-diesel" source="*irving*.csv" 
+    | rename Total as PriceUs, State as Province, "Site Name" as City 
+    | eval Provider="Irving US", Price=(((PriceUs/3.78451)*0.36)+1.5)
+        ] 
+    [ search index="sfx-diesel" source="*flyingj*.csv" 
+    | rename "Total Cost" as PriceUs, ST as Province, "City" as City 
+    | eval Provider="Flying J US", Price=(((PriceUs/3.78451)*0.36)+1.5)
+        ] 
+| eval Dates=strftime(_time,"%m/%d/%y") 
+| search City="*$city$*" 
+| where Provider="$provider-c$" OR Provider="$provider-d$" 
+| table Dates Province City Provider Price</query>
+          <earliest>$comptime.earliest$</earliest>
+          <latest>$comptime.latest$</latest>
+          <refresh>5m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <single>
+        <search>
+          <query>| multisearch 
+    [ search index="sfx-diesel" source="*pipeline*.csv" 
+    | rename Sous_Total as Price, Prov as Province, Diesel as City 
+    | eval Provider="Pipeline"
+        ] 
+    [ search index="sfx-diesel" source="*bvd*.csv" 
+    | rename "FUEL PRICE" as Price, PROV as Province, "CITY" as City 
+    | eval Provider="BVD"
+        ] 
+    [ search index="sfx-diesel" source="*irving*.csv" 
+    | rename State as Province, "Site Name" as City, "Base Price" as bp, "Federal Excise Tax" as fet, "Provincial Road Tax" as prt, "Sales Tax" as st 
+    | eval Price=sum(bp,fet,prt,st) 
+    | eval Provider="Irving"
+        ] 
+    [ search index="sfx-diesel" source="*flyingj*.csv" 
+    | rename Prov as Province, "Fuel Price" as Price, "Rack City" as City 
+    | eval Provider="Flying J"
+        ] 
+    [ search index="sfx-diesel" source="*bvd*.csv" 
+    | rename "YOUR PRICE" as PriceUs, STATE as Province, CITY as City 
+    | eval Provider="BVD Loves", Price=(((PriceUs/3.78451)*0.36)+1.5)
+        ] 
+    [ search index="sfx-diesel" source="*irving*.csv" 
+    | rename Total as PriceUs, State as Province, "Site Name" as City 
+    | eval Provider="Irving US", Price=(((PriceUs/3.78451)*0.36)+1.5)
+        ] 
+    [ search index="sfx-diesel" source="*flyingj*.csv" 
+    | rename "Total Cost" as PriceUs, ST as Province, "City" as City 
+    | eval Provider="Flying J US", Price=(((PriceUs/3.78451)*0.36)+1.5)
+        ] 
+| eval Dates=strftime(_time,"%m/%d/%y") 
+| search City="*$city$*" 
+| where Provider="$provider-c$" OR Provider="$provider-d$" 
+| sort 0 +Price
+| table Provider Dates Province City Price</query>
+          <earliest>$comptime.earliest$</earliest>
+          <latest>$comptime.latest$</latest>
+          <refresh>5m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="unit">is priced lower</option>
+        <option name="useColors">0</option>
+      </single>
+    </panel>
+  </row>
+</form>
