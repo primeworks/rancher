@@ -1,0 +1,253 @@
+<form version="1.1" theme="dark">
+  <label>OLD Purchase Compliance</label>
+  <description>Track purchase locations</description>
+  <search id="base">
+    <query>
+      | savedsearch invoiceSearch exrt="$exrt$"
+</query>
+    <earliest>$purchasedate.earliest$</earliest>
+    <latest>$purchasedate.latest$</latest>
+  </search>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="purchasedate" searchWhenChanged="true">
+      <label>Period</label>
+      <default>
+        <earliest>-3d@d</earliest>
+        <latest>@d</latest>
+      </default>
+    </input>
+    <input type="text" token="exrt" searchWhenChanged="true">
+      <label>Exchange Rate</label>
+      <default>0.375</default>
+      <initialValue>0.375</initialValue>
+    </input>
+    <input type="dropdown" token="prov" searchWhenChanged="true">
+      <label>Provider</label>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <fieldForLabel>Provider</fieldForLabel>
+      <fieldForValue>Provider</fieldForValue>
+      <search id="provider" base="base">
+        <query>
+|dedup Provider
+| table Provider</query>
+      </search>
+    </input>
+    <input type="dropdown" token="cit" searchWhenChanged="false">
+      <label>City</label>
+      <choice value="*">All</choice>
+      <fieldForLabel>City</fieldForLabel>
+      <fieldForValue>City</fieldForValue>
+      <search id="cit" base="base">
+        <query>
+| search Provider ="$prov$"
+|dedup City
+| table City</query>
+      </search>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="dropdown" token="provin" searchWhenChanged="false">
+      <label>Province</label>
+      <choice value="*">All</choice>
+      <fieldForLabel>Province</fieldForLabel>
+      <fieldForValue>Province</fieldForValue>
+      <search id="provin" base="base">
+        <query>
+| search Provider ="$prov$"
+|dedup Province
+| table Province</query>
+      </search>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="dropdown" token="uni" searchWhenChanged="true">
+      <label>Unit</label>
+      <choice value="*">All</choice>
+      <default>*</default>
+      <initialValue>*</initialValue>
+      <fieldForLabel>Unit</fieldForLabel>
+      <fieldForValue>Unit</fieldForValue>
+      <search id="unit" base="base">
+        <query>
+| search Provider ="$prov$"
+|dedup Unit
+| table Unit</query>
+      </search>
+    </input>
+    <input type="dropdown" token="uni2" searchWhenChanged="true">
+      <label>Unit in Review</label>
+      <choice value="*">All</choice>
+      <fieldForLabel>Unit</fieldForLabel>
+      <fieldForValue>Unit</fieldForValue>
+      <search id="unit2" base="base">
+        <query>
+| search Provider ="$prov$"
+|dedup Unit
+| table Unit</query>
+      </search>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>VIEW OF ALL TRANSACTIONS FOR THE PERIOD SELECTED</title>
+      <table>
+        <title>CLICK ON THE ROW TO VIEW MORE DETAILS OF THE DRIVER'S PURCHASES WITH THIS PERIOD IN CA &amp; US</title>
+        <search id="comp" base="base">
+          <query>| search (Provider="$prov$" City!="BORDENTOWN" Gallons &gt; 50) OR (Provider="Loves" City="BORDENTOWN" Gallons &gt; 101) OR (Country="Canada" Liters &lt; 500) AND (Country="USA" Gallons &gt; 0.0 desc_final = "Truck")
+| sort - Overage
+| table Unit, Make, Date, Time, Driver, Gallons, Overage, City, Spillover, Liters, Cost, MissCost, Price, Description, Phone, Provider, Province, Country</query>
+        </search>
+        <option name="count">20</option>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">true</option>
+        <option name="wrap">false</option>
+        <format type="color" field="Quantity">
+          <colorPalette type="list">[#118832,#D41F1F]</colorPalette>
+          <scale type="threshold">190</scale>
+        </format>
+        <format type="color" field="Cost">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Diff">
+          <option name="precision">3</option>
+          <option name="unit">$</option>
+          <option name="unitPosition">before</option>
+        </format>
+        <format type="number" field="Overage">
+          <option name="unit">$</option>
+          <option name="unitPosition">before</option>
+        </format>
+        <format type="color" field="Gallons">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">50,70,100</scale>
+        </format>
+        <format type="color" field="Liters">
+          <colorPalette type="list">[#D41F1F,#CBA700,#118832]</colorPalette>
+          <scale type="threshold">300,499</scale>
+        </format>
+        <drilldown>
+          <set token="form.uni2">$click.value$</set>
+        </drilldown>
+      </table>
+      <single>
+        <title>TOTAL OVERAGE</title>
+        <search id="overage" base="base">
+          <query>| search (Provider="$prov$" City!="BORDENTOWN" Gallons &gt; 50) OR (Provider="Loves" City="BORDENTOWN" Gallons &gt; 101) OR (Country="Canada" Liters &lt; 500) AND (Country="USA" Gallons &gt; 0.0 desc_final = "Truck")
+| stats sum(Overage)</query>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="underLabel">Spent over approved limit overall</option>
+        <option name="unit">$</option>
+        <option name="unitPosition">before</option>
+        <option name="useColors">1</option>
+      </single>
+      <single>
+        <title>TOTAL SPILLOVER</title>
+        <search id="volume" base="base">
+          <query>| search (Provider="$prov$" City!="BORDENTOWN" Gallons &gt; 50) OR (Provider="Loves" City="BORDENTOWN" Gallons &gt; 101) OR (Country="Canada" Liters &lt; 500) AND (Country="USA" Gallons &gt; 0.0 desc_final = "Truck")
+| stats sum(Spillover)</query>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,200,300,400]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="underLabel">Fueled over approved limit overall</option>
+        <option name="unit">Gal</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel depends="$uni2$">
+      <title>VIEW OF DRIVER'S TRANSACTION HISTORY FOR THE PERIOD</title>
+      <table>
+        <title>CLICK ON ANY ROW TO CLOSE THIS VIEW</title>
+        <search id="deet" base="base">
+          <query>| search Unit="$uni2$" Gallons &gt; 1
+| sort - _time
+| rename Description as Desc, Province as Prov
+| table Date,Time, Driver, Unit, Gallons, Liters, Overage, City, Desc, Prov</query>
+        </search>
+        <option name="count">20</option>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">true</option>
+        <option name="wrap">false</option>
+        <format type="color" field="Quantity">
+          <colorPalette type="list">[#118832,#D41F1F]</colorPalette>
+          <scale type="threshold">190</scale>
+        </format>
+        <format type="color" field="Cost">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">1,1.6,1.9</scale>
+        </format>
+        <format type="number" field="Cost">
+          <option name="precision">4</option>
+        </format>
+        <format type="number" field="Diff">
+          <option name="precision">3</option>
+          <option name="unit">$</option>
+          <option name="unitPosition">before</option>
+        </format>
+        <format type="number" field="Overage">
+          <option name="precision">3</option>
+          <option name="unit">$</option>
+          <option name="unitPosition">before</option>
+        </format>
+        <format type="color" field="Gallons">
+          <colorPalette type="list">[#118832,#CBA700,#D94E17,#D41F1F]</colorPalette>
+          <scale type="threshold">50,70,100</scale>
+        </format>
+        <format type="color" field="Liters">
+          <colorPalette type="list">[#D41F1F,#CBA700,#118832]</colorPalette>
+          <scale type="threshold">300,499</scale>
+        </format>
+        <drilldown>
+          <unset token="uni2"></unset>
+        </drilldown>
+      </table>
+      <single>
+        <title>DRIVER'S TOTAL OVERAGE</title>
+        <search id="overage2" base="base">
+          <query>| search Unit="$uni2$" Gallons &gt; 1
+| stats sum(Overage)</query>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="underLabel">Spent over approved limit overall</option>
+        <option name="unit">$</option>
+        <option name="unitPosition">before</option>
+        <option name="useColors">1</option>
+      </single>
+      <single>
+        <title>DRIVER'S TOTAL SPILLOVER</title>
+        <search id="volume2" base="base">
+          <query>| search Unit="$uni2$" Gallons &gt; 1
+| stats sum(Spillover)</query>
+        </search>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.000</option>
+        <option name="rangeColors">["0x53a051","0x0877a6","0xf8be34","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[0,200,300,400]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="underLabel">Fueled over approved limit overall</option>
+        <option name="unit">Gal</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+</form>
