@@ -1,0 +1,9 @@
+index="sfx" source="/opt/splunk/var/sfx-data/sfx-invoices/BVD*.csv" UOM="L"
+| rename "Driver Id" as Unit
+| eval Provider="BVD", Date=strftime(_time, "%y-%m-%d"), DateTime=Date +" "+ Time, pCost=Cost, DateTime=strftime(strptime(DateTime, "%y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M")
+| rename "PreTax AMT" as Price, "Prov_ST Abb" as Province, "Site City" as City, "Site" as Location, "Billed PPU" as Cost, "Fuel Code" as Description
+| fields Unit, Provider, Card, Price, Province, City, Location, Date, Quantity, Cost, Country, DateTime, Description
+| search Provider="BVD" City="MISSISSAUGA"
+| sort - DateTime
+
+| stats avg(Cost)
