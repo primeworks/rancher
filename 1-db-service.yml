@@ -7,6 +7,7 @@ metadata:
     controller: true
     kind: statefulset
     name: db-atlantic
+    uid: d136565c-b478-49ea-9e0f-f5d36e00195b
 spec:
   selector:
     workload.user.cattle.io/workloadselector: statefulSet-default-db-atlantic
