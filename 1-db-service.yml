@@ -11,6 +11,7 @@ metadata:
 spec:
   selector:
     workload.user.cattle.io/workloadselector: statefulSet-default-db-atlantic
+  sessionAffinity: None
   ports:
     - protocol: TCP
       targetPort: 42
