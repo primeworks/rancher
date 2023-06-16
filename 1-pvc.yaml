@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: alpha-odoo
+  name: odoo-alpha
   labels:
     app: odoo-alpha
 spec:
