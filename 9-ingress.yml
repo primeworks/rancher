@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: odoo-alpha
   annotations:
+    cert-manager.io/issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
@@ -16,4 +17,8 @@ spec:
           service:
             name: odoo-alpha
             port:
-              number: 8069
+              name: http
+  tls:
+  - hosts:
+    - alpha.webdiscode.com
+    secretName: alpha.webdiscode.com-tls
