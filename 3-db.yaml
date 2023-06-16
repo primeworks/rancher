@@ -47,6 +47,7 @@ spec:
           value: odoo
         image: postgres:15
         imagePullPolicy: IfNotPresent
+        name: db-atlantic
         
         resources:
           requests:
