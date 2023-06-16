@@ -3,10 +3,18 @@ kind: Service
 metadata:
   name: odoo-alpha
 spec:
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  allocateLoadBalancerNodePorts: true
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+  - IPv4
   selector:
     workload.user.cattle.io/workloadselector: deployment-default-odoo-alpha
+  type: LoadBalancer
+  sessionAffinity: None
   ports:
-    - protocol: TCP
-      targetPort: odoo-alpha
-      port: 8069
-      name: odoo-alpha
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
