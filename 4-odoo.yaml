@@ -32,16 +32,19 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: app
+              - key: stack
                 operator: In
                 values:
-                - files
+                - odoo
       containers:
       - env:
         - name: HOST
           value: db-atlantic
         - name: PASSWORD
-          value: odoo
+          valueFrom:
+            secretKeyRef:
+              key: odoo-password
+              name: odoo-atlantic-odoo
         - name: USER
           value: odoo
         image: odoo:16
