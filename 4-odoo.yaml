@@ -92,5 +92,5 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: atlantic-odoo
+          claimName: odoo-atlantic
 
