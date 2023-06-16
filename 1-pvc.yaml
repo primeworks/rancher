@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: odoo-alpha
+  name: odoo-atlantic
   labels:
-    app: odoo-alpha
+    app: odoo-atlantic
 spec:
   accessModes:
     - ReadWriteMany

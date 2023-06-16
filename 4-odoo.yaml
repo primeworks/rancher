@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-alpha
+    app: odoo-atlantic
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-alpha
-  name: odoo-alpha
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-atlantic
+  name: odoo-atlantic
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-alpha
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-atlantic
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -26,7 +26,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-alpha
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-atlantic
     spec:
       affinity:
         nodeAffinity:
@@ -40,14 +40,14 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-alpha
+          value: db-atlantic
         - name: PASSWORD
           value: odoo
         - name: USER
           value: odoo
         image: odoo:16
         imagePullPolicy: IfNotPresent
-        name: odoo-alpha
+        name: odoo-atlantic
         resources:
           limits:
             cpu: "1"
@@ -67,7 +67,7 @@ spec:
         tty: true
         ports:
             - containerPort: 8069
-              name: odoo-alpha
+              name: odoo-atlantic
               protocol: TCP
         volumeMounts:
         # Edit the volume to match the existing mountPaths in the cluster
@@ -93,5 +93,5 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: alpha-odoo
+          claimName: atlantic-odoo
 
