@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: atlantic.webdiscode.com
+  - host: www.atlanticgunsandgear.com
     http:
       paths:
       - path: /
@@ -20,5 +20,5 @@ spec:
               name: http
   tls:
   - hosts:
-    - atlantic.webdiscode.com
-    secretName: atlantic.webdiscode.com-tls
+    - www.atlanticgunsandgear.com
+    secretName: www.atlanticgunsandgear.com-tls
