@@ -63,6 +63,18 @@ spec:
         - containerPort: 8069
           name: http
           protocol: TCP
+        startupProbe:
+            failureThreshold: 3
+            successThreshold: 1
+            initialDelaySeconds: 0
+            timeoutSeconds: 1
+            periodSeconds: 10
+            exec:
+              command:
+                - /bin/sh
+                - '-c'
+                - '-e'
+                - exec pg_isready -U "odoo" -d "dbname=postgres" -h db-atlantic
         readinessProbe:
           failureThreshold: 6
           httpGet:
