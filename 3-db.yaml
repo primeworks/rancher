@@ -47,7 +47,31 @@ spec:
           value: odoo
         image: postgres:12
         imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - -e
+            - exec pg_isready -U "odoo" -d "dbname=postgres" -h 127.0.0.1 -p 5432
+          failureThreshold: 6
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
         name: db-atlantic
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - -e
+            - exec pg_isready -U "odoo" -d "dbname=postgres" -h 127.0.0.1 -p 5432
+          failureThreshold: 6
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
         resources:
           limits:
             cpu: "1"
