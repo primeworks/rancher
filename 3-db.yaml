@@ -42,10 +42,7 @@ spec:
         - name: POSTGRES_DB
           value: postgres
         - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: password
-              name: atlantic-postgresql
+          value: odoo
         - name: POSTGRES_USER
           value: odoo
         image: postgres:15
