@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: www.fishinggunsandgear.com
+  - host: fishing.webdiscode.com
     http:
       paths:
       - path: /
@@ -20,5 +20,5 @@ spec:
               name: http
   tls:
   - hosts:
-    - www.fishinggunsandgear.com
-    secretName: www.fishinggunsandgear.com-tls
+    - fishing.webdiscode.com
+    secretName: fishing.webdiscode.com-tls
