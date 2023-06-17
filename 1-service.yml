@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-atlantic
+  name: odoo-fishing
 spec:
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
@@ -10,7 +10,7 @@ spec:
   ipFamilies:
   - IPv4
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-atlantic
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-fishing
   type: LoadBalancer
   sessionAffinity: None
   ports:

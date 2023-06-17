@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: odoo-atlantic
+  name: odoo-fishing
   labels:
-    app: odoo-atlantic
+    app: odoo-fishing
 spec:
   accessModes:
     - ReadWriteMany
