@@ -22,7 +22,6 @@ spec:
   template:
     metadata:
       annotations:
-        cattle.io/timestamp: "2021-11-09T18:59:34Z"
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
