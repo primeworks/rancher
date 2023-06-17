@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: www.atlanticgunsandgear.com
+  - host: w3.atlanticgunsandgear.com
     http:
       paths:
       - path: /
