@@ -9,7 +9,7 @@ metadata:
   name: odoo-fishing
 spec:
   progressDeadlineSeconds: 600
-  replicas: 2
+  replicas: 3
   revisionHistoryLimit: 10
   selector:
     matchLabels:
