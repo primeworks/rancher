@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-fishing
+  ownerReferences:
+  - apiVersion: apps/v1beta2
+    controller: true
+    kind: statefulset
+    name: db-fishing
+    uid: d136565c-b478-49ea-9e0f-f5d36e00195b
+spec:
+  selector:
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-fishing
+  sessionAffinity: None
+  clusterIP: None
+  clusterIPs:
+  - None
+  ports:
+    - protocol: TCP
+      targetPort: 42
+      port: 42
+      name: default

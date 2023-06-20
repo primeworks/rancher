@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: db-fishing
+    app.kubernetes.io/managed-by: Helm
+    cattle.io/creator: norman
+    objectset.rio.cattle.io/hash: dbb408b909497414f93be5e7a78a2f285d27b7e1
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-fishing
+  name: db-fishing
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: statefulSet-default-db-fishing
+  serviceName: db-fishing
+  template:
+    metadata:
+      annotations:
+        cattle.io/timestamp: "2022-09-04T02:49:36Z"
+        field.cattle.io/ports: '[[]]'
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: statefulSet-default-db-fishing
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: stack
+                operator: In
+                values:
+                - odoo
+      containers:
+      - args:
+        - -c
+        - max_connections=1200
+        env:
+        - name: POSTGRES_DB
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: odoo
+        - name: POSTGRES_USER
+          value: odoo
+        image: postgres:15
+        imagePullPolicy: IfNotPresent
+        name: db-fishing
+        
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        volumeMounts:
+        # Edit the volume to match the existing volumeMounts in the cluster
+        - mountPath: /var/lib/postgresql/data
+          name: vol-ytjxx
+          subPath: database
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir:
+          medium: Memory
+        name: dshm
+      # Edit the volume to match the existing pv in the cluster
+      - name: vol-ytjxx
+        persistentVolumeClaim:
+          claimName: odoo-fishing
+  updateStrategy:
+    type: RollingUpdate
+status:
+  availableReplicas: 1
+  replicas: 1
