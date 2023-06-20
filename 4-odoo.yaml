@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-fishing
+    app: odoo-studio24
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-fishing
-  name: odoo-fishing
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-studio24
+  name: odoo-studio24
 spec:
   progressDeadlineSeconds: 600
   replicas: 3
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-fishing
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-studio24
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,7 +25,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-fishing
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-studio24
     spec:
       affinity:
         nodeAffinity:
@@ -39,7 +39,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-fishing
+          value: db-studio24
         - name: PASSWORD
           value: odoo
         - name: USER
@@ -71,7 +71,7 @@ spec:
                 - /bin/sh
                 - '-c'
                 - '-e'
-                - exec pg_isready -U "odoo" -d "dbname=postgres" -h db-fishing
+                - exec pg_isready -U "odoo" -d "dbname=postgres" -h db-studio24
         readinessProbe:
           failureThreshold: 6
           httpGet:
@@ -82,7 +82,7 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-fishing
+        name: odoo-studio24
         resources:
           limits:
             cpu: "1"
@@ -128,5 +128,5 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: odoo-fishing
+          claimName: odoo-studio24
 

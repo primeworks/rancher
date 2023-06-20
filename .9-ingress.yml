@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-fishing
+  name: odoo-studio24
   annotations:
     cert-manager.io/issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /
@@ -15,7 +15,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: odoo-fishing
+            name: odoo-studio24
             port:
               name: http
   tls:

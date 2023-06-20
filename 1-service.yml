@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-fishing
+  name: odoo-studio24
 spec:
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
@@ -10,7 +10,7 @@ spec:
   ipFamilies:
   - IPv4
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-fishing
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-studio24
   type: LoadBalancer
   sessionAffinity: None
   ports:
