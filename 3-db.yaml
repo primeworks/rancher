@@ -30,10 +30,10 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: app
+              - key: stack
                 operator: In
                 values:
-                - db
+                - odoo
       containers:
       - args:
         - -c
@@ -45,13 +45,11 @@ spec:
           value: odoo
         - name: POSTGRES_USER
           value: odoo
-        image: postgres:12
+        image: postgres:15
         imagePullPolicy: IfNotPresent
         name: db-lighthouse
+        
         resources:
-          limits:
-            cpu: "1"
-            memory: 6000Mi
           requests:
             cpu: 100m
             memory: 512Mi
@@ -69,7 +67,7 @@ spec:
         # Edit the volume to match the existing volumeMounts in the cluster
         - mountPath: /var/lib/postgresql/data
           name: vol-ytjxx
-          subPath: database16
+          subPath: database
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -83,11 +81,6 @@ spec:
       - name: vol-ytjxx
         persistentVolumeClaim:
           claimName: odoo-lighthouse
-      - configMap:
-          defaultMode: 511
-          name: postgresql.conf
-          optional: true
-        name: config
   updateStrategy:
     type: RollingUpdate
 status:

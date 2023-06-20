@@ -3,10 +3,18 @@ kind: Service
 metadata:
   name: odoo-lighthouse
 spec:
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  allocateLoadBalancerNodePorts: true
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+  - IPv4
   selector:
     workload.user.cattle.io/workloadselector: deployment-default-odoo-lighthouse
+  type: LoadBalancer
+  sessionAffinity: None
   ports:
-    - protocol: TCP
-      targetPort: odoo-lighthouse
-      port: 8069
-      name: odoo-lighthouse
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http

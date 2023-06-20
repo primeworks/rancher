@@ -9,7 +9,7 @@ metadata:
   name: odoo-lighthouse
 spec:
   progressDeadlineSeconds: 600
-  replicas: 1
+  replicas: 3
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -22,7 +22,6 @@ spec:
   template:
     metadata:
       annotations:
-        cattle.io/timestamp: "2021-11-09T18:59:34Z"
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
@@ -33,10 +32,10 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: app
+              - key: stack
                 operator: In
                 values:
-                - files
+                - odoo
       containers:
       - env:
         - name: HOST
@@ -47,6 +46,42 @@ spec:
           value: odoo
         image: odoo:16
         imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /web/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 600
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 5
+        ports:
+        - containerPort: 8069
+          name: http
+          protocol: TCP
+        startupProbe:
+            failureThreshold: 3
+            successThreshold: 1
+            initialDelaySeconds: 0
+            timeoutSeconds: 1
+            periodSeconds: 10
+            exec:
+              command:
+                - /bin/sh
+                - '-c'
+                - '-e'
+                - exec pg_isready -U "odoo" -d "dbname=postgres" -h db-lighthouse
+        readinessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /web/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
         name: odoo-lighthouse
         resources:
           limits:
@@ -67,15 +102,18 @@ spec:
         tty: true
         ports:
             - containerPort: 8069
-              name: odoo-lighthouse
+              name: http
               protocol: TCP
         volumeMounts:
         # Edit the volume to match the existing mountPaths in the cluster
-        - mountPath: /etc/odoo
-          name: config
         - mountPath: /var/lib/odoo
           name: vol-7xe3r
           subPath: odoo
+        - mountPath: /mnt/extra-addons
+          name: vol-7xe3r
+          subPath: odoo/addons
+        - mountPath: /etc/odoo
+          name: config
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
