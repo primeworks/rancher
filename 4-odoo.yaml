@@ -84,9 +84,6 @@ spec:
           timeoutSeconds: 5
         name: odoo-uc
         resources:
-          limits:
-            cpu: "1"
-            memory: 6000Mi
           requests:
             cpu: 100m
             memory: 512Mi
