@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: odoo-dezain
+  name: odoo-dezainca
   labels:
-    app: odoo-dezain
+    app: odoo-dezainca
 spec:
   accessModes:
     - ReadWriteMany

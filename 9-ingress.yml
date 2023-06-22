@@ -1,24 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-dezain
+  name: odoo-dezainca
   annotations:
     cert-manager.io/issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-  - host: odoo-dezain.webdiscode.com
+  - host: odoo-dezainca.webdiscode.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: odoo-dezain
+            name: odoo-dezainca
             port:
               name: http
   tls:
   - hosts:
-    - odoo-dezain.webdiscode.com
-    secretName: odoo-dezain.webdiscode.com-tls
+    - odoo-dezainca.webdiscode.com
+    secretName: odoo-dezainca.webdiscode.com-tls
