@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: www.atlanticgunsandgear.com
+  - host: odoo-evoucherng.webdiscode.com
     http:
       paths:
       - path: /
@@ -20,5 +20,5 @@ spec:
               name: http
   tls:
   - hosts:
-    - www.atlanticgunsandgear.com
-    secretName: www.atlanticgunsandgear.com-tls
+    - odoo-evoucherng.webdiscode.com
+    secretName: odoo-evoucherng.webdiscode.com-tls
