@@ -22,7 +22,6 @@ spec:
   template:
     metadata:
       annotations:
-        cattle.io/timestamp: "2021-11-09T18:59:34Z"
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
@@ -33,25 +32,58 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: app
+              - key: stack
                 operator: In
                 values:
-                - files
+                - odoo
       containers:
       - env:
         - name: HOST
-          value: db-basic
+          value: db-eliteboxng
         - name: PASSWORD
           value: odoo
         - name: USER
           value: odoo
         image: odoo:13
         imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /web/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 600
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 5
+        ports:
+        - containerPort: 8069
+          name: http
+          protocol: TCP
+        startupProbe:
+            failureThreshold: 3
+            successThreshold: 1
+            initialDelaySeconds: 0
+            timeoutSeconds: 1
+            periodSeconds: 10
+            exec:
+              command:
+                - /bin/sh
+                - '-c'
+                - '-e'
+                - exec pg_isready -U "odoo" -d "dbname=postgres" -h db-eliteboxng
+        readinessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /web/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
         name: odoo-eliteboxng
         resources:
-          limits:
-            cpu: "1"
-            memory: 6000Mi
           requests:
             cpu: 100m
             memory: 512Mi
@@ -67,15 +99,18 @@ spec:
         tty: true
         ports:
             - containerPort: 8069
-              name: odoo-eliteboxng
+              name: http
               protocol: TCP
         volumeMounts:
         # Edit the volume to match the existing mountPaths in the cluster
-        - mountPath: /etc/odoo
-          name: config
         - mountPath: /var/lib/odoo
           name: vol-7xe3r
-          subPath: data/odoo
+          subPath: odoo
+        - mountPath: /mnt/extra-addons
+          name: vol-7xe3r
+          subPath: odoo/addons
+        - mountPath: /etc/odoo
+          name: config
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -90,5 +125,5 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: eliteboxng-odoo
+          claimName: odoo-eliteboxng
 
