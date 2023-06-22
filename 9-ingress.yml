@@ -1,19 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-evoucher
+  name: odoo-evoucherng
   annotations:
+    cert-manager.io/issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-  - host: odoo-evoucher.webdiscode.com
+  - host: www.atlanticgunsandgear.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: odoo-evoucher
+            name: odoo-evoucherng
             port:
-              number: 8069
+              name: http
+  tls:
+  - hosts:
+    - www.atlanticgunsandgear.com
+    secretName: www.atlanticgunsandgear.com-tls
