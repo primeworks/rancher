@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-lighthouse
+  name: odoo-uc
 spec:
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
@@ -10,7 +10,7 @@ spec:
   ipFamilies:
   - IPv4
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-lighthouse
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-uc
   type: LoadBalancer
   sessionAffinity: None
   ports:

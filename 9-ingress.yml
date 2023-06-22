@@ -1,24 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-lighthouse
+  name: odoo-uc
   annotations:
     cert-manager.io/issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-  - host: odoo-lighthouse.webdiscode.com
+  - host: odoo-uc.webdiscode.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: odoo-lighthouse
+            name: odoo-uc
             port:
               name: http
   tls:
   - hosts:
-    - odoo-lighthouse.webdiscode.com
-    secretName: odoo-lighthouse.webdiscode.com-tls
+    - odoo-uc.webdiscode.com
+    secretName: odoo-uc.webdiscode.com-tls
