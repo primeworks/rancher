@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: db-basic
+    app: db-didisng
     app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
     objectset.rio.cattle.io/hash: dbb408b909497414f93be5e7a78a2f285d27b7e1
-    workload.user.cattle.io/workloadselector: statefulSet-default-db-basic
-  name: db-basic
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-didisng
+  name: db-didisng
 spec:
   podManagementPolicy: OrderedReady
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: statefulSet-default-db-basic
-  serviceName: db-basic
+      workload.user.cattle.io/workloadselector: statefulSet-default-db-didisng
+  serviceName: db-didisng
   template:
     metadata:
       annotations:
@@ -23,17 +23,17 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: statefulSet-default-db-basic
+        workload.user.cattle.io/workloadselector: statefulSet-default-db-didisng
     spec:
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: app
+              - key: stack
                 operator: In
                 values:
-                - db
+                - odoo
       containers:
       - args:
         - -c
@@ -45,13 +45,11 @@ spec:
           value: odoo
         - name: POSTGRES_USER
           value: odoo
-        image: postgres:12
+        image: postgres:15
         imagePullPolicy: IfNotPresent
-        name: db-basic
+        name: db-didisng
+        
         resources:
-          limits:
-            cpu: "1"
-            memory: 6000Mi
           requests:
             cpu: 100m
             memory: 512Mi
@@ -69,7 +67,7 @@ spec:
         # Edit the volume to match the existing volumeMounts in the cluster
         - mountPath: /var/lib/postgresql/data
           name: vol-ytjxx
-          subPath: didis-database
+          subPath: database
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -82,7 +80,7 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
         persistentVolumeClaim:
-          claimName: abope-odoo
+          claimName: odoo-didisng
   updateStrategy:
     type: RollingUpdate
 status:

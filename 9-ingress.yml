@@ -1,19 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-didis
+  name: odoo-didisng
   annotations:
+    cert-manager.io/issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-  - host: didis.webdiscode.com
+  - host: odoo-didisng.webdiscode.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: odoo-didis
+            name: odoo-didisng
             port:
-              number: 8069
+              name: http
+  tls:
+  - hosts:
+    - odoo-didisng.webdiscode.com
+    secretName: odoo-didisng.webdiscode.com-tls

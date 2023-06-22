@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-didis
+    app: odoo-didisng
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-didis
-  name: odoo-didis
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-didisng
+  name: odoo-didisng
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-didis
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-didisng
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -22,36 +22,68 @@ spec:
   template:
     metadata:
       annotations:
-        cattle.io/timestamp: "2021-11-09T18:59:34Z"
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-didis
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-didisng
     spec:
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: app
+              - key: stack
                 operator: In
                 values:
-                - files
+                - odoo
       containers:
       - env:
         - name: HOST
-          value: db-basic
+          value: db-didisng
         - name: PASSWORD
           value: odoo
         - name: USER
           value: odoo
-        image: odoo:13
+        image: odoo:15
         imagePullPolicy: IfNotPresent
-        name: odoo-didis
+        livenessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /web/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 600
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 5
+        ports:
+        - containerPort: 8069
+          name: http
+          protocol: TCP
+        startupProbe:
+            failureThreshold: 3
+            successThreshold: 1
+            initialDelaySeconds: 0
+            timeoutSeconds: 1
+            periodSeconds: 10
+            exec:
+              command:
+                - /bin/sh
+                - '-c'
+                - '-e'
+                - exec pg_isready -U "odoo" -d "dbname=postgres" -h db-didisng
+        readinessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /web/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: odoo-didisng
         resources:
-          limits:
-            cpu: "1"
-            memory: 6000Mi
           requests:
             cpu: 100m
             memory: 512Mi
@@ -67,15 +99,18 @@ spec:
         tty: true
         ports:
             - containerPort: 8069
-              name: odoo-didis
+              name: http
               protocol: TCP
         volumeMounts:
         # Edit the volume to match the existing mountPaths in the cluster
-        - mountPath: /etc/odoo
-          name: config
         - mountPath: /var/lib/odoo
           name: vol-7xe3r
           subPath: odoo
+        - mountPath: /mnt/extra-addons
+          name: vol-7xe3r
+          subPath: odoo/addons
+        - mountPath: /etc/odoo
+          name: config
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -90,5 +125,5 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: abope-odoo
+          claimName: odoo-didisng
 
