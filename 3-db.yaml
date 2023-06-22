@@ -30,10 +30,10 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: app
+              - key: stack
                 operator: In
                 values:
-                - db
+                - odoo
       containers:
       - args:
         - -c
@@ -45,13 +45,11 @@ spec:
           value: odoo
         - name: POSTGRES_USER
           value: odoo
-        image: postgres:12
+        image: postgres:15
         imagePullPolicy: IfNotPresent
         name: db-basic
+        
         resources:
-          limits:
-            cpu: "1"
-            memory: 6000Mi
           requests:
             cpu: 100m
             memory: 512Mi
@@ -82,7 +80,7 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
         persistentVolumeClaim:
-          claimName: tbv-repair
+          claimName: odoo-basic
   updateStrategy:
     type: RollingUpdate
 status:
