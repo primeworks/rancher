@@ -1,12 +1,20 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-abope
+  name: odoo-abopeng
 spec:
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  allocateLoadBalancerNodePorts: true
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+  - IPv4
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-abope
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-abopeng
+  type: LoadBalancer
+  sessionAffinity: None
   ports:
-    - protocol: TCP
-      targetPort: odoo-abope
-      port: 8069
-      name: odoo-abope
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
