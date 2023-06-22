@@ -1,12 +1,20 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-silverflow
+  name: odoo-basic
 spec:
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  allocateLoadBalancerNodePorts: true
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+  - IPv4
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-silverflow
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+  type: LoadBalancer
+  sessionAffinity: None
   ports:
-    - protocol: TCP
-      targetPort: odoo-silverflow
-      port: 8069
-      name: odoo-silverflow
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
