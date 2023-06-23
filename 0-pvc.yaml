@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: odoo-basic
+  name: splunk-sfx
   labels:
-    app: odoo-basic
+    app: splunk-sfx
 spec:
   accessModes:
     - ReadWriteMany
