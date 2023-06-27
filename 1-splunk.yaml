@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
-  name: splunk-sfx
+    workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-basic
+  name: splunk-basic
   namespace: default
 spec:
   progressDeadlineSeconds: 600
@@ -11,7 +11,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
+      workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-basic
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -21,17 +21,17 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-sfx
+        workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-basic
     spec:
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: app
+              - key: stack
                 operator: In
                 values:
-                - sfx
+                - splunk
       containers:
       - env:
         - name: SPLUNK_START_ARGS
@@ -40,39 +40,34 @@ spec:
           value: i)24125114**A
         image: splunk/splunk
         imagePullPolicy: IfNotPresent
-        name: splunk-sfx
+        name: splunk-basic
         ports:
         - containerPort: 8000
-          name: splunk-sfx
+          name: http
           protocol: TCP
         resources:
-          limits:
-            cpu: "1"
-            memory: 36000Mi
           requests:
             cpu: 100m
             memory: 512Mi
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
-        - mountPath: /opt/splunk/var/sfx-data
+        - mountPath: /opt/splunk/var/basic-data
           name: data
+          subPath: basic-data
         - mountPath: /opt/splunk/etc
-          name: etc
+          name: data
+          subPath: etc
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
-      - hostPath:
-          path: /opt/splunk/etc
-          type: DirectoryOrCreate
-        name: etc
-      - hostPath:
-          path: /opt/splunk/data
-          type: DirectoryOrCreate
-        name: data
+      # Edit the volume to match the existing pv in the cluster
+      - name: data
+        persistentVolumeClaim:
+          claimName: splunk-basic
 status:
   availableReplicas: 1
   conditions:
@@ -84,7 +79,7 @@ status:
     type: Available
   - lastTransitionTime: "2023-01-12T20:05:29Z"
     lastUpdateTime: "2023-02-17T18:16:44Z"
-    message: ReplicaSet "splunk-sfxt-5d84d49c7b" has successfully progressed.
+    message: ReplicaSet "splunk-basict-5d84d49c7b" has successfully progressed.
     reason: NewReplicaSetAvailable
     status: "True"
     type: Progressing
