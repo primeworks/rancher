@@ -18,7 +18,20 @@ spec:
             name: odoo-harvesthouse
             port:
               name: http
+  - host: hhpei.webdiscode.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-harvesthouse
+            port:
+              name: http
   tls:
   - hosts:
     - odoo-harvesthouse.webdiscode.com
     secretName: odoo-harvesthouse.webdiscode.com-tls
+  - hosts:
+    - hhpei.webdiscode.com
+    secretName: hhpei.webdiscode.com-tls
