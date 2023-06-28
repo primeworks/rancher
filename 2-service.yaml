@@ -10,7 +10,7 @@ spec:
   ipFamilies:
   - IPv4
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-splunk-truck
+    workload.user.cattle.io/workloadselector: apps.deployment-default-splunk-truck
   type: LoadBalancer
   sessionAffinity: None
   ports:
