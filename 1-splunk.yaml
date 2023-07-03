@@ -52,7 +52,7 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
-        - mountPath: /opt/splunk/var/truck-data
+        - mountPath: /opt/splunk/var/sfx-data
           name: data
           subPath: truck-data
         - mountPath: /opt/splunk/etc
