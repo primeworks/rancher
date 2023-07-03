@@ -30,8 +30,5 @@ spec:
               name: http
   tls:
    - hosts:
-    - abope.webdiscode.com
-    secretName: abope.webdiscode.com-tls
-   - hosts:
     - odoo-abopeng.webdiscode.com
     secretName: odoo-abopeng.webdiscode.com-tls
