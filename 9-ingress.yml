@@ -8,16 +8,6 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: studio24nigeria.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: odoo-studio24
-            port:
-              name: http
   - host: www.studio24nigeria.com
     http:
       paths:
@@ -42,9 +32,6 @@ spec:
   - hosts:
     - www.studio24nigeria.com
     secretName: www.studio24nigeria.com-tls
-  - hosts:
-    - studio24nigeria.com
-    secretName: studio24nigeria.com-tls
   - hosts:
     - odoo-studio24.webdiscode.com
     secretName: odoo-studio24.webdiscode.com-tls
