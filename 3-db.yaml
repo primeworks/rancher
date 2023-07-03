@@ -38,6 +38,8 @@ spec:
       - args:
         - -c
         - max_connections=1200
+        - -c
+        - shared_buffers=1024MB
         env:
         - name: POSTGRES_DB
           value: postgres
