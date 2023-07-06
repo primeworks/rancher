@@ -18,7 +18,20 @@ spec:
             name: odoo-fishing
             port:
               name: http
+  - host: www.fishinpei.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-fishing
+            port:
+              name: http
   tls:
   - hosts:
     - www.atlanticgunsandgear.com
     secretName: www.atlanticgunsandgear.com-tls
+  - hosts:
+    - www.fishinpei.com
+    secretName: www.fishinpei.com-tls
