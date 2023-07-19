@@ -39,6 +39,12 @@ spec:
         - max_connections=1200
         - -c
         - shared_buffers=1024MB
+        - -c
+        - max_parallel_workers_per_gather=8
+        - -c
+        - work_mem=10GB
+        - -c
+        - dynamic_shared_memory_type=posix
         env:
         - name: POSTGRES_DB
           value: postgres
