@@ -88,7 +88,7 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
         persistentVolumeClaim:
-          claimName: odoo-didisng
+          claimName: pvc-23a97b4f-88ec-45db-9513-0cf7f068310f
   updateStrategy:
     type: RollingUpdate
 status:
