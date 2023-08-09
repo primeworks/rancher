@@ -46,9 +46,9 @@ spec:
           name: splunk-sfx
           protocol: TCP
         resources:
-          limits:
-            cpu: "1"
-            memory: 36000Mi
+         # limits:
+         #   cpu: "1"
+         #   memory: 36000Mi
           requests:
             cpu: 100m
             memory: 512Mi
