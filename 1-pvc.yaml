@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: odoo-basic
+  name: odoo-ssng
   labels:
-    app: odoo-basic
+    app: odoo-ssng
 spec:
   accessModes:
     - ReadWriteMany
