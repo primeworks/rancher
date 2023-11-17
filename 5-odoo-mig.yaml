@@ -113,8 +113,11 @@ spec:
           name: vol-7xe3r
           subPath: odoo
         - mountPath: /mnt/extra-addons
-          name: vol-7xe3r
+          name: vol-openup
           subPath: odoo/addons
+        - mountPath: /mnt/OpenUpgrade-16.0
+              name: vol-7xe3r
+              subPath: OpenUpgrade-16.0
         - mountPath: /etc/odoo
           name: config
       dnsPolicy: ClusterFirst
