@@ -46,6 +46,12 @@ spec:
           value: odoo
         image: odoo:16
         imagePullPolicy: IfNotPresent
+        args:
+            - '--database=odoo'
+            - '--upgrade-path=/mnt/OpenUpgrade-16.0/opengrade_scripts/scripts'
+            - '--load=base,web,openupgrade_framework'
+            - '--update=all'
+            - '--stop-after-init'
         livenessProbe:
           failureThreshold: 6
           httpGet:
