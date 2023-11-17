@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-mig-16
+  name: odoo-mig-17
 spec:
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
@@ -10,7 +10,7 @@ spec:
   ipFamilies:
   - IPv4
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-mig-16
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-mig-17
   type: LoadBalancer
   sessionAffinity: None
   ports:
