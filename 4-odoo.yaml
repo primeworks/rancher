@@ -119,7 +119,7 @@ spec:
       volumes:
       - configMap:
           defaultMode: 509
-          name: odoo.conf
+          name: odoo-mig-16
           optional: true
         name: config
       # Edit the volume to match the existing pv in the cluster
