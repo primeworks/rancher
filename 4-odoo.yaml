@@ -6,7 +6,7 @@ metadata:
     tier: frontend
     cattle.io/creator: norman
     workload.user.cattle.io/workloadselector: deployment-default-odoo-mig-16
-  name: odoo-mig-16
+  name: odoo-mig-16-test
 spec:
   progressDeadlineSeconds: 600
   replicas: 0
