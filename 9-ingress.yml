@@ -8,6 +8,26 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
+  - host: odoo-mig.webdiscode.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-mig
+            port:
+              name: http
+  - host: odoo-mig-16.webdiscode.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-mig-16
+            port:
+              name: http
   - host: odoo-mig-17.webdiscode.com
     http:
       paths:
@@ -19,6 +39,12 @@ spec:
             port:
               name: http
   tls:
+  - hosts:
+    - odoo-mig.webdiscode.com
+    secretName: odoo-mig.webdiscode.com-tls
+  - hosts:
+    - odoo-mig-16.webdiscode.com
+    secretName: odoo-mig-16.webdiscode.com-tls
   - hosts:
     - odoo-mig-17.webdiscode.com
     secretName: odoo-mig-17.webdiscode.com-tls
