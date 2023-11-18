@@ -44,7 +44,7 @@ spec:
           value: odoo
         - name: USER
           value: odoo
-        image: odoo:17
+        image: odoo:15
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 6

@@ -44,7 +44,7 @@ spec:
           value: odoo
         - name: USER
           value: odoo
-        image: odoo:17
+        image: odoo:16
         imagePullPolicy: IfNotPresent
         args:
             - '--stop-after-init'
