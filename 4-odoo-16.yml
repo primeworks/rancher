@@ -110,7 +110,7 @@ spec:
           subPath: odoo-16
         - mountPath: /mnt/extra-addons
           name: vol-7xe3r
-          subPath: odoo/addons
+          subPath: opengrade-16
         - mountPath: /etc/odoo
           name: config
       dnsPolicy: ClusterFirst
