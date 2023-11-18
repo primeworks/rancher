@@ -39,7 +39,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-basic
+          value: db-17-b
         - name: PASSWORD
           value: odoo
         - name: USER
@@ -71,7 +71,7 @@ spec:
                 - /bin/sh
                 - '-c'
                 - '-e'
-                - exec pg_isready -U "odoo" -d "dbname=postgres" -h db-basic
+                - exec pg_isready -U "odoo" -d "dbname=postgres" -h db-17-b
         readinessProbe:
           failureThreshold: 6
           httpGet:
