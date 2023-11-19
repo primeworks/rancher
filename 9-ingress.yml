@@ -18,7 +18,20 @@ spec:
             name: odoo-lighthouse
             port:
               name: http
+  - host: www.thelighthouseministries.ca
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-lighthouse
+            port:
+              name: http
   tls:
-  - hosts:
+   - hosts:
     - odoo-lighthouse.webdiscode.com
     secretName: odoo-lighthouse.webdiscode.com-tls
+  - hosts:
+    - www.thelighthouseministries.ca
+    secretName: www.thelighthouseministries.ca-tls
