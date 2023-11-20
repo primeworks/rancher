@@ -32,6 +32,3 @@ spec:
   - hosts:
     - www.atlanticgunsandgear.com
     secretName: www.atlanticgunsandgear.com-tls
-  - hosts:
-    - www.fishinpei.com
-    secretName: www.fishinpei.com-tls
