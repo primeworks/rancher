@@ -85,5 +85,5 @@ spec:
   updateStrategy:
     type: RollingUpdate
 status:
-  availableReplicas: 1
-  replicas: 1
+  availableReplicas: 0
+  replicas: 0
