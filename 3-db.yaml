@@ -10,7 +10,7 @@ metadata:
   name: db-17-b
 spec:
   podManagementPolicy: OrderedReady
-  replicas: 0
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
