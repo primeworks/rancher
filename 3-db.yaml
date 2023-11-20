@@ -10,7 +10,7 @@ metadata:
   name: db-lighthouse
 spec:
   podManagementPolicy: OrderedReady
-  replicas: 0
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -85,5 +85,5 @@ spec:
   updateStrategy:
     type: RollingUpdate
 status:
-  availableReplicas: 0
-  replicas: 0
+  availableReplicas: 1
+  replicas: 1
