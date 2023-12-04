@@ -41,10 +41,6 @@ spec:
         - --work_mem=30GB
         - --dynamic_shared_memory_type=posix
         - --max_parallel_workers_per_gather=8
-        command:
-        - sh
-        - -c
-        - sleep 86400
         env:
         - name: POSTGRES_DB
           value: postgres
