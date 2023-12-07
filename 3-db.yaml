@@ -32,7 +32,7 @@ spec:
               - key: stack
                 operator: In
                 values:
-                - 24
+                - '24'
       containers:
       - args:
         - --max_connections=1200

@@ -35,7 +35,7 @@ spec:
               - key: stack
                 operator: In
                 values:
-                - 24
+                - '24'
       containers:
       - env:
         - name: HOST
