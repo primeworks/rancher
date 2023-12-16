@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: odoo-17-demo
+  name: odoo-silverflowca
   labels:
-    app: odoo-17-demo
+    app: odoo-silverflowca
 spec:
   accessModes:
     - ReadWriteMany

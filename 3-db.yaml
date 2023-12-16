@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: db-17-demo
+    app: db-silverflowca
     app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
     objectset.rio.cattle.io/hash: dbb408b909497414f93be5e7a78a2f285d27b7e1
-    workload.user.cattle.io/workloadselector: statefulSet-default-db-17-demo
-  name: db-17-demo
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-silverflowca
+  name: db-silverflowca
 spec:
   podManagementPolicy: OrderedReady
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: statefulSet-default-db-17-demo
-  serviceName: db-17-demo
+      workload.user.cattle.io/workloadselector: statefulSet-default-db-silverflowca
+  serviceName: db-silverflowca
   template:
     metadata:
       annotations:
@@ -23,7 +23,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: statefulSet-default-db-17-demo
+        workload.user.cattle.io/workloadselector: statefulSet-default-db-silverflowca
     spec:
       affinity:
         nodeAffinity:
@@ -51,7 +51,7 @@ spec:
           value: odoo
         image: postgres:15
         imagePullPolicy: IfNotPresent
-        name: db-17-demo
+        name: db-silverflowca
         
         resources:
           requests:
@@ -84,7 +84,7 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
         persistentVolumeClaim:
-          claimName: odoo-17-demo
+          claimName: odoo-silverflowca
   updateStrategy:
     type: RollingUpdate
 status:

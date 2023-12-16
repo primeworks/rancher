@@ -1,24 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-17-demo
+  name: odoo-silverflowca
   annotations:
     cert-manager.io/issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-  - host: odoo-17-demo.webdiscode.com
+  - host: odoo-silverflowca.webdiscode.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: odoo-17-demo
+            name: odoo-silverflowca
             port:
               name: http
   tls:
   - hosts:
-    - odoo-17-demo.webdiscode.com
-    secretName: odoo-17-demo.webdiscode.com-tls
+    - odoo-silverflowca.webdiscode.com
+    secretName: odoo-silverflowca.webdiscode.com-tls
