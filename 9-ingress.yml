@@ -1,24 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-17-b
+  name: odoo-sf
   annotations:
     cert-manager.io/issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-  - host: odoo-17-b.webdiscode.com
+  - host: odoo-sf.webdiscode.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: odoo-17-b
+            name: odoo-sf
             port:
               name: http
   tls:
   - hosts:
-    - odoo-17-b.webdiscode.com
-    secretName: odoo-17-b.webdiscode.com-tls
+    - odoo-sf.webdiscode.com
+    secretName: odoo-sf.webdiscode.com-tls
