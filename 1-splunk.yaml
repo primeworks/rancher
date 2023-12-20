@@ -63,6 +63,11 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: stack
+        operator: Equal
+        value: sfx2
       volumes:
       # Edit the volume to match the existing pv in the cluster
       - name: data
