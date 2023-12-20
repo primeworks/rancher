@@ -76,6 +76,11 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: stack
+        operator: Equal
+        value: '24'
       volumes:
       - emptyDir:
           medium: Memory
