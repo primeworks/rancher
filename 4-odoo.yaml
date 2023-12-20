@@ -112,6 +112,11 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: stack
+        operator: Equal
+        value: odoo
       volumes:
       - configMap:
           defaultMode: 509
