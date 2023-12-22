@@ -90,7 +90,7 @@ spec:
       volumes:
       - emptyDir:
           medium: Memory
-          sizeLimit: 1Gi
+          sizeLimit: 4Gi
         name: dshm
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
