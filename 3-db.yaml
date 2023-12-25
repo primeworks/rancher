@@ -72,8 +72,8 @@ spec:
         tty: true
         volumeMounts:
         # Edit the volume to match the existing volumeMounts in the cluster
-        # - mountPath: /dev/shm
-        #   name: dshm
+        - mountPath: /dev/shm
+          name: dshm
         - mountPath: /var/lib/postgresql/data
           name: vol-ytjxx
           subPath: database
