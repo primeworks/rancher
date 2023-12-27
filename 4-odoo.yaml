@@ -66,12 +66,10 @@ spec:
             initialDelaySeconds: 0
             timeoutSeconds: 1
             periodSeconds: 10
-            exec:
-              command:
-                - /bin/sh
-                - '-c'
-                - '-e'
-                - exec pg_isready -U "odoo" -d "dbname=postgres" -h db-studio24
+            httpGet:
+              path: /web/health
+              port: http
+              scheme: HTTP
         readinessProbe:
           failureThreshold: 6
           httpGet:
@@ -79,7 +77,7 @@ spec:
             port: http
             scheme: HTTP
           initialDelaySeconds: 30
-          periodSeconds: 10
+          periodSeconds: 3000
           successThreshold: 1
           timeoutSeconds: 5
         name: odoo-studio24
