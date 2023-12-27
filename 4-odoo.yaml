@@ -71,7 +71,7 @@ spec:
             successThreshold: 1
             initialDelaySeconds: 0
             timeoutSeconds: 1
-            periodSeconds: 300
+            periodSeconds: 10
             exec:
               command:
                 - /bin/sh
