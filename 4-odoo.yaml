@@ -61,17 +61,15 @@ spec:
           name: http
           protocol: TCP
         startupProbe:
-            failureThreshold: 3
-            successThreshold: 1
-            initialDelaySeconds: 0
-            timeoutSeconds: 1
-            periodSeconds: 10
-            exec:
-              command:
-                - /bin/sh
-                - '-c'
-                - '-e'
-                - exec pg_isready -U "odoo" -d "dbname=postgres" -h db-ssng
+          failureThreshold: 6
+          httpGet:
+            path: /web/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
         readinessProbe:
           failureThreshold: 6
           httpGet:
