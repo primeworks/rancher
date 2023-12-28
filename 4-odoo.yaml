@@ -103,6 +103,8 @@ spec:
               protocol: TCP
         volumeMounts:
         # Edit the volume to match the existing mountPaths in the cluster
+        - mountPath: /dev/shm
+          name: dshm
         - mountPath: /var/lib/odoo
           name: vol-7xe3r
           subPath: odoo
@@ -122,6 +124,10 @@ spec:
         operator: Equal
         value: odoo
       volumes:
+      - emptyDir:
+          medium: Memory
+          sizeLimit: 1Gi
+        name: dshm
       - configMap:
           defaultMode: 509
           name: odoo.conf
