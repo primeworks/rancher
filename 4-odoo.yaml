@@ -27,6 +27,12 @@ spec:
       labels:
         workload.user.cattle.io/workloadselector: deployment-default-odoo-harvesthouse
     spec:
+      initContainers:
+      - name: check-db-ready
+        image: postgres:9.6.5
+        command: ['sh', '-c', 
+          'until pg_isready -h db-harvesthouse -p 5432; 
+          do echo waiting for database; sleep 2; done;']
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -61,17 +67,15 @@ spec:
           name: http
           protocol: TCP
         startupProbe:
-            failureThreshold: 3
-            successThreshold: 1
-            initialDelaySeconds: 0
-            timeoutSeconds: 1
-            periodSeconds: 10
-            exec:
-              command:
-                - /bin/sh
-                - '-c'
-                - '-e'
-                - exec pg_isready -U "odoo" -d "dbname=postgres" -h db-harvesthouse
+          failureThreshold: 6
+          httpGet:
+            path: /web/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
         readinessProbe:
           failureThreshold: 6
           httpGet:
