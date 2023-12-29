@@ -79,11 +79,11 @@ fi
            wget -O "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
 
            if [ -e "$LOCAL_DUMP_FILE" ]; then
-           echo "Restoring database dump locally..."
-           createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"
-           PGPASSWORD="odoo" psql -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -f "$LOCAL_DUMP_FILE"
-           echo "Database restored successfully."
-           rm "$LOCAL_DUMP_FILE"
+               echo "Restoring database dump locally..."
+               createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"
+               PGPASSWORD="odoo" psql -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -f "$LOCAL_DUMP_FILE"
+               echo "Database restored successfully."
+               rm "$LOCAL_DUMP_FILE"
            
            else
                echo "Error: Failed to download the database dump from FTP."
