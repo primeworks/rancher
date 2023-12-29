@@ -43,7 +43,7 @@ spec:
           value: odoo
         image: postgres:9.6.5
         command: ['sh', '-c', 
-          'until createdb -h db-cbmpei -p 5432; 
+          'until createdb -h db-cbmpei -U odoo -p 5432; 
           do echo waiting for database installation; sleep 60; done;']
       - name: db-initialize
         image: odoo:17
