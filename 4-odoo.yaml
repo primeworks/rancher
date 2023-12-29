@@ -46,9 +46,16 @@ spec:
           'until createdb -h db-cbmpei -U odoo -p 5432; 
           do echo waiting for database installation; sleep 60; done;']
       - name: db-initialize
+        env:
+        - name: HOST
+          value: db-cbmpei
+        - name: PASSWORD
+          value: odoo
+        - name: USER
+          value: odoo
         image: odoo:17
         command: ['sh', '-c', 
-          'until ~/usr/bin/odoo shell -h db-cbmpei -p 5432 -d cbmpei --without-demo-data=all; 
+          'until ~/usr/bin/odoo shell -d cbmpei --without-demo-data=all; 
           do echo waiting for database initialization; sleep 120; done;']
       affinity:
         nodeAffinity:
