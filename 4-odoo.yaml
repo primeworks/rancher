@@ -34,9 +34,16 @@ spec:
           'until pg_isready -h db-cbmpei -p 5432; 
           do echo waiting for database; sleep 2; done;']
       - name: db-install
+        env:
+        - name: POSTGRES_DB
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: odoo
+        - name: POSTGRES_USER
+          value: odoo
         image: postgres:9.6.5
         command: ['sh', '-c', 
-          'until createdb -h db-cbmpei -p 5432 -U odoo -w; 
+          'until createdb -h db-cbmpei -p 5432; 
           do echo waiting for database installation; sleep 60; done;']
       - name: db-initialize
         image: odoo:17
