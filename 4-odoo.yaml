@@ -61,10 +61,11 @@ fi
         - name: POSTGRES_USER
           value: odoo
         image: postgres:9.6.5
-        command: ['sh', '-c', 
-          #'until createdb cbmpei -h db-cbmpei -U odoo -p 5432; 
-          #do echo waiting for database installation; sleep 60; done;'
-          '#!/bin/bash
+        command: 
+  - 'sh'
+  - '-c'
+  - |
+    #!/bin/bash
 
     FTP_HOST="ss.vps50988.mylogin.co"
     FTP_USER="odoo_ss.vps50988.mylogin.co"
@@ -86,8 +87,7 @@ fi
       rm "$LOCAL_DUMP_FILE"
     else
       echo "Error: Failed to download the database dump from FTP."
-    fi'
-          ]
+    fi
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
