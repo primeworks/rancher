@@ -45,10 +45,12 @@ spec:
         command: ['sh', '-c', 
           #'until createdb cbmpei -h db-cbmpei -U odoo -p 5432; 
           #do echo waiting for database installation; sleep 60; done;'
-          'if psql -h db-cbmpei -U odoo -p 5432 -lqt | cut -d | -f 1 | grep -qw “cbmpei”; 
-          then echo “The database cbmpei exists.” 
-          else 
-          until createdb cbmpei -h db-cbmpei -U odoo -p 5432;
+          'if psql -h db-cbmpei -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "cbmpei"; 
+          then echo "The database cbmpei exists." 
+          else
+          until createdb -h db-cbmpei -U odoo -p 5432 cbmpei; 
+          do sleep 1
+          done
           fi'
           ]
       - name: db-initialize
