@@ -70,7 +70,7 @@ fi
           'if PGPASSWORD="odoo" psql -h db-cbmpei -U odoo -d cbmpei -tAc "select * from information_schema.tables t where t.table_name = res_users" > /dev/null 2>&1; then
     echo "The database is initialized."
 else
-    until ~/usr/bin/odoo shell -d cbmpei --without-demo-data=all; then
+    until /usr/bin/odoo shell --db_host db-cbmpei -d coredb -i base; then
     echo "The database is being initialized."
 fi
 
