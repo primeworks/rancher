@@ -67,7 +67,7 @@ fi
           #'if [~/usr/bin/odoo shell -d cbmpei --without-demo-data=all; 
           #do echo waiting for database initialization;] ; then sleep 1000; else exit 1; fi'
           
-          'if PGPASSWORD="odoo" psql -h db-cbmpei -U odoo -d cbmpei -tAc "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" > /dev/null 2>&1; then
+          'if PGPASSWORD="odoo" psql -h db-cbmpei -U odoo -d cbmpei -tAc "SELECT 1 FROM information_schema.tables WHERE table_name = res_users" > /dev/null 2>&1; then
     echo "The database is initialized."
 else
     until ~/usr/bin/odoo shell -d cbmpei --without-demo-data=all;
