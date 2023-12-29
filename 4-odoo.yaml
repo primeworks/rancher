@@ -75,8 +75,6 @@ fi
     LOCAL_USER="odoo"
     LOCAL_DATABASE="cbmpei"
     LOCAL_DUMP_FILE="odoo.dump"
-
-    echo "Downloading database dump from FTP..."
     wget -O "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
 
     if [ -e "$LOCAL_DUMP_FILE" ]; then
