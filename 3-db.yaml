@@ -33,7 +33,7 @@ spec:
               - key: stack
                 operator: In
                 values:
-                - silver
+                - odoo
       containers:
       - args:
         - --max_connections=1200
