@@ -67,6 +67,10 @@ fi
               LOCAL_DATABASE="cbmpei"
               LOCAL_DUMP_FILE="odoo_2023-12-29_19-32-40.dump"
 
+              if ! PGPASSWORD="odoo" psql -h db-cbmpei -U odoo -d cbmpei -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+        echo "The res_users table doesn't exist in the cbmpei database. Proceeding with database restore..."
+
+
               cd /var/lib/odoo/
               echo "Downloading database dump from FTP..."
               curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
