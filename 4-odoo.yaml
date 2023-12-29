@@ -54,6 +54,16 @@ fi
           ]
       - name: db-restore
         image: odoo:17
+        volumeMounts:
+        # Edit the volume to match the existing mountPaths in the cluster
+        - mountPath: /mnt
+          name: data
+          subPath: odoo
+        volumes:
+      # Edit the volume to match the existing pv in the cluster
+      - name: data
+        persistentVolumeClaim:
+          claimName: odoo-cbmpei
         command:
             - sh
             - -c
@@ -65,7 +75,7 @@ fi
               LOCAL_HOST="db-cbmpei"
               LOCAL_USER="odoo"
               LOCAL_DATABASE="cbmpei"
-              LOCAL_DUMP_FILE="/opt/odoo.dump"
+              LOCAL_DUMP_FILE="/mnt/odoo.dump"
 
               echo "Downloading database dump from FTP..."
               curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
