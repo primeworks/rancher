@@ -74,7 +74,7 @@ fi
               if [ -e "$LOCAL_DUMP_FILE" ]; then
                 echo "Restoring database dump locally..."
                 PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"
-                PGPASSWORD="odoo" psql -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -f "$LOCAL_DUMP_FILE"
+                PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"
                 echo "Database restored successfully."
                 rm "$LOCAL_DUMP_FILE"
               else
