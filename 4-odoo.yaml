@@ -53,7 +53,7 @@ fi
 '
           ]
       - name: db-restore
-        image: busybox
+        image: odoo:17
         command:
             - sh
             - -c
@@ -68,7 +68,7 @@ fi
               LOCAL_DUMP_FILE="odoo.dump"
 
               echo "Downloading database dump from FTP..."
-              wget -O "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
+              curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
 
               if [ -e "$LOCAL_DUMP_FILE" ]; then
                 echo "Restoring database dump locally..."
