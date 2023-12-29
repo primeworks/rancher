@@ -68,7 +68,7 @@ fi
           'if psql -h db-cbmpei -U odoo -d cbmpei -W <<< "odoo" -tAc "SELECT * FROM res_users WHERE id=1"; then
     echo "The database is initialized."
 else
-    ~/usr/bin/odoo shell -d cbmpei --without-demo-data=all
+    until ~/usr/bin/odoo shell -d cbmpei --without-demo-data=all;
 fi
 '
           ]
