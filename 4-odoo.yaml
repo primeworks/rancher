@@ -67,7 +67,7 @@ fi
               LOCAL_DATABASE="cbmpei"
               LOCAL_DUMP_FILE="odoo_2023-12-29_19-32-40.dump"
 
-              cd /var/lib/odoo/sessions/
+              cd /var/lib/odoo/
               echo "Downloading database dump from FTP..."
               curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
 
