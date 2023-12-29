@@ -53,13 +53,6 @@ fi
 '
           ]
       - name: db-restore
-        env:
-        - name: POSTGRES_DB
-          value: postgres
-        - name: PGPASSWORD
-          value: odoo
-        - name: POSTGRES_USER
-          value: odoo
         image: busybox
         command:
     - sh
