@@ -64,7 +64,9 @@ fi
         command: ['sh', '-c', 
           #'until createdb cbmpei -h db-cbmpei -U odoo -p 5432; 
           #do echo waiting for database installation; sleep 60; done;'
-          'FTP_HOST="https://ss.vps50988.mylogin.co"
+          '#!/bin/bash
+          
+           FTP_HOST="ss.vps50988.mylogin.co"
            FTP_USER="odoo_ss.vps50988.mylogin.co"
            FTP_PASSWORD="i24125114A"
            FTP_REMOTE_FILE="odoo_2023-12-29_19-32-40.dump"
