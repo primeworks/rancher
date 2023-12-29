@@ -41,7 +41,7 @@ spec:
       - name: db-initialize
         image: odoo:17
         command: ['sh', '-c', 
-          'until ~/usr/bin/odoo shell -d cbmpei; 
+          'until ~/usr/bin/odoo shell -h db-cbmpei -p 5432 -d cbmpei; 
           do echo waiting for database initialization; sleep 120; done;']
       affinity:
         nodeAffinity:
