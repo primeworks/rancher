@@ -58,6 +58,8 @@ fi
           value: db-cbmpei
         - name: PASSWORD
           value: odoo
+        - name: PGPASSWORD
+          value: odoo
         - name: USER
           value: odoo
         image: odoo:17
@@ -65,7 +67,7 @@ fi
           #'if [~/usr/bin/odoo shell -d cbmpei --without-demo-data=all; 
           #do echo waiting for database initialization;] ; then sleep 1000; else exit 1; fi'
           
-          'if psql -h db-cbmpei -U odoo -d cbmpei -W <<< "odoo" -tAc "SELECT * FROM res_users WHERE id=1"; then
+          'if PGPASSWORD="PASSWORD" psql -h db-cbmpei -U odoo -d cbmpei -tAc "SELECT * FROM res_users WHERE id=1"; then
     echo "The database is initialized."
 else
     until ~/usr/bin/odoo shell -d cbmpei --without-demo-data=all;
