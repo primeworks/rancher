@@ -43,8 +43,17 @@ spec:
           value: odoo
         image: postgres:9.6.5
         command: ['sh', '-c', 
-          'until createdb cbmpei -h db-cbmpei -U odoo -p 5432; 
-          do echo waiting for database installation; sleep 60; done;']
+          #'until createdb cbmpei -h db-cbmpei -U odoo -p 5432; 
+          #do echo waiting for database installation; sleep 60; done;'
+          'if psql -lqt | cut -d | -f 1 | grep -qw “cbmpei”; 
+          then echo “The database cbmpei exists.” 
+          else 
+          createdb cbmpei -h db-cbmpei -U odoo -p 5432;
+          do echo waiting for database installation;
+          sleep 60;
+          exit 1
+          fi'
+          ]
       - name: db-initialize
         env:
         - name: HOST
