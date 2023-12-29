@@ -52,7 +52,7 @@ else
 fi
 '
           ]
-      - name: db-install
+      - name: db-restore
         env:
         - name: POSTGRES_DB
           value: postgres
