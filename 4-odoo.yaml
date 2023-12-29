@@ -70,9 +70,7 @@ fi
           'if PGPASSWORD="PASSWORD" psql -h db-cbmpei -U odoo -d cbmpei -tAc "SELECT COUNT(*) FROM res_users WHERE active = true" | grep -qw 1; then
     echo "The database is initialized."
 else
-    until ~/usr/bin/odoo shell -d cbmpei --without-demo-data=all; do
-        sleep 1
-    done
+    until ~/usr/bin/odoo shell -d cbmpei --without-demo-data=all; 
 fi
 '
           ]
