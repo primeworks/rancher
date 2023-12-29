@@ -48,7 +48,7 @@ spec:
           'if psql -lqt | cut -d | -f 1 | grep -qw “cbmpei”; 
           then echo “The database cbmpei exists.” 
           else 
-          createdb cbmpei -h db-cbmpei -U odoo -p 5432;
+          until createdb cbmpei -h db-cbmpei -U odoo -p 5432;
           do echo waiting for database installation;
           exit 1
           fi'
