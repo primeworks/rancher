@@ -66,29 +66,27 @@ fi
           #do echo waiting for database installation; sleep 60; done;'
           '#!/bin/bash
 
-FTP_HOST="ss.vps50988.mylogin.co"
-FTP_USER="odoo_ss.vps50988.mylogin.co"
-FTP_PASSWORD="i24125114A"
-FTP_REMOTE_FILE="odoo_2023-12-29_19-32-40.dump"
-LOCAL_HOST="db-cbmpei"
-LOCAL_USER="odoo"
-LOCAL_DATABASE="cbmpei"
-LOCAL_DUMP_FILE="odoo.dump"
+    FTP_HOST="ss.vps50988.mylogin.co"
+    FTP_USER="odoo_ss.vps50988.mylogin.co"
+    FTP_PASSWORD="i24125114A"
+    FTP_REMOTE_FILE="odoo_2023-12-29_19-32-40.dump"
+    LOCAL_HOST="db-cbmpei"
+    LOCAL_USER="odoo"
+    LOCAL_DATABASE="cbmpei"
+    LOCAL_DUMP_FILE="odoo.dump"
 
-echo "Downloading database dump from FTP..."
-wget -O "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
+    echo "Downloading database dump from FTP..."
+    wget -O "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
 
-if [ -e "$LOCAL_DUMP_FILE" ]; then
-    echo "Restoring database dump locally..."
-    createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"
-    PGPASSWORD="odoo" psql -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -f "$LOCAL_DUMP_FILE"
-    echo "Database restored successfully."
-    rm "$LOCAL_DUMP_FILE"
-else
-    echo "Error: Failed to download the database dump from FTP."
-fi
-
-           '
+    if [ -e "$LOCAL_DUMP_FILE" ]; then
+      echo "Restoring database dump locally..."
+      createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"
+      PGPASSWORD="odoo" psql -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -f "$LOCAL_DUMP_FILE"
+      echo "Database restored successfully."
+      rm "$LOCAL_DUMP_FILE"
+    else
+      echo "Error: Failed to download the database dump from FTP."
+    fi'
           ]
       affinity:
         nodeAffinity:
