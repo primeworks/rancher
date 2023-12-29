@@ -43,7 +43,7 @@ spec:
           value: odoo
         image: postgres:9.6.5
         command: ['sh', '-c', 
-          'until createdb -h db-cbmpei -U odoo -p 5432; 
+          'until createdb -h db-cbmpei -U odoo -p 5432 --dbname=cbmpei -d postgres; 
           do echo waiting for database installation; sleep 60; done;']
       - name: db-initialize
         env:
@@ -55,8 +55,8 @@ spec:
           value: odoo
         image: odoo:17
         command: ['sh', '-c', 
-          'until ~/usr/bin/odoo shell -d cbmpei --without-demo-data=all; 
-          do echo waiting for database initialization; sleep 120; done;']
+          'if [~/usr/bin/odoo shell -d cbmpei --without-demo-data=all; 
+          do echo waiting for database initialization;] ; then sleep 1000; else exit 1; fi']
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
