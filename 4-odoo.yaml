@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-cbpei
+    app: odoo-cbmpei
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-cbpei
-  name: odoo-cbpei
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-cbmpei
+  name: odoo-cbmpei
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-cbpei
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-cbmpei
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,13 +25,13 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-cbpei
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-cbmpei
     spec:
       initContainers:
       - name: check-db-ready
         image: postgres:9.6.5
         command: ['sh', '-c', 
-          'until pg_isready -h db-cbpei -p 5432; 
+          'until pg_isready -h db-cbmpei -p 5432; 
           do echo waiting for database; sleep 2; done;']
       affinity:
         nodeAffinity:
@@ -45,7 +45,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-cbpei
+          value: db-cbmpei
         - name: PASSWORD
           value: odoo
         - name: USER
@@ -86,7 +86,7 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-cbpei
+        name: odoo-cbmpei
         resources:
           requests:
             cpu: 100m
@@ -129,5 +129,5 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: odoo-cbpei
+          claimName: odoo-cbmpei
 

@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: db-cbpei
+    app: db-cbmpei
     app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
     objectset.rio.cattle.io/hash: dbb408b909497414f93be5e7a78a2f285d27b7e1
-    workload.user.cattle.io/workloadselector: statefulSet-default-db-cbpei
-  name: db-cbpei
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-cbmpei
+  name: db-cbmpei
 spec:
   podManagementPolicy: OrderedReady
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: statefulSet-default-db-cbpei
-  serviceName: db-cbpei
+      workload.user.cattle.io/workloadselector: statefulSet-default-db-cbmpei
+  serviceName: db-cbmpei
   template:
     metadata:
       annotations:
@@ -23,7 +23,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: statefulSet-default-db-cbpei
+        workload.user.cattle.io/workloadselector: statefulSet-default-db-cbmpei
     spec:
       affinity:
         nodeAffinity:
@@ -51,7 +51,7 @@ spec:
           value: odoo
         image: postgres:15
         imagePullPolicy: IfNotPresent
-        name: db-cbpei
+        name: db-cbmpei
         
         resources:
           requests:
@@ -87,7 +87,7 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
         persistentVolumeClaim:
-          claimName: odoo-cbpei
+          claimName: odoo-cbmpei
   updateStrategy:
     type: RollingUpdate
 status:

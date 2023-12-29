@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-cbpei
+  name: odoo-cbmpei
 spec:
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
@@ -10,7 +10,7 @@ spec:
   ipFamilies:
   - IPv4
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-cbpei
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-cbmpei
   type: LoadBalancer
   sessionAffinity: None
   ports:
