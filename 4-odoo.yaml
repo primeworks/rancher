@@ -37,7 +37,7 @@ spec:
         env:
         - name: POSTGRES_DB
           value: postgres
-        - name: PGPASSWORD
+        - name: POSTGRES_PASSWORD
           value: odoo
         - name: POSTGRES_USER
           value: odoo
@@ -45,7 +45,7 @@ spec:
         command: ['sh', '-c', 
           #'until createdb cbmpei -h db-cbmpei -U odoo -p 5432; 
           #do echo waiting for database installation; sleep 60; done;'
-          'if psql -lqt | cut -d | -f 1 | grep -qw “cbmpei”; 
+          'if psql -h db-cbmpei -U odoo -p 5432 -lqt | cut -d | -f 1 | grep -qw “cbmpei”; 
           then echo “The database cbmpei exists.” 
           else 
           until createdb cbmpei -h db-cbmpei -U odoo -p 5432;
