@@ -37,7 +37,7 @@ spec:
         env:
         - name: POSTGRES_DB
           value: postgres
-        - name: POSTGRES_PASSWORD
+        - name: PGPASSWORD
           value: odoo
         - name: POSTGRES_USER
           value: odoo
