@@ -49,7 +49,6 @@ spec:
           then echo “The database cbmpei exists.” 
           else 
           until createdb cbmpei -h db-cbmpei -U odoo -p 5432;
-          exit 1
           fi'
           ]
       - name: db-initialize
