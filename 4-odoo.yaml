@@ -60,10 +60,10 @@ fi
           name: data
           subPath: odoo
         volumes:
-      # Edit the volume to match the existing pv in the cluster
-      - name: data
-        persistentVolumeClaim:
-          claimName: odoo-cbmpei
+        # Edit the volume to match the existing pv in the cluster
+        - name: data
+          persistentVolumeClaim:
+            claimName: odoo-cbmpei
         command:
             - sh
             - -c
