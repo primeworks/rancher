@@ -55,8 +55,15 @@ spec:
           value: odoo
         image: odoo:17
         command: ['sh', '-c', 
-          'if [~/usr/bin/odoo shell -d cbmpei --without-demo-data=all; 
-          do echo waiting for database initialization;] ; then sleep 1000; else exit 1; fi']
+          #'if [~/usr/bin/odoo shell -d cbmpei --without-demo-data=all; 
+          #do echo waiting for database initialization;] ; then sleep 1000; else exit 1; fi'
+          
+          'if psql cbmpei -tAc “SELECT 1 FROM res_users WHERE id=1”; 
+          then echo “The database exists.” 
+          else ~/usr/bin/odoo shell -d cbmpei --without-demo-data=all;
+          exit 1
+          fi'
+          ]
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
