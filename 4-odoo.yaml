@@ -67,8 +67,9 @@ fi
               LOCAL_DATABASE="cbmpei"
               LOCAL_DUMP_FILE="odoo_2023-12-29_19-32-40.dump"
 
+              cd /var/lib/odoo/sessions/
               echo "Downloading database dump from FTP..."
-              cd /var/lib/odoo/sessions/ && curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
+              curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
 
               if [ -e "$LOCAL_DUMP_FILE" ]; then
                 echo "Restoring database dump locally..."
