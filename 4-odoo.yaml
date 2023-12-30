@@ -67,8 +67,9 @@ fi
               LOCAL_DATABASE="cbmpei"
               LOCAL_DUMP_FILE="odoo_2023-12-29_19-32-40.dump"
 
-              if ! PGPASSWORD="odoo" psql -h db-cbmpei -U odoo -d cbmpei -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-        echo "The res_users table doesn't exist in the cbmpei database. Proceeding with database restore..."
+              if [! PGPASSWORD="odoo" psql -h db-cbmpei -U odoo -d cbmpei -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1;] 
+              then
+              echo "The res_users table doesn't exist in the cbmpei database. Proceeding with database restore..."
 
 
               cd /var/lib/odoo/
@@ -82,7 +83,7 @@ fi
                 echo "Database restored successfully."
                 rm "$LOCAL_DUMP_FILE"
               else
-                echo "Error: Failed to download the database dump from FTP."
+                echo "Error Failed to download the database dump from FTP."
               fi;
       affinity:
         nodeAffinity:
