@@ -1,0 +1,477 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "84"
+    field.cattle.io/publicEndpoints: '[{"addresses":["192.168.50.36"],"port":80,"protocol":"TCP","serviceName":"default:odoo-cbmpei","allNodes":false},{"addresses":["185.197.194.169"],"port":443,"protocol":"HTTPS","serviceName":"default:odoo-cbmpei","ingressName":"default:odoo-cbmpei","hostname":"odoo-cbmpei.webdiscode.com","path":"/","allNodes":true}]'
+    meta.helm.sh/release-name: odoo-cbmpei
+    meta.helm.sh/release-namespace: default
+    objectset.rio.cattle.io/id: default-odoo-cbmpei
+  creationTimestamp: "2023-12-29T10:31:26Z"
+  generation: 86
+  labels:
+    app: odoo-cbmpei
+    app.kubernetes.io/managed-by: Helm
+    cattle.io/creator: norman
+    objectset.rio.cattle.io/hash: a02a545feeb5b7af4be19eed83ffc7013e1a6415
+    tier: frontend
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-cbmpei
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:meta.helm.sh/release-name: {}
+          f:meta.helm.sh/release-namespace: {}
+          f:objectset.rio.cattle.io/id: {}
+        f:labels:
+          .: {}
+          f:app: {}
+          f:app.kubernetes.io/managed-by: {}
+          f:cattle.io/creator: {}
+          f:objectset.rio.cattle.io/hash: {}
+          f:tier: {}
+          f:workload.user.cattle.io/workloadselector: {}
+      f:spec:
+        f:progressDeadlineSeconds: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector: {}
+        f:strategy:
+          f:rollingUpdate:
+            .: {}
+            f:maxSurge: {}
+            f:maxUnavailable: {}
+          f:type: {}
+        f:template:
+          f:metadata:
+            f:annotations:
+              .: {}
+              f:field.cattle.io/ports: {}
+            f:labels:
+              .: {}
+              f:workload.user.cattle.io/workloadselector: {}
+          f:spec:
+            f:affinity:
+              .: {}
+              f:nodeAffinity:
+                .: {}
+                f:requiredDuringSchedulingIgnoredDuringExecution: {}
+            f:containers:
+              k:{"name":"odoo-cbmpei"}:
+                .: {}
+                f:env:
+                  .: {}
+                  k:{"name":"HOST"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"PASSWORD"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"USER"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:livenessProbe:
+                  .: {}
+                  f:failureThreshold: {}
+                  f:httpGet:
+                    .: {}
+                    f:path: {}
+                    f:port: {}
+                    f:scheme: {}
+                  f:initialDelaySeconds: {}
+                  f:periodSeconds: {}
+                  f:successThreshold: {}
+                  f:timeoutSeconds: {}
+                f:name: {}
+                f:ports:
+                  .: {}
+                  k:{"containerPort":8069,"protocol":"TCP"}:
+                    .: {}
+                    f:containerPort: {}
+                    f:name: {}
+                    f:protocol: {}
+                f:readinessProbe:
+                  .: {}
+                  f:failureThreshold: {}
+                  f:httpGet:
+                    .: {}
+                    f:path: {}
+                    f:port: {}
+                    f:scheme: {}
+                  f:initialDelaySeconds: {}
+                  f:periodSeconds: {}
+                  f:successThreshold: {}
+                  f:timeoutSeconds: {}
+                f:resources:
+                  .: {}
+                  f:requests:
+                    .: {}
+                    f:cpu: {}
+                    f:memory: {}
+                f:securityContext:
+                  .: {}
+                  f:allowPrivilegeEscalation: {}
+                  f:capabilities: {}
+                  f:privileged: {}
+                  f:readOnlyRootFilesystem: {}
+                  f:runAsNonRoot: {}
+                f:startupProbe:
+                  .: {}
+                  f:failureThreshold: {}
+                  f:httpGet:
+                    .: {}
+                    f:path: {}
+                    f:port: {}
+                    f:scheme: {}
+                  f:periodSeconds: {}
+                  f:successThreshold: {}
+                  f:timeoutSeconds: {}
+                f:stdin: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+                f:tty: {}
+                f:volumeMounts:
+                  .: {}
+                  k:{"mountPath":"/etc/odoo"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                  k:{"mountPath":"/mnt/extra-addons"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:subPath: {}
+                  k:{"mountPath":"/var/lib/odoo"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                    f:subPath: {}
+            f:dnsPolicy: {}
+            f:initContainers:
+              .: {}
+              k:{"name":"check-db-ready"}:
+                .: {}
+                f:command: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+              k:{"name":"db-install"}:
+                .: {}
+                f:command: {}
+                f:env:
+                  .: {}
+                  k:{"name":"PGPASSWORD"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"POSTGRES_DB"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"POSTGRES_USER"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+              k:{"name":"db-restore"}:
+                .: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:resources: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+            f:volumes:
+              .: {}
+              k:{"name":"config"}:
+                .: {}
+                f:configMap:
+                  .: {}
+                  f:defaultMode: {}
+                  f:name: {}
+                  f:optional: {}
+                f:name: {}
+              k:{"name":"vol-7xe3r"}:
+                .: {}
+                f:name: {}
+                f:persistentVolumeClaim:
+                  .: {}
+                  f:claimName: {}
+    manager: fleetagent
+    operation: Update
+    time: "2023-12-30T00:44:01Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:field.cattle.io/publicEndpoints: {}
+      f:spec:
+        f:template:
+          f:metadata:
+            f:annotations:
+              f:cattle.io/timestamp: {}
+          f:spec:
+            f:initContainers:
+              k:{"name":"db-restore"}:
+                f:command: {}
+    manager: agent
+    operation: Update
+    time: "2023-12-30T00:49:50Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:deployment.kubernetes.io/revision: {}
+      f:status:
+        f:availableReplicas: {}
+        f:conditions:
+          .: {}
+          k:{"type":"Available"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Progressing"}:
+            .: {}
+            f:lastTransitionTime: {}
+            f:lastUpdateTime: {}
+            f:message: {}
+            f:reason: {}
+            f:status: {}
+            f:type: {}
+        f:observedGeneration: {}
+        f:readyReplicas: {}
+        f:replicas: {}
+        f:updatedReplicas: {}
+    manager: kube-controller-manager
+    operation: Update
+    subresource: status
+    time: "2023-12-30T01:15:40Z"
+  name: odoo-cbmpei
+  namespace: default
+  resourceVersion: "192014702"
+  uid: 0c41cf4a-a48e-4a6b-ba4d-35264713503a
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-cbmpei
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        cattle.io/timestamp: "2023-12-30T01:14:59Z"
+        field.cattle.io/ports: '[[]]'
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-cbmpei
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: stack
+                operator: In
+                values:
+                - odoo
+      containers:
+      - env:
+        - name: HOST
+          value: db-cbmpei
+        - name: PASSWORD
+          value: odoo
+        - name: USER
+          value: odoo
+        image: odoo:17
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /web/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 600
+          periodSeconds: 300
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: odoo-cbmpei
+        ports:
+        - containerPort: 8069
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /web/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        startupProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /web/health
+            port: http
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        volumeMounts:
+        - mountPath: /var/lib/odoo
+          name: vol-7xe3r
+          subPath: odoo
+        - mountPath: /mnt/extra-addons
+          name: vol-7xe3r
+          subPath: odoo/addons
+        - mountPath: /etc/odoo
+          name: config
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - command:
+        - sh
+        - -c
+        - until pg_isready -h db-cbmpei -p 5432; do echo waiting for database; sleep
+          2; done;
+        image: postgres:9.6.5
+        imagePullPolicy: IfNotPresent
+        name: check-db-ready
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      - command:
+        - sh
+        - -c
+        - 'if psql -h db-cbmpei -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "cbmpei";
+          then echo "The database cbmpei exists." else until createdb -h db-cbmpei
+          -U odoo -p 5432 cbmpei; fi '
+        env:
+        - name: POSTGRES_DB
+          value: postgres
+        - name: PGPASSWORD
+          value: odoo
+        - name: POSTGRES_USER
+          value: odoo
+        image: postgres:9.6.5
+        imagePullPolicy: IfNotPresent
+        name: db-install
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      - command:
+        - sh
+        - -c
+        - |
+          FTP_HOST="ss.vps50988.mylogin.co"
+          FTP_USER="odoo_ss.vps50988.mylogin.co"
+          FTP_PASSWORD="i24125114A"
+          FTP_REMOTE_FILE="odoo_2023-12-29_19-32-40.dump"
+          LOCAL_HOST="db-cbmpei"
+          LOCAL_USER="odoo"
+          LOCAL_DATABASE="cbmpei"
+          LOCAL_DUMP_FILE="odoo_2023-12-29_19-32-40.dump"
+
+          if ! PGPASSWORD="odoo" psql -h db-cbmpei -U odoo -d cbmpei -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+            echo "The res_users table doesn't exist in the cbmpei database. Proceeding with database restore..."
+
+            cd /var/lib/odoo/
+            echo "Downloading database dump from FTP..."
+            curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
+
+            if [ -e "$LOCAL_DUMP_FILE" ]; then
+              echo "Restoring database dump locally..."
+              PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"
+              PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"
+              echo "Database restored successfully."
+              rm "$LOCAL_DUMP_FILE"
+            else
+              echo "Error: Failed to download the database dump from FTP."
+            fi
+          else
+            echo "The res_users table already exists in the cbmpei database. Skipping database restore."
+          fi
+        image: odoo:17
+        imagePullPolicy: IfNotPresent
+        name: db-restore
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 509
+          name: odoo.conf
+          optional: true
+        name: config
+      - name: vol-7xe3r
+        persistentVolumeClaim:
+          claimName: odoo-cbmpei
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2023-12-29T23:15:29Z"
+    lastUpdateTime: "2023-12-29T23:15:29Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2023-12-30T00:44:01Z"
+    lastUpdateTime: "2023-12-30T01:15:41Z"
+    message: ReplicaSet "odoo-cbmpei-74f548cfbd" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 86
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

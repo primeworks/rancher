@@ -28,13 +28,23 @@ spec:
         workload.user.cattle.io/workloadselector: deployment-default-odoo-cbmpei
     spec:
       initContainers:
-      - name: check-db-ready
-        image: postgres:9.6.5
-        command: 
+      - command:
         - sh
         - -c
-        - until pg_isready -h db-cbmpei -p 5432; do echo waiting for database; sleep 2; done;
-      - name: db-install
+        - until pg_isready -h db-cbmpei -p 5432; do echo waiting for database; sleep
+          2; done;
+        image: postgres:9.6.5
+        imagePullPolicy: IfNotPresent
+        name: check-db-ready
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      - command:
+        - sh
+        - -c
+        - 'if psql -h db-cbmpei -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "cbmpei";
+          then echo "The database cbmpei exists." else until createdb -h db-cbmpei
+          -U odoo -p 5432 cbmpei; fi '
         env:
         - name: POSTGRES_DB
           value: postgres
@@ -43,46 +53,49 @@ spec:
         - name: POSTGRES_USER
           value: odoo
         image: postgres:9.6.5
-        command: 
+        imagePullPolicy: IfNotPresent
+        name: db-install
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      - command:
         - sh
         - -c
-        - 'if psql -h db-cbmpei -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "cbmpei"; 
-          then echo "The database cbmpei exists." else until createdb -h db-cbmpei 
-          -U odoo -p 5432 cbmpei; fi '
-      - name: db-restore
+        - |
+          FTP_HOST="ss.vps50988.mylogin.co"
+          FTP_USER="odoo_ss.vps50988.mylogin.co"
+          FTP_PASSWORD="i24125114A"
+          FTP_REMOTE_FILE="odoo_2023-12-29_19-32-40.dump"
+          LOCAL_HOST="db-cbmpei"
+          LOCAL_USER="odoo"
+          LOCAL_DATABASE="cbmpei"
+          LOCAL_DUMP_FILE="odoo_2023-12-29_19-32-40.dump"
+
+          if ! PGPASSWORD="odoo" psql -h db-cbmpei -U odoo -d cbmpei -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+            echo "The res_users table doesn't exist in the cbmpei database. Proceeding with database restore..."
+
+            cd /var/lib/odoo/
+            echo "Downloading database dump from FTP..."
+            curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
+
+            if [ -e "$LOCAL_DUMP_FILE" ]; then
+              echo "Restoring database dump locally..."
+              PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"
+              PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"
+              echo "Database restored successfully."
+              rm "$LOCAL_DUMP_FILE"
+            else
+              echo "Error: Failed to download the database dump from FTP."
+            fi
+          else
+            echo "The res_users table already exists in the cbmpei database. Skipping database restore."
+          fi
         image: odoo:17
-        command:
-            - sh
-            - -c
-            - |
-              FTP_HOST="ss.vps50988.mylogin.co"
-              FTP_USER="odoo_ss.vps50988.mylogin.co"
-              FTP_PASSWORD="i24125114A"
-              FTP_REMOTE_FILE="odoo_2023-12-29_19-32-40.dump"
-              LOCAL_HOST="db-cbmpei"
-              LOCAL_USER="odoo"
-              LOCAL_DATABASE="cbmpei"
-              LOCAL_DUMP_FILE="odoo_2023-12-29_19-32-40.dump"
-
-              if ! PGPASSWORD="odoo" psql -h db-cbmpei -U odoo -d cbmpei -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-                echo "The res_users table doesn't exist in the cbmpei database. Proceeding with database restore..."
-
-                cd /var/lib/odoo/
-                echo "Downloading database dump from FTP..."
-                curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
-
-                if [ -e "$LOCAL_DUMP_FILE" ]; then
-                  echo "Restoring database dump locally..."
-                  PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"
-                  PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"
-                  echo "Database restored successfully."
-                  rm "$LOCAL_DUMP_FILE"
-                else
-                  echo "Error: Failed to download the database dump from FTP."
-                fi
-              else
-                echo "The res_users table already exists in the cbmpei database. Skipping database restore."
-              fi
+        imagePullPolicy: IfNotPresent
+        name: db-restore
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
