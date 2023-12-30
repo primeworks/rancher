@@ -92,7 +92,7 @@ spec:
           fi
         image: odoo:17
         imagePullPolicy: IfNotPresent
-        name: db-restore
+        name: db-restored
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
