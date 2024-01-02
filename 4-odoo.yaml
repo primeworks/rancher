@@ -28,11 +28,74 @@ spec:
         workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
     spec:
       initContainers:
-      - name: check-db-ready
+      - command:
+        - sh
+        - -c
+        - until pg_isready -h db-basic -p 5432; do echo waiting for database; sleep
+          2; done;
         image: postgres:9.6.5
-        command: ['sh', '-c', 
-          'until pg_isready -h db-basic -p 5432; 
-          do echo waiting for database; sleep 2; done;']
+        imagePullPolicy: IfNotPresent
+        name: check-db-ready
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      - command:
+        - sh
+        - -c
+        - 'if psql -h db-basic -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "basic";
+          then echo "The database basic exists." else until createdb -h db-basic
+          -U odoo -p 5432 basic; fi '
+        env:
+        - name: POSTGRES_DB
+          value: postgres
+        - name: PGPASSWORD
+          value: odoo
+        - name: POSTGRES_USER
+          value: odoo
+        image: postgres:9.6.5
+        imagePullPolicy: IfNotPresent
+        name: db-install
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      - command:
+        - sh
+        - -c
+        - |
+          FTP_HOST="ss.vps50988.mylogin.co"
+          FTP_USER="odoo_ss.vps50988.mylogin.co"
+          FTP_PASSWORD="i24125114A"
+          FTP_REMOTE_FILE="odoo_2023-12-29_19-32-40.dump"
+          LOCAL_HOST="db-basic"
+          LOCAL_USER="odoo"
+          LOCAL_DATABASE="basic"
+          LOCAL_DUMP_FILE="odoo_2023-12-29_19-32-40.dump"
+
+          if ! PGPASSWORD="odoo" psql -h db-basic -U odoo -d basic -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+            echo "The res_users table doesn't exist in the basic database. Proceeding with database restore..."
+
+            cd /var/lib/odoo/
+            echo "Downloading database dump from FTP..."
+            curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
+
+            if [ -e "$LOCAL_DUMP_FILE" ]; then
+              echo "Restoring database dump locally..."
+              PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"
+              PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"
+              echo "Database restored successfully."
+              rm "$LOCAL_DUMP_FILE"
+            else
+              echo "Error: Failed to download the database dump from FTP."
+            fi
+          else
+            echo "The res_users table already exists in the basic database. Skipping database restore."
+          fi
+        image: odoo:17
+        imagePullPolicy: IfNotPresent
+        name: db-restored
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -50,7 +113,7 @@ spec:
           value: odoo
         - name: USER
           value: odoo
-        image: odoo:16
+        image: odoo:17
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 6
