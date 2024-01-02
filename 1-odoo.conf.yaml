@@ -20,4 +20,4 @@ data:
     = False\n;proxy_mode = True\nreport_url = ^%d$:8069"
 kind: ConfigMap
 metadata:
-  name: odoo-basic.conf
+  name: odoo-cbf.conf

@@ -1,24 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-basic
+  name: odoo-cbf
   annotations:
     cert-manager.io/issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-  - host: odoo-basic.webdiscode.com
+  - host: odoo-cbf.webdiscode.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: odoo-basic
+            name: odoo-cbf
             port:
               name: http
   tls:
   - hosts:
-    - odoo-basic.webdiscode.com
-    secretName: odoo-basic.webdiscode.com-tls
+    - odoo-cbf.webdiscode.com
+    secretName: odoo-cbf.webdiscode.com-tls
