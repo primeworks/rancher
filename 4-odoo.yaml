@@ -116,16 +116,16 @@ spec:
             echo "The res_users table doesn't exist in the cbf database. Proceeding with database restore..."
 
             echo "Entering odoo directory..."
-            cd /mnt/odoo/
+            cd /mnt/
             echo "Creating filestore directory..."
             mkdir filestore
             echo "Creating $LOCAL_DATABASE directory..."
             mkdir filestore/$LOCAL_DATABASE
             echo "Downloading filestore files..."
-            cd /mnt/odoo/filestore/
-            wget -r -np $LOCAL_DATABASE  "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/filestore"
+            cd /mnt/filestore/
+            wget -P $LOCAL_DATABASE  "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/filestore"
             echo "Setting directory permissions..."
-            chmod -R 777 /mnt/odoo/filestore
+            chmod -R 777 /mnt/filestore
             
           fi
         image: busybox
