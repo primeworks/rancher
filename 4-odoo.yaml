@@ -39,63 +39,6 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-      - command:
-        - sh
-        - -c
-        - 'if psql -h db-17-tpl -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "17-tpl";
-          then echo "The database 17-tpl exists." else until createdb -h db-17-tpl
-          -U odoo -p 5432 17-tpl; fi '
-        env:
-        - name: POSTGRES_DB
-          value: postgres
-        - name: PGPASSWORD
-          value: odoo
-        - name: POSTGRES_USER
-          value: odoo
-        image: postgres:9.6.5
-        imagePullPolicy: IfNotPresent
-        name: db-install
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      - command:
-        - sh
-        - -c
-        - |
-          FTP_HOST="ss.vps50988.mylogin.co"
-          FTP_USER="odoo_ss.vps50988.mylogin.co"
-          FTP_PASSWORD="i24125114A"
-          FTP_REMOTE_FILE="odoo_2023-12-29_19-32-40.dump"
-          LOCAL_HOST="db-17-tpl"
-          LOCAL_USER="odoo"
-          LOCAL_DATABASE="17-tpl"
-          LOCAL_DUMP_FILE="odoo_2023-12-29_19-32-40.dump"
-
-          if ! PGPASSWORD="odoo" psql -h db-17-tpl -U odoo -d 17-tpl -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-            echo "The res_users table doesn't exist in the 17-tpl database. Proceeding with database restore..."
-
-            cd /var/lib/odoo/
-            echo "Downloading database dump from FTP..."
-            curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
-
-            if [ -e "$LOCAL_DUMP_FILE" ]; then
-              echo "Restoring database dump locally..."
-              PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"
-              PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"
-              echo "Database restored successfully."
-              rm "$LOCAL_DUMP_FILE"
-            else
-              echo "Error: Failed to download the database dump from FTP."
-            fi
-          else
-            echo "The res_users table already exists in the 17-tpl database. Skipping database restore."
-          fi
-        image: odoo:17
-        imagePullPolicy: IfNotPresent
-        name: db-restored
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
