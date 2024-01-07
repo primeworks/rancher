@@ -82,7 +82,7 @@ spec:
             echo "Creating $LOCAL_DATABASE directory..."
             mkdir filestore/$LOCAL_DATABASE
             echo "Downloading filestore files..."
-            curl -o filestore/$LOCAL_DATABASE/  "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/filestore/*"
+            curl -o filestore/$LOCAL_DATABASE  "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/filestore"
             echo "Downloading database dump from FTP..."
             curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/$FTP_REMOTE_FILE"
 
