@@ -112,7 +112,7 @@ spec:
           LOCAL_DATABASE="cbf"
           LOCAL_DUMP_FILE="dump.sql"
 
-          echo "Entering odoo directory..."
+          echo "Entering odoo directory...."
           cd /mnt/
           echo "Creating filestore directory..."
           mkdir filestore
