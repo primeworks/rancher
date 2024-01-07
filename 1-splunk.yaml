@@ -28,7 +28,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: app
+              - key: stack
                 operator: In
                 values:
                 - sfx
