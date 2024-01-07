@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-basic
+    app: odoo-17-tpl
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
-  name: odoo-basic
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-17-tpl
+  name: odoo-17-tpl
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-17-tpl
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,13 +25,13 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-17-tpl
     spec:
       initContainers:
       - command:
         - sh
         - -c
-        - until pg_isready -h db-basic -p 5432; do echo waiting for database; sleep
+        - until pg_isready -h db-17-tpl -p 5432; do echo waiting for database; sleep
           2; done;
         image: postgres:9.6.5
         imagePullPolicy: IfNotPresent
@@ -42,9 +42,9 @@ spec:
       - command:
         - sh
         - -c
-        - 'if psql -h db-basic -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "basic";
-          then echo "The database basic exists." else until createdb -h db-basic
-          -U odoo -p 5432 basic; fi '
+        - 'if psql -h db-17-tpl -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "17-tpl";
+          then echo "The database 17-tpl exists." else until createdb -h db-17-tpl
+          -U odoo -p 5432 17-tpl; fi '
         env:
         - name: POSTGRES_DB
           value: postgres
@@ -66,13 +66,13 @@ spec:
           FTP_USER="odoo_ss.vps50988.mylogin.co"
           FTP_PASSWORD="i24125114A"
           FTP_REMOTE_FILE="odoo_2023-12-29_19-32-40.dump"
-          LOCAL_HOST="db-basic"
+          LOCAL_HOST="db-17-tpl"
           LOCAL_USER="odoo"
-          LOCAL_DATABASE="basic"
+          LOCAL_DATABASE="17-tpl"
           LOCAL_DUMP_FILE="odoo_2023-12-29_19-32-40.dump"
 
-          if ! PGPASSWORD="odoo" psql -h db-basic -U odoo -d basic -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-            echo "The res_users table doesn't exist in the basic database. Proceeding with database restore..."
+          if ! PGPASSWORD="odoo" psql -h db-17-tpl -U odoo -d 17-tpl -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+            echo "The res_users table doesn't exist in the 17-tpl database. Proceeding with database restore..."
 
             cd /var/lib/odoo/
             echo "Downloading database dump from FTP..."
@@ -88,7 +88,7 @@ spec:
               echo "Error: Failed to download the database dump from FTP."
             fi
           else
-            echo "The res_users table already exists in the basic database. Skipping database restore."
+            echo "The res_users table already exists in the 17-tpl database. Skipping database restore."
           fi
         image: odoo:17
         imagePullPolicy: IfNotPresent
@@ -108,7 +108,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-basic
+          value: db-17-tpl
         - name: PASSWORD
           value: odoo
         - name: USER
@@ -149,7 +149,7 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-basic
+        name: odoo-17-tpl
         resources:
           requests:
             cpu: 100m
@@ -192,5 +192,5 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: odoo-basic
+          claimName: odoo-17-tpl
 
