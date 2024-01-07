@@ -16,7 +16,7 @@ data:
     = False\n;test_enable = False\n;test_file = False\n;test_tags = None\n;translate_modules
     = ['all']\n;unaccent = False\n;without_demo = False\n;workers = 3\n;unsplash.access_key
     = 1b0c89ac6fe3ac460b2ae6acdfd36030e8d039ea45612d62914813ca26aca7af\n;unsplash.app_id
-    = 59256\n;Database to Domain Filter Settings\n;db_name = False\n;dbfilter = ^%d$\nlist_db
+    = 59256\n;Database to Domain Filter Settings\n;db_name = False\n;dbfilter = ^%d$\n;list_db
     = False\n;proxy_mode = True\nreport_url = ^%d$:8069"
 kind: ConfigMap
 metadata:
