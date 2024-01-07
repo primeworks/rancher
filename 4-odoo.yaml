@@ -65,18 +65,24 @@ spec:
           FTP_HOST="ss.vps50988.mylogin.co"
           FTP_USER="odoo_ss.vps50988.mylogin.co"
           FTP_PASSWORD="i24125114A"
-          FTP_REMOTE_FILE="odoo_2023-12-29_19-32-40.dump"
+          FTP_REMOTE_FILE="dump.sql"
+          FTP_REMOTE_FILESTORE="odoo17-basic"
           LOCAL_HOST="db-cbf"
           LOCAL_USER="odoo"
           LOCAL_DATABASE="cbf"
-          LOCAL_DUMP_FILE="odoo_2023-12-29_19-32-40.dump"
+          LOCAL_DUMP_FILE="dump.sql"
 
           if ! PGPASSWORD="odoo" psql -h db-cbf -U odoo -d cbf -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
             echo "The res_users table doesn't exist in the cbf database. Proceeding with database restore..."
 
+            echo "Entering odoo directory..."
             cd /var/lib/odoo/
+            echo "Creating filestore directory..."
+            mkdir filestore/$LOCAL_DATABASE
+            echo "Downloading filestore files..."
+            curl -o filestore/$LOCAL_DATABASE/  "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/filestore/*"
             echo "Downloading database dump from FTP..."
-            curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILE"
+            curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/$FTP_REMOTE_FILE"
 
             if [ -e "$LOCAL_DUMP_FILE" ]; then
               echo "Restoring database dump locally..."
