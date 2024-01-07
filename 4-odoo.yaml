@@ -82,8 +82,10 @@ spec:
             echo "Creating $LOCAL_DATABASE directory..."
             mkdir filestore/$LOCAL_DATABASE
             echo "Downloading filestore files..."
-            curl -o filestore/$LOCAL_DATABASE  "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/filestore"
+            cd /var/lib/odoo/filestore/
+            curl -o $LOCAL_DATABASE  "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/filestore"
             echo "Downloading database dump from FTP..."
+            cd /var/lib/odoo/
             curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/$FTP_REMOTE_FILE"
 
             if [ -e "$LOCAL_DUMP_FILE" ]; then
