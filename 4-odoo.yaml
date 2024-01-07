@@ -78,6 +78,8 @@ spec:
             echo "Entering odoo directory..."
             cd /var/lib/odoo/
             echo "Creating filestore directory..."
+            mkdir filestore
+            echo "Creating $LOCAL_DATABASE directory..."
             mkdir filestore/$LOCAL_DATABASE
             echo "Downloading filestore files..."
             curl -o filestore/$LOCAL_DATABASE/  "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/filestore/*"
