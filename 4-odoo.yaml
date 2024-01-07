@@ -112,22 +112,19 @@ spec:
           LOCAL_DATABASE="cbf"
           LOCAL_DUMP_FILE="dump.sql"
 
-          if ! PGPASSWORD="odoo" psql -h db-cbf -U odoo -d cbf -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-            echo "The res_users table doesn't exist in the cbf database. Proceeding with database restore..."
-
-            echo "Entering odoo directory..."
-            cd /mnt/
-            echo "Creating filestore directory..."
-            mkdir filestore
-            echo "Creating $LOCAL_DATABASE directory..."
-            mkdir filestore/$LOCAL_DATABASE
-            echo "Downloading filestore files..."
-            cd /mnt/filestore/
-            wget -P $LOCAL_DATABASE  "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/filestore"
-            echo "Setting directory permissions..."
-            chmod -R 777 /mnt/filestore
+          echo "Entering odoo directory..."
+          cd /mnt/
+          echo "Creating filestore directory..."
+          mkdir filestore
+          echo "Creating $LOCAL_DATABASE directory..."
+          mkdir filestore/$LOCAL_DATABASE
+          echo "Downloading filestore files..."
+          cd /mnt/filestore/
+          wget -P $LOCAL_DATABASE  "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/filestore"
+          echo "Setting directory permissions..."
+          chmod -R 777 /mnt/filestore
             
-          fi
+        #  fi
         image: busybox
         imagePullPolicy: IfNotPresent
         name: filestore-restored
