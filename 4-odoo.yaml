@@ -130,9 +130,11 @@ spec:
               echo "The database $LOCAL_DATABASE created..."
             else echo "The database $LOCAL_DATABASE already exists..."
             fi
-            if ! PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"; then
-                 echo "Database failed to be restored."
-              else  echo "Database restored successfully."
+            if PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"; then
+                 
+                 echo "Database restored successfully."
+                 rm "$LOCAL_DUMP_FILE"
+              else  echo "Database failed to be restored."
                     rm "$LOCAL_DUMP_FILE"
               fi
           else
