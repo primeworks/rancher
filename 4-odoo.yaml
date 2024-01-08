@@ -122,7 +122,7 @@ spec:
             echo "Entering odoo directory..."
             cd /var/lib/odoo/
             echo "List contents of odoo directory..."
-            ls
+            ls /var/lib/odoo/
 
             echo "Restoring database dump locally..."
             PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"
