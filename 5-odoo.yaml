@@ -33,7 +33,7 @@ spec:
         - -c
         - |
           until PGPASSWORD="odoo" psql -h db-cbf -U odoo -d cbf -c 
-          "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'"; 
+          "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; 
           do echo waiting for database; 
           sleep 2; 
           done;
