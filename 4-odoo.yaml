@@ -121,9 +121,9 @@ spec:
             echo "The res_users table doesn't exist in the cbf database. Proceeding with database restore..."
 
             echo "Entering odoo directory..."
-            cd /var/lib/odoo/
+            cd /var/lib/odoo/addons/
             echo "List contents of odoo directory..."
-            ls /var/lib/odoo/
+            ls /var/lib/odoo/addons/
 
             echo "Restoring database dump locally..."
             if PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"; then
