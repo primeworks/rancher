@@ -32,15 +32,11 @@ spec:
         - sh
         - -c
         - |
-          if ! PGPASSWORD="odoo" psql -h db-cbf -U odoo -d cbf -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-            echo "The res_users table doesn't exist in the cbf database. Proceeding with database restore..."
-
-          else
-            echo "The res_users table already exists in the cbf database. Skipping database restore."
-          fi
+          until PGPASSWORD="odoo" psql -h db-cbf -U odoo -d cbf -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; ; do echo waiting for database; sleep
+          2; done;
         image: odoo:17
         imagePullPolicy: IfNotPresent
-        name: db-restored
+        name: db-ready
         volumeMounts:
         # Edit the volume to match the existing mountPaths in the cluster
         - mountPath: /var/lib/odoo
