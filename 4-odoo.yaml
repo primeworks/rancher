@@ -93,6 +93,7 @@ spec:
 
           echo "Setting directory permissions..."
           chmod -Rv 777 /mnt/filestore
+          echo "Permissions set..."
             
         #  fi
         image: busybox
