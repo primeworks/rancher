@@ -5,15 +5,15 @@ metadata:
     app: odoo-cbf
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-pre-odoo-cbf
-  name: odoo-pre-cbf
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-cbf-cbf
+  name: odoo-cbf
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-pre-odoo-cbf
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-cbf-cbf
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,7 +25,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-pre-odoo-cbf
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-cbf-cbf
     spec:
       initContainers:
       - command:
@@ -195,7 +195,7 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-pre-cbf
+        name: odoo-cbf
         resources:
           requests:
             cpu: 100m
