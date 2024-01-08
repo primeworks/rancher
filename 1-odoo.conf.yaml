@@ -3,10 +3,10 @@ data:
   odoo.conf: "[options] \naddons_path = /mnt/extra-addons\ndata_dir = /var/lib/odoo\nadmin_passwd
     = UA29dGB28Gx5PWz8bnRW\n;csv_internal_sep = ,\n;db_host = 139.162.234.5\ndb_maxconn
     = 100\n;db_password = i24125114A\n;db_port = 5432\n;db_sslmode = prefer\n;db_template
-    = template0\n;db_user = odoo\ndemo = {}\nemail_from = odoo@webdiscode.com\n;geoip_database
+    = template0\n;db_user = odoo\ndemo = {}\n;email_from = odoo@webdiscode.com\n;geoip_database
     = /usr/share/GeoIP/GeoLite2-City.mmdb\n;http_enable = True\n;http_interface =
-    \nhttp_port = 8069\n;import_partial = \nlimit_memory_hard = 2684354560\nlimit_memory_soft
-    = 2147483648\nlimit_request = 8192\nlimit_time_cpu = 600\nlimit_time_real = 1200\n;limit_time_real_cron
+    \nhttp_port = 8069\n;import_partial = \nlimit_memory_hard = 3221225472\nlimit_memory_soft
+    = 2684354560\nlimit_request = 8192\nlimit_time_cpu = 1600\nlimit_time_real = 100000\nlimit_time_real_cron
     = -1\n;log_db = False\n;log_db_level = warning\n;log_handler = :INFO\n;log_level
     = info\n;logfile = /var/log/odoo/odoo-server.log\n;logrotate = False\n;longpolling_port
     = 8072\nmax_cron_threads = 1\n;osv_memory_age_limit = 1.0\n;osv_memory_count_limit
@@ -14,10 +14,10 @@ data:
     False\nserver_wide_modules = base,web\nsmtp_password = UA29dGB28Gx5PWz8bnRW\nsmtp_port
     = 25\nsmtp_server = relay.mailbaby.net\n;smtp_ssl = False\nsmtp_user = mb16635\n;syslog
     = False\n;test_enable = False\n;test_file = False\n;test_tags = None\n;translate_modules
-    = ['all']\n;unaccent = False\n;without_demo = False\n;workers = 1\n;unsplash.access_key
+    = ['all']\n;unaccent = False\n;without_demo = False\n;workers = 3\n;unsplash.access_key
     = 1b0c89ac6fe3ac460b2ae6acdfd36030e8d039ea45612d62914813ca26aca7af\n;unsplash.app_id
     = 59256\n;Database to Domain Filter Settings\n;db_name = False\n;dbfilter = ^%d$\nlist_db
-    = False\nproxy_mode = True\nxmlrpc_interface = 127.0.0.1\nreport_url = ^%d$:8069"
+    = False\n;proxy_mode = True\nreport_url = ^%d$:8069"
 kind: ConfigMap
 metadata:
   name: odoo-cbf.conf
