@@ -5,15 +5,15 @@ metadata:
     app: odoo-cbf
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-cbf
+    workload.user.cattle.io/workloadselector: deployment-default-pre-odoo-cbf
   name: odoo-cbf
 spec:
   progressDeadlineSeconds: 600
-  replicas: 3
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-cbf
+      workload.user.cattle.io/workloadselector: deployment-default-pre-odoo-cbf
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,7 +25,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-cbf
+        workload.user.cattle.io/workloadselector: deployment-default-pre-odoo-cbf
     spec:
       initContainers:
       - command:
@@ -151,6 +151,80 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+      containers:
+      - env:
+        - name: HOST
+          value: db-cbf
+        - name: PASSWORD
+          value: odoo
+        - name: USER
+          value: odoo
+        image: odoo:17
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /web/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 600
+          periodSeconds: 300
+          successThreshold: 1
+          timeoutSeconds: 5
+        ports:
+        - containerPort: 8069
+          name: http
+          protocol: TCP
+        startupProbe:
+            failureThreshold: 3
+            successThreshold: 1
+            initialDelaySeconds: 0
+            timeoutSeconds: 1
+            periodSeconds: 10
+            httpGet:
+              path: /web/health
+              port: http
+              scheme: HTTP
+        readinessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /web/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: odoo-cbf
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        ports:
+            - containerPort: 8069
+              name: http
+              protocol: TCP
+        volumeMounts:
+        # Edit the volume to match the existing mountPaths in the cluster
+        - mountPath: /var/lib/odoo
+          name: vol-7xe3r
+          subPath: odoo
+        - mountPath: /mnt/extra-addons
+          name: vol-7xe3r
+          subPath: odoo/addons
+        - mountPath: /etc/odoo
+          name: config
+      
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
