@@ -122,15 +122,11 @@ spec:
             echo "Entering odoo directory..."
             cd /var/lib/odoo/
 
-            if [ -e "$LOCAL_DUMP_FILE" ]; then
-              echo "Restoring database dump locally..."
-              PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"
-              PGPASSWORD="odoo" psql -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -f "$LOCAL_DUMP_FILE"
-              echo "Database restored successfully."
-              rm "$LOCAL_DUMP_FILE"
-            else
-              echo "Error: Failed to download the database dump from FTP."
-            fi
+            echo "Restoring database dump locally..."
+            PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"
+            PGPASSWORD="odoo" psql -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -f "$LOCAL_DUMP_FILE"
+            echo "Database restored successfully."
+            rm "$LOCAL_DUMP_FILE"
           else
             echo "The res_users table already exists in the cbf database. Skipping database restore."
           fi
