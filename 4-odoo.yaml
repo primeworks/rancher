@@ -114,7 +114,7 @@ spec:
           LOCAL_HOST="db-cbf"
           LOCAL_USER="odoo"
           LOCAL_DATABASE="cbf"
-          LOCAL_DUMP_FILE="odoo.dump"
+          LOCAL_DUMP_FILE="dump.sql"
 
           if ! PGPASSWORD="odoo" psql -h db-cbf -U odoo -d cbf -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
             echo "The res_users table doesn't exist in the cbf database. Proceeding with database restore..."
