@@ -126,15 +126,15 @@ spec:
             ls /var/lib/odoo/
 
             echo "Restoring database dump locally..."
-            if ! PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"; then
+            if PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"; then
+              echo "The database $LOCAL_DATABASE created..."
               echo "The database $LOCAL_DATABASE already exists..."
-            else echo "The database $LOCAL_DATABASE created..."
-            if ! PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"; then
-              echo "Database failed to be restored."
-                
-            else  echo "Database restored successfully."
+              if ! PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"; then
+                 echo "Database failed to be restored."
+              else  echo "Database restored successfully."
                     rm "$LOCAL_DUMP_FILE"
-            fi
+              fi
+            else echo "The database $LOCAL_DATABASE created..."
             fi
           else
             echo "The res_users table already exists in the cbf database. Skipping database restore."
