@@ -33,7 +33,7 @@ spec:
         - -c
         - |
           until PGPASSWORD="odoo" psql -h db-cbf -U odoo -d cbf -c "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users');" | grep -q t; do
-          echo "Waiting for the res_users table to be available in the database..."; 
+          echo "Waiting for the res_users table to be available in the database...."; 
           sleep 2; 
           done;
         image: odoo:17
