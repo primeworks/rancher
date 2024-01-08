@@ -80,13 +80,16 @@ spec:
           mkdir filestore/$LOCAL_DATABASE
           echo "Downloading filestore files..."
           cd /mnt/filestore/$LOCAL_DATABASE
-          wget -P ./  "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE"
+          wget -P ./addons/  "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE"
+          cd ./addons/
           echo "Extracting archive..."
           unzip $LOCAL_DUMP_FILE
           echo "Move files from directory"
-          mv odoo17-basic/filestore /mnt/filestore/$LOCAL_DATABASE
-          mv odoo17-basic/dump.sql /mnt/
+          mv filestore /mnt/filestore/$LOCAL_DATABASE
+          mv dump.sql /mnt/
+          echo "List items in odoo directory..."
           ls /mnt/
+          echo "List contents in filestore directory..."
           ls /mnt/filestore/$LOCAL_DATABASE/
 
           echo "Setting directory permissions..."
