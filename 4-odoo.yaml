@@ -76,6 +76,7 @@ spec:
           cd /mnt/
           echo "Creating filestore directory..."
           mkdir filestore
+          mkdir addons
           echo "Creating $LOCAL_DATABASE directory..."
           mkdir filestore/$LOCAL_DATABASE
           echo "Downloading filestore files..."
