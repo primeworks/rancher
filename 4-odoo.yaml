@@ -121,8 +121,6 @@ spec:
 
             echo "Entering odoo directory..."
             cd /var/lib/odoo/
-            echo "Downloading database dump from FTP..."
-            curl -o "$LOCAL_DUMP_FILE" "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/$FTP_REMOTE_FILE"
 
             if [ -e "$LOCAL_DUMP_FILE" ]; then
               echo "Restoring database dump locally..."
