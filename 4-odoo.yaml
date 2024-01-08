@@ -134,6 +134,7 @@ spec:
             else  echo "Database restored successfully."
                     rm "$LOCAL_DUMP_FILE"
             fi
+            fi
           else
             echo "The res_users table already exists in the cbf database. Skipping database restore."
           fi
