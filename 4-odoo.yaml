@@ -81,7 +81,7 @@ spec:
           mkdir filestore/$LOCAL_DATABASE
           echo "Downloading filestore files..."
           cd addons/
-          wget -P $LOCAL_DUMP_FILE "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE"
+          wget -P "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE"
           echo "Extracting archive..."
           unzip $LOCAL_DUMP_FILE
           echo "Move files from directory"
