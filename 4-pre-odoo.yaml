@@ -6,7 +6,7 @@ metadata:
     tier: frontend
     cattle.io/creator: norman
     workload.user.cattle.io/workloadselector: deployment-default-odoo-cbf
-  name: odoo-cbf
+  name: odoo-pre-cbf
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
