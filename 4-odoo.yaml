@@ -114,7 +114,7 @@ spec:
           LOCAL_HOST="db-cbf"
           LOCAL_USER="odoo"
           LOCAL_DATABASE="cbf"
-          LOCAL_DUMP_FILE="dump.sql"
+          LOCAL_DUMP_FILE="odoo-basic.dump"
 
           if ! PGPASSWORD="odoo" psql -h db-cbf -U odoo -d cbf -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
             echo "The res_users table doesn't exist in the cbf database. Proceeding with database restore..."
@@ -125,10 +125,15 @@ spec:
             ls /var/lib/odoo/
 
             echo "Restoring database dump locally..."
-            PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"
-            PGPASSWORD="odoo" psql -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -f "$LOCAL_DUMP_FILE"
-            echo "Database restored successfully."
-            rm "$LOCAL_DUMP_FILE"
+            if ! PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"; then
+              echo "The database $LOCAL_DATABASE already exists..."
+            else echo "The database $LOCAL_DATABASE created..."
+            if ! PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"; then
+              echo "Database failed to be restored."
+                
+            else  echo "Database restored successfully."
+                    rm "$LOCAL_DUMP_FILE"
+            fi
           else
             echo "The res_users table already exists in the cbf database. Skipping database restore."
           fi
