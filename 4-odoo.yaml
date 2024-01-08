@@ -92,7 +92,7 @@ spec:
           ls /mnt/filestore/$LOCAL_DATABASE/
 
           echo "Setting directory permissions..."
-          chmod -R 777 /mnt/filestore
+          chmod -Rv 777 /mnt/filestore
             
         #  fi
         image: busybox
