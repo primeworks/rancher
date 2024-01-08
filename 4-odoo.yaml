@@ -106,11 +106,11 @@ spec:
           FTP_USER="odoo_ss.vps50988.mylogin.co"
           FTP_PASSWORD="i24125114A"
           FTP_REMOTE_FILE="dump.sql"
-          FTP_REMOTE_FILESTORE="odoo17-basic"
+          FTP_REMOTE_FILESTORE="odoo17-basic.zip"
           LOCAL_HOST="db-cbf"
           LOCAL_USER="odoo"
           LOCAL_DATABASE="cbf"
-          LOCAL_DUMP_FILE="dump.sql"
+          LOCAL_DUMP_FILE="odoo17-basic.zip"
 
           echo "Entering odoo directory...."
           cd /mnt/
@@ -120,7 +120,15 @@ spec:
           mkdir filestore/$LOCAL_DATABASE
           echo "Downloading filestore files..."
           cd /mnt/filestore/$LOCAL_DATABASE
-          wget -P ./  "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE/filestore/*"
+          wget -P $LOCAL_DUMP_FILE  "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE"
+          echo "Extracting archive..."
+          unzip $LOCAL_DUMP_FILE
+          echo "Move files from directory"
+          mv odoo17-basic/filestore /mnt/filestore/$LOCAL_DATABASE
+          mv odoo17-basic/dump.sql /mnt/
+          ls /mnt/
+          ls /mnt/filestore/$LOCAL_DATABASE/
+
           echo "Setting directory permissions..."
           chmod -R 777 /mnt/filestore
             
