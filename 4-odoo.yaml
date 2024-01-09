@@ -27,6 +27,14 @@ spec:
       labels:
         workload.user.cattle.io/workloadselector: deployment-default-odoo-abopeng
     spec:
+      initContainers:
+      - name: check-db-ready
+        image: postgres:9.6.5
+        command:
+        - sh
+        - -c
+        - until pg_isready -h db-abopeng -p 5432; do echo waiting for database; sleep
+          2; done;
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
