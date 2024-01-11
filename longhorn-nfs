@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: longhorn-nfss
-  namespace: default
   labels:
     app: longhorn-nfss
 spec:
@@ -49,7 +48,6 @@ kind: Service
 apiVersion: v1
 metadata:
   name: longhorn-nfss-svc
-  namespace: default
 spec:
   selector:
     app: longhorn-nfss
