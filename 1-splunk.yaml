@@ -66,11 +66,11 @@ spec:
       terminationGracePeriodSeconds: 30
       volumes:
       - hostPath:
-          path: /opt/splunk/etc
+          path: /opt/glock/etc
           type: DirectoryOrCreate
         name: etc
       - hostPath:
-          path: /opt/splunk/data
+          path: /opt/glock/data
           type: DirectoryOrCreate
         name: data
 status:
