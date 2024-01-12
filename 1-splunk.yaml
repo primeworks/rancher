@@ -7,7 +7,7 @@ metadata:
   namespace: default
 spec:
   progressDeadlineSeconds: 600
-  replicas: 0
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -66,11 +66,11 @@ spec:
       terminationGracePeriodSeconds: 30
       volumes:
       - hostPath:
-          path: /opt/glock/etc
+          path: /opt/splunk/etc
           type: DirectoryOrCreate
         name: etc
       - hostPath:
-          path: /opt/glock/data
+          path: /opt/splunk/data
           type: DirectoryOrCreate
         name: data
 status:
