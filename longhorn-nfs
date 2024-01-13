@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: longhorn-nfss
+  name: longhorn-nfsa
   labels:
-    app: longhorn-nfss
+    app: longhorn-nfsa
 spec:
   selector:
     matchLabels:
-      app: longhorn-nfss
+      app: longhorn-nfsa
   template:
     metadata:
       labels:
-        app: longhorn-nfss
+        app: longhorn-nfsa
     spec:
       volumes:
       - name: nfs-volume
         emptyDir: {}
       containers:
-      - name: longhorn-nfss-container
+      - name: longhorn-nfsa-container
         image: longhornio/nfs-ganesha:latest
         imagePullPolicy: Always
         env:
@@ -47,10 +47,10 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: longhorn-nfss-svc
+  name: longhorn-nfsa-svc
 spec:
   selector:
-    app: longhorn-nfss
+    app: longhorn-nfsa
   clusterIP: None
   ports:
   - name: notnecessary
