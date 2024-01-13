@@ -15,7 +15,7 @@ data:
     False\nserver_wide_modules = base,web\nsmtp_password = UA29dGB28Gx5PWz8bnRW\nsmtp_port
     = 25\nsmtp_server = relay.mailbaby.net\n;smtp_ssl = False\nsmtp_user = mb16635\n;syslog
     = False\n;test_enable = False\n;test_file = False\n;test_tags = None\n;translate_modules
-    = ['all']\n;unaccent = False\n;without_demo = False\nworkers = 4\n;unsplash.access_key
+    = ['all']\n;unaccent = False\n;without_demo = False\nworkers = 17\n;unsplash.access_key
     = 1b0c89ac6fe3ac460b2ae6acdfd36030e8d039ea45612d62914813ca26aca7af\n;unsplash.app_id
     = 59256\n;Database to Domain Filter Settings\n;db_name = False\n;dbfilter = ^%d$\nlist_db
     = True\nproxy_mode = True\nreport_url = ^%d$:8069"
