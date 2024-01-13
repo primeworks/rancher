@@ -18,7 +18,7 @@ data:
     = ['all']\n;unaccent = False\n;without_demo = False\n;workers = 17\n;unsplash.access_key
     = 1b0c89ac6fe3ac460b2ae6acdfd36030e8d039ea45612d62914813ca26aca7af\n;unsplash.app_id
     = 59256\n;Database to Domain Filter Settings\n;db_name = False\n;dbfilter = ^%d$\nlist_db
-    = True\nproxy_mode = False\nxmlrpc_interface = 127.0.0.1\nreport_url = ^%d$:8069"
+    = True\n;proxy_mode = False\n;xmlrpc_interface = 127.0.0.1\nreport_url = ^%d$:8069"
 kind: ConfigMap
 metadata:
   name: odoo-cbf.conf
