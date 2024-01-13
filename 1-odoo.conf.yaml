@@ -1,7 +1,8 @@
 apiVersion: v1
 data:
-  odoo.conf: "[options] \naddons_path = /mnt/extra-addons\ndata_dir = /var/lib/odoo\nadmin_passwd
-    = UA29dGB28Gx5PWz8bnRW\n;csv_internal_sep = ,\n;db_host = 139.162.234.5\ndb_maxconn
+  odoo.conf: "[options] \naddons_path = /mnt/extra-addons\ndata_dir = /var/lib/odoo\n;admin_passwd
+    = UA29dGB28Gx5PWz8bnRW\nadmin_passwd
+    = odoo\n;csv_internal_sep = ,\n;db_host = 139.162.234.5\ndb_maxconn
     = 100\n;db_password = i24125114A\n;db_port = 5432\n;db_sslmode = prefer\n;db_template
     = template0\n;db_user = odoo\ndemo = {}\n;email_from = odoo@webdiscode.com\n;geoip_database
     = /usr/share/GeoIP/GeoLite2-City.mmdb\n;http_enable = True\n;http_interface =
