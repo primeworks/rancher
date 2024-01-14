@@ -23,6 +23,7 @@ data:
     smtp_server = relay.mailbaby.net
     smtp_user = mb16635
     ;workers = 2
+    list_db = False
     proxy_mode = True
     report_url = ^%d$:8069
 kind: ConfigMap
