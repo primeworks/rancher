@@ -1,7 +1,8 @@
 apiVersion: v1
 data:
   odoo.conf: "[options] \naddons_path = /mnt/extra-addons\ndata_dir = /var/lib/odoo\n;admin_passwd
-    = UA29dGB28Gx5PWz8bnRW\n;csv_internal_sep = ,\n;db_host = 139.162.234.5\ndb_maxconn
+    = UA29dGB28Gx5PWz8bnRW\nadmin_passwd
+    = odoo\n;csv_internal_sep = ,\n;db_host = 139.162.234.5\ndb_maxconn
     = 100\n;db_password = i24125114A\n;db_port = 5432\n;db_sslmode = prefer\n;db_template
     = template0\n;db_user = odoo\ndemo = {}\n;email_from = odoo@webdiscode.com\n;geoip_database
     = /usr/share/GeoIP/GeoLite2-City.mmdb\n;http_enable = True\n;http_interface =
@@ -17,7 +18,7 @@ data:
     = ['all']\n;unaccent = False\n;without_demo = False\n;workers = 3\n;unsplash.access_key
     = 1b0c89ac6fe3ac460b2ae6acdfd36030e8d039ea45612d62914813ca26aca7af\n;unsplash.app_id
     = 59256\n;Database to Domain Filter Settings\n;db_name = False\n;dbfilter = ^%d$\nlist_db
-    = False\n;proxy_mode = True\nreport_url = ^%d$:8069"
+    = True\n;proxy_mode = True\nreport_url = ^%d$:8069"
 kind: ConfigMap
 metadata:
   name: odoo-cbf.conf
