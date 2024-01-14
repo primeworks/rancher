@@ -28,4 +28,4 @@ data:
     report_url = ^%d$:8069
 kind: ConfigMap
 metadata:
-  name: odoo-cbf.conf
+  name: odoo-basic.conf
