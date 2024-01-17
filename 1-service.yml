@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-cbf
+  name: odoo-prayer
 spec:
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
@@ -10,7 +10,7 @@ spec:
   ipFamilies:
   - IPv4
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-cbf
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-prayer
   type: LoadBalancer
   sessionAffinity: None
   ports:

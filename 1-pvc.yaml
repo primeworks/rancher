@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: odoo-cbf
+  name: odoo-prayer
   labels:
-    app: odoo-cbf
+    app: odoo-prayer
 spec:
   accessModes:
     - ReadWriteMany

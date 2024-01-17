@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: db-cbf
+  name: db-prayer
   ownerReferences:
   - apiVersion: apps/v1beta2
     controller: true
     kind: statefulset
-    name: db-cbf
+    name: db-prayer
     uid: d136565c-b478-49ea-9e0f-f5d36e00195b
 spec:
   selector:
-    workload.user.cattle.io/workloadselector: statefulSet-default-db-cbf
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-prayer
   sessionAffinity: None
   clusterIP: None
   clusterIPs:
