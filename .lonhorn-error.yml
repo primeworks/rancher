@@ -1,0 +1,1019 @@
+apiVersion: v1
+items:
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:55Z"
+    finalizers:
+    - longhorn.io
+    generation: 881
+    labels:
+      longhornvolume: pvc-109fe117-8764-4269-943d-8c08e71b9d1f
+    name: pvc-109fe117-8764-4269-943d-8c08e71b9d1f
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-109fe117-8764-4269-943d-8c08e71b9d1f
+      uid: c9019c28-d685-46ae-bc85-b217d53f2626
+    resourceVersion: "200822118"
+    uid: 18982796-6b53-49bc-b9d9-cdc6ea11b08f
+  spec:
+    attachmentTickets:
+      csi-3bcd9650879d3356a79ee93e8a63653a9ac4aac9009eeaf6c44903509ffc93a5:
+        generation: 0
+        id: csi-3bcd9650879d3356a79ee93e8a63653a9ac4aac9009eeaf6c44903509ffc93a5
+        nodeID: vmi1147231
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      csi-21c26e88b5db70a265a2be9bfc2aeba0482b7d6a204036e7648c62b9040ecae3:
+        generation: 0
+        id: csi-21c26e88b5db70a265a2be9bfc2aeba0482b7d6a204036e7648c62b9040ecae3
+        nodeID: vmi1343463
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      share-manager-controller-pvc-109fe117-8764-4269-943d-8c08e71b9d1f:
+        generation: 1
+        id: share-manager-controller-pvc-109fe117-8764-4269-943d-8c08e71b9d1f
+        nodeID: vmi1343465
+        parameters:
+          disableFrontend: "false"
+        type: share-manager-controller
+    volume: pvc-109fe117-8764-4269-943d-8c08e71b9d1f
+  status:
+    attachmentTicketStatuses:
+      csi-3bcd9650879d3356a79ee93e8a63653a9ac4aac9009eeaf6c44903509ffc93a5:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-11T16:16:03Z"
+          message: The attachment ticket is satisfied
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: csi-3bcd9650879d3356a79ee93e8a63653a9ac4aac9009eeaf6c44903509ffc93a5
+        satisfied: true
+      csi-21c26e88b5db70a265a2be9bfc2aeba0482b7d6a204036e7648c62b9040ecae3:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-16T03:06:23Z"
+          message: The attachment ticket is satisfied
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: csi-21c26e88b5db70a265a2be9bfc2aeba0482b7d6a204036e7648c62b9040ecae3
+        satisfied: true
+      share-manager-controller-pvc-109fe117-8764-4269-943d-8c08e71b9d1f:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-11T16:15:44Z"
+          message: ""
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 1
+        id: share-manager-controller-pvc-109fe117-8764-4269-943d-8c08e71b9d1f
+        satisfied: true
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:53Z"
+    finalizers:
+    - longhorn.io
+    generation: 995
+    labels:
+      longhornvolume: pvc-23a97b4f-88ec-45db-9513-0cf7f068310f
+    name: pvc-23a97b4f-88ec-45db-9513-0cf7f068310f
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-23a97b4f-88ec-45db-9513-0cf7f068310f
+      uid: 89c9af65-43fa-4ebb-96d6-27d4957cfac1
+    resourceVersion: "200769370"
+    uid: f4157f11-9de3-4995-ad9f-f3e9603f4c16
+  spec:
+    attachmentTickets:
+      csi-cbe3092d55f882b9fc8facf956d1a3db230b3aa4cce67416b35828522f49b174:
+        generation: 0
+        id: csi-cbe3092d55f882b9fc8facf956d1a3db230b3aa4cce67416b35828522f49b174
+        nodeID: vmi1147231
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      csi-fb7521b0c6c838f4184fb7173290546536b396168e3c67a83ecd936888782fe6:
+        generation: 0
+        id: csi-fb7521b0c6c838f4184fb7173290546536b396168e3c67a83ecd936888782fe6
+        nodeID: vmi1343463
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      share-manager-controller-pvc-23a97b4f-88ec-45db-9513-0cf7f068310f:
+        generation: 4
+        id: share-manager-controller-pvc-23a97b4f-88ec-45db-9513-0cf7f068310f
+        nodeID: vmi1343465
+        parameters:
+          disableFrontend: "false"
+        type: share-manager-controller
+    volume: pvc-23a97b4f-88ec-45db-9513-0cf7f068310f
+  status:
+    attachmentTicketStatuses:
+      csi-cbe3092d55f882b9fc8facf956d1a3db230b3aa4cce67416b35828522f49b174:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-11T21:34:46Z"
+          message: The attachment ticket is satisfied
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: csi-cbe3092d55f882b9fc8facf956d1a3db230b3aa4cce67416b35828522f49b174
+        satisfied: true
+      csi-fb7521b0c6c838f4184fb7173290546536b396168e3c67a83ecd936888782fe6:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-16T03:07:00Z"
+          message: The attachment ticket is satisfied
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: csi-fb7521b0c6c838f4184fb7173290546536b396168e3c67a83ecd936888782fe6
+        satisfied: true
+      share-manager-controller-pvc-23a97b4f-88ec-45db-9513-0cf7f068310f:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-11T21:34:34Z"
+          message: ""
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 4
+        id: share-manager-controller-pvc-23a97b4f-88ec-45db-9513-0cf7f068310f
+        satisfied: true
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:56Z"
+    finalizers:
+    - longhorn.io
+    generation: 522
+    labels:
+      longhornvolume: pvc-29bd580f-06ea-4acd-8bde-31baa4310679
+    name: pvc-29bd580f-06ea-4acd-8bde-31baa4310679
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-29bd580f-06ea-4acd-8bde-31baa4310679
+      uid: 6f4bc007-08b6-4796-8855-951c1b652316
+    resourceVersion: "201013013"
+    uid: 20b77ea2-6dec-49b1-835b-0ee18454b125
+  spec:
+    attachmentTickets:
+      csi-4e8ae306cf34d87e91c9f265460166261cda187c83fdaf88b12b48bb4375b04d:
+        generation: 0
+        id: csi-4e8ae306cf34d87e91c9f265460166261cda187c83fdaf88b12b48bb4375b04d
+        nodeID: vmi1147231
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      csi-e5b2b0df6e55ed4345c7c295bed2300d74bee912cef6e23b300a0fc2730a355d:
+        generation: 0
+        id: csi-e5b2b0df6e55ed4345c7c295bed2300d74bee912cef6e23b300a0fc2730a355d
+        nodeID: vmi1343463
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      share-manager-controller-pvc-29bd580f-06ea-4acd-8bde-31baa4310679:
+        generation: 0
+        id: share-manager-controller-pvc-29bd580f-06ea-4acd-8bde-31baa4310679
+        nodeID: vmi1343465
+        parameters:
+          disableFrontend: "false"
+        type: share-manager-controller
+    volume: pvc-29bd580f-06ea-4acd-8bde-31baa4310679
+  status:
+    attachmentTicketStatuses:
+      csi-4e8ae306cf34d87e91c9f265460166261cda187c83fdaf88b12b48bb4375b04d:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-16T16:18:23Z"
+          message: The attachment ticket is satisfied
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: csi-4e8ae306cf34d87e91c9f265460166261cda187c83fdaf88b12b48bb4375b04d
+        satisfied: true
+      csi-e5b2b0df6e55ed4345c7c295bed2300d74bee912cef6e23b300a0fc2730a355d:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-16T16:18:23Z"
+          message: The attachment ticket is satisfied
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: csi-e5b2b0df6e55ed4345c7c295bed2300d74bee912cef6e23b300a0fc2730a355d
+        satisfied: true
+      share-manager-controller-pvc-29bd580f-06ea-4acd-8bde-31baa4310679:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-16T16:18:17Z"
+          message: ""
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: share-manager-controller-pvc-29bd580f-06ea-4acd-8bde-31baa4310679
+        satisfied: true
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:56Z"
+    finalizers:
+    - longhorn.io
+    generation: 398
+    labels:
+      longhornvolume: pvc-381ad218-b2a8-40b9-b852-7b787dc0d59b
+    name: pvc-381ad218-b2a8-40b9-b852-7b787dc0d59b
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-381ad218-b2a8-40b9-b852-7b787dc0d59b
+      uid: 2c053ae0-3b0d-4898-9899-4d3feaf06deb
+    resourceVersion: "199125157"
+    uid: 48d3e968-4033-4961-92b9-7521a42cee2b
+  spec:
+    attachmentTickets: {}
+    volume: pvc-381ad218-b2a8-40b9-b852-7b787dc0d59b
+  status:
+    attachmentTicketStatuses: {}
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2024-01-16T14:10:31Z"
+    finalizers:
+    - longhorn.io
+    generation: 9
+    labels:
+      longhornvolume: pvc-4021753d-2cf2-4de6-bd81-90e441242a59
+    name: pvc-4021753d-2cf2-4de6-bd81-90e441242a59
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-4021753d-2cf2-4de6-bd81-90e441242a59
+      uid: 544b3c68-7143-4a54-a5db-f1d922bd2c7a
+    resourceVersion: "200996769"
+    uid: 94ea5c59-7199-4693-a492-cca585c3cb63
+  spec:
+    attachmentTickets: {}
+    volume: pvc-4021753d-2cf2-4de6-bd81-90e441242a59
+  status:
+    attachmentTicketStatuses: {}
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:58Z"
+    finalizers:
+    - longhorn.io
+    generation: 317
+    labels:
+      longhornvolume: pvc-48e9d408-e2a0-4a40-b9f6-d6aae24d965a
+    name: pvc-48e9d408-e2a0-4a40-b9f6-d6aae24d965a
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-48e9d408-e2a0-4a40-b9f6-d6aae24d965a
+      uid: df781ca9-713e-4c8d-ba24-edc686508f94
+    resourceVersion: "199125019"
+    uid: 306775e1-04fa-434b-938a-fa02790d3fa9
+  spec:
+    attachmentTickets: {}
+    volume: pvc-48e9d408-e2a0-4a40-b9f6-d6aae24d965a
+  status:
+    attachmentTicketStatuses: {}
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-12-28T01:50:48Z"
+    finalizers:
+    - longhorn.io
+    generation: 280
+    labels:
+      longhornvolume: pvc-49cff5a5-9c4c-431b-ba35-5289f2911126
+    name: pvc-49cff5a5-9c4c-431b-ba35-5289f2911126
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-49cff5a5-9c4c-431b-ba35-5289f2911126
+      uid: 2c4c7604-1511-4acf-88c8-1e48901d3087
+    resourceVersion: "200954873"
+    uid: 6e3b2108-530b-4768-a77e-e7bff89bfd82
+  spec:
+    attachmentTickets: {}
+    volume: pvc-49cff5a5-9c4c-431b-ba35-5289f2911126
+  status:
+    attachmentTicketStatuses: {}
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2024-01-14T20:37:44Z"
+    finalizers:
+    - longhorn.io
+    generation: 32
+    labels:
+      longhornvolume: pvc-5aa1fb5c-d844-4026-ac2a-1cd96317d4c2
+    name: pvc-5aa1fb5c-d844-4026-ac2a-1cd96317d4c2
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-5aa1fb5c-d844-4026-ac2a-1cd96317d4c2
+      uid: bd595bc5-2b8a-4ef1-9437-bf8c406ff02e
+    resourceVersion: "200966859"
+    uid: a6049aef-7441-431a-9b26-a3a46e2356c1
+  spec:
+    attachmentTickets: {}
+    volume: pvc-5aa1fb5c-d844-4026-ac2a-1cd96317d4c2
+  status:
+    attachmentTicketStatuses: {}
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:59Z"
+    finalizers:
+    - longhorn.io
+    generation: 499
+    labels:
+      longhornvolume: pvc-5d5f2450-fda1-468d-a8eb-d50afff9d34e
+    name: pvc-5d5f2450-fda1-468d-a8eb-d50afff9d34e
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-5d5f2450-fda1-468d-a8eb-d50afff9d34e
+      uid: e062b50a-b972-4503-a6d7-effaf3ed9264
+    resourceVersion: "201015726"
+    uid: 9d5f201d-294f-4619-80ad-7ab9292e4d4e
+  spec:
+    attachmentTickets:
+      csi-1235b5de1bf12778f383b1f21683dd8319b543bbf2104c0d67e6abe9323133c3:
+        generation: 0
+        id: csi-1235b5de1bf12778f383b1f21683dd8319b543bbf2104c0d67e6abe9323133c3
+        nodeID: vmi1147231
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      csi-c33f1c9149809e80d000f60ace664dc664a777d38719bbaeab571f5faffd2474:
+        generation: 0
+        id: csi-c33f1c9149809e80d000f60ace664dc664a777d38719bbaeab571f5faffd2474
+        nodeID: vmi1343463
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      share-manager-controller-pvc-5d5f2450-fda1-468d-a8eb-d50afff9d34e:
+        generation: 0
+        id: share-manager-controller-pvc-5d5f2450-fda1-468d-a8eb-d50afff9d34e
+        nodeID: vmi1343465
+        parameters:
+          disableFrontend: "false"
+        type: share-manager-controller
+    volume: pvc-5d5f2450-fda1-468d-a8eb-d50afff9d34e
+  status:
+    attachmentTicketStatuses:
+      csi-1235b5de1bf12778f383b1f21683dd8319b543bbf2104c0d67e6abe9323133c3:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-16T16:23:58Z"
+          message: Waiting for volume share to be available
+          reason: ""
+          status: "False"
+          type: Satisfied
+        generation: 0
+        id: csi-1235b5de1bf12778f383b1f21683dd8319b543bbf2104c0d67e6abe9323133c3
+        satisfied: false
+      csi-c33f1c9149809e80d000f60ace664dc664a777d38719bbaeab571f5faffd2474:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-16T16:23:55Z"
+          message: Waiting for volume share to be available
+          reason: ""
+          status: "False"
+          type: Satisfied
+        generation: 0
+        id: csi-c33f1c9149809e80d000f60ace664dc664a777d38719bbaeab571f5faffd2474
+        satisfied: false
+      share-manager-controller-pvc-5d5f2450-fda1-468d-a8eb-d50afff9d34e:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-16T16:24:19Z"
+          message: ""
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: share-manager-controller-pvc-5d5f2450-fda1-468d-a8eb-d50afff9d34e
+        satisfied: true
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:58Z"
+    finalizers:
+    - longhorn.io
+    generation: 995
+    labels:
+      longhornvolume: pvc-72eb7967-bd02-4f68-9d56-a2698c94903f
+    name: pvc-72eb7967-bd02-4f68-9d56-a2698c94903f
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-72eb7967-bd02-4f68-9d56-a2698c94903f
+      uid: a6181e33-892f-4149-80b3-b56c670003c8
+    resourceVersion: "200958789"
+    uid: 0dad7f08-0e71-4b3f-bbab-9061b3ce8f94
+  spec:
+    attachmentTickets:
+      csi-22c0267aebcbd8871f8940cb43947a34a892a013f739ebb13dd16894bfa7e21a:
+        generation: 0
+        id: csi-22c0267aebcbd8871f8940cb43947a34a892a013f739ebb13dd16894bfa7e21a
+        nodeID: vmi1343465
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      share-manager-controller-pvc-72eb7967-bd02-4f68-9d56-a2698c94903f:
+        generation: 1
+        id: share-manager-controller-pvc-72eb7967-bd02-4f68-9d56-a2698c94903f
+        nodeID: vmi1343465
+        parameters:
+          disableFrontend: "false"
+        type: share-manager-controller
+    volume: pvc-72eb7967-bd02-4f68-9d56-a2698c94903f
+  status:
+    attachmentTicketStatuses:
+      csi-22c0267aebcbd8871f8940cb43947a34a892a013f739ebb13dd16894bfa7e21a:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-11T05:47:59Z"
+          message: The attachment ticket is satisfied
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: csi-22c0267aebcbd8871f8940cb43947a34a892a013f739ebb13dd16894bfa7e21a
+        satisfied: true
+      share-manager-controller-pvc-72eb7967-bd02-4f68-9d56-a2698c94903f:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-11T05:47:44Z"
+          message: ""
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 1
+        id: share-manager-controller-pvc-72eb7967-bd02-4f68-9d56-a2698c94903f
+        satisfied: true
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:58Z"
+    finalizers:
+    - longhorn.io
+    generation: 861
+    labels:
+      longhornvolume: pvc-74361f35-52eb-4eb4-9bdf-c6e80b83fdc0
+    name: pvc-74361f35-52eb-4eb4-9bdf-c6e80b83fdc0
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-74361f35-52eb-4eb4-9bdf-c6e80b83fdc0
+      uid: 1f795c16-73f0-4e71-89e8-e074142cbc3a
+    resourceVersion: "199124574"
+    uid: a862f1b5-f512-4b8d-bfae-28902f0661bd
+  spec:
+    attachmentTickets: {}
+    volume: pvc-74361f35-52eb-4eb4-9bdf-c6e80b83fdc0
+  status:
+    attachmentTicketStatuses: {}
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:28:00Z"
+    finalizers:
+    - longhorn.io
+    generation: 1173
+    labels:
+      longhornvolume: pvc-7802db76-b34a-4cb5-8380-d9afa3c7984e
+    name: pvc-7802db76-b34a-4cb5-8380-d9afa3c7984e
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-7802db76-b34a-4cb5-8380-d9afa3c7984e
+      uid: 9c09547f-5bfe-4687-8ed7-422dd3fa0e56
+    resourceVersion: "200768285"
+    uid: 7642fcbf-47ef-4cb8-85d4-6cd43e5a2b60
+  spec:
+    attachmentTickets:
+      csi-240efe3087f9e0710af7df925a32ebd5d00e0839fc6fb543c616b9d2087ae182:
+        generation: 0
+        id: csi-240efe3087f9e0710af7df925a32ebd5d00e0839fc6fb543c616b9d2087ae182
+        nodeID: vmi1147231
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      csi-6412fe8a82def0f1a628d3af6127509ba5a1ff3c18e085b8ebd446d1cb294b5f:
+        generation: 0
+        id: csi-6412fe8a82def0f1a628d3af6127509ba5a1ff3c18e085b8ebd446d1cb294b5f
+        nodeID: vmi1343463
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      share-manager-controller-pvc-7802db76-b34a-4cb5-8380-d9afa3c7984e:
+        generation: 1
+        id: share-manager-controller-pvc-7802db76-b34a-4cb5-8380-d9afa3c7984e
+        nodeID: vmi1343465
+        parameters:
+          disableFrontend: "false"
+        type: share-manager-controller
+    volume: pvc-7802db76-b34a-4cb5-8380-d9afa3c7984e
+  status:
+    attachmentTicketStatuses:
+      csi-240efe3087f9e0710af7df925a32ebd5d00e0839fc6fb543c616b9d2087ae182:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-11T11:45:04Z"
+          message: The attachment ticket is satisfied
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: csi-240efe3087f9e0710af7df925a32ebd5d00e0839fc6fb543c616b9d2087ae182
+        satisfied: true
+      csi-6412fe8a82def0f1a628d3af6127509ba5a1ff3c18e085b8ebd446d1cb294b5f:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-16T03:06:13Z"
+          message: The attachment ticket is satisfied
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: csi-6412fe8a82def0f1a628d3af6127509ba5a1ff3c18e085b8ebd446d1cb294b5f
+        satisfied: true
+      share-manager-controller-pvc-7802db76-b34a-4cb5-8380-d9afa3c7984e:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-11T11:44:53Z"
+          message: ""
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 1
+        id: share-manager-controller-pvc-7802db76-b34a-4cb5-8380-d9afa3c7984e
+        satisfied: true
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-12-30T01:32:41Z"
+    finalizers:
+    - longhorn.io
+    generation: 229
+    labels:
+      longhornvolume: pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c
+    name: pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c
+      uid: 90abf0b1-270c-49ad-988d-3c37889cecc9
+    resourceVersion: "200996914"
+    uid: 86a45c67-b8cc-4c1f-9471-8d346d54f86d
+  spec:
+    attachmentTickets:
+      csi-d56ff7a6c818504474edaceefa815f89b395232e06553f2bb6b48ff5dfe1de6e:
+        generation: 0
+        id: csi-d56ff7a6c818504474edaceefa815f89b395232e06553f2bb6b48ff5dfe1de6e
+        nodeID: vmi1147231
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      share-manager-controller-pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c:
+        generation: 7
+        id: share-manager-controller-pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c
+        nodeID: vmi1343465
+        parameters:
+          disableFrontend: "false"
+        type: share-manager-controller
+    volume: pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c
+  status:
+    attachmentTicketStatuses:
+      csi-d56ff7a6c818504474edaceefa815f89b395232e06553f2bb6b48ff5dfe1de6e:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-11T21:34:37Z"
+          message: The attachment ticket is satisfied
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: csi-d56ff7a6c818504474edaceefa815f89b395232e06553f2bb6b48ff5dfe1de6e
+        satisfied: true
+      share-manager-controller-pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-11T21:34:31Z"
+          message: ""
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 7
+        id: share-manager-controller-pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c
+        satisfied: true
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:54Z"
+    finalizers:
+    - longhorn.io
+    generation: 320
+    labels:
+      longhornvolume: pvc-85ba82f0-39cf-450e-9add-ad604a8e5be9
+    name: pvc-85ba82f0-39cf-450e-9add-ad604a8e5be9
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-85ba82f0-39cf-450e-9add-ad604a8e5be9
+      uid: 15e5d7da-b9a5-4a32-b09a-7480719eab53
+    resourceVersion: "199125251"
+    uid: 135ea72c-8eca-409d-a675-77dbcbc400fc
+  spec:
+    attachmentTickets: {}
+    volume: pvc-85ba82f0-39cf-450e-9add-ad604a8e5be9
+  status:
+    attachmentTicketStatuses: {}
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:59Z"
+    finalizers:
+    - longhorn.io
+    generation: 488
+    labels:
+      longhornvolume: pvc-aaf73d7c-e8a4-4bad-9d33-103d8072bac7
+    name: pvc-aaf73d7c-e8a4-4bad-9d33-103d8072bac7
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-aaf73d7c-e8a4-4bad-9d33-103d8072bac7
+      uid: 4b8118f5-caad-47d0-b995-a29be1fe3aa8
+    resourceVersion: "201021627"
+    uid: 17338c53-b6c2-4559-8be9-a6dd4eed5106
+  spec:
+    attachmentTickets:
+      csi-636224cede981c4e0c44066841372c68de926409b9ae53194042384440996573:
+        generation: 0
+        id: csi-636224cede981c4e0c44066841372c68de926409b9ae53194042384440996573
+        nodeID: vmi1343463
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      share-manager-controller-pvc-aaf73d7c-e8a4-4bad-9d33-103d8072bac7:
+        generation: 0
+        id: share-manager-controller-pvc-aaf73d7c-e8a4-4bad-9d33-103d8072bac7
+        nodeID: vmi1147231
+        parameters:
+          disableFrontend: "false"
+        type: share-manager-controller
+    volume: pvc-aaf73d7c-e8a4-4bad-9d33-103d8072bac7
+  status:
+    attachmentTicketStatuses:
+      csi-636224cede981c4e0c44066841372c68de926409b9ae53194042384440996573:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-16T16:23:56Z"
+          message: Waiting for volume share to be available
+          reason: ""
+          status: "False"
+          type: Satisfied
+        generation: 0
+        id: csi-636224cede981c4e0c44066841372c68de926409b9ae53194042384440996573
+        satisfied: false
+      share-manager-controller-pvc-aaf73d7c-e8a4-4bad-9d33-103d8072bac7:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-16T16:24:06Z"
+          message: ""
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: share-manager-controller-pvc-aaf73d7c-e8a4-4bad-9d33-103d8072bac7
+        satisfied: true
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:56Z"
+    finalizers:
+    - longhorn.io
+    generation: 633
+    labels:
+      longhornvolume: pvc-ae76e204-8f15-4383-a18f-b2f3b4dbd43c
+    name: pvc-ae76e204-8f15-4383-a18f-b2f3b4dbd43c
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-ae76e204-8f15-4383-a18f-b2f3b4dbd43c
+      uid: 183d6221-fc48-4667-b612-6f7d42e4c034
+    resourceVersion: "199125402"
+    uid: 3b8e6897-6362-4ea9-b142-8bd6a0e222f2
+  spec:
+    attachmentTickets: {}
+    volume: pvc-ae76e204-8f15-4383-a18f-b2f3b4dbd43c
+  status:
+    attachmentTicketStatuses: {}
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:54Z"
+    finalizers:
+    - longhorn.io
+    generation: 448
+    labels:
+      longhornvolume: pvc-d8eeb595-410d-4360-80bd-edbd0190cff0
+    name: pvc-d8eeb595-410d-4360-80bd-edbd0190cff0
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-d8eeb595-410d-4360-80bd-edbd0190cff0
+      uid: 55ea2b6e-ae0c-4a21-853d-e1dfd8b62a5c
+    resourceVersion: "201031601"
+    uid: 57070753-a42c-4c9a-bac2-a9169ad1f7f1
+  spec:
+    attachmentTickets:
+      csi-7701b84c4e8b30682969dac7e8fbbfa9c25606e64cb504da836f628ac89707a5:
+        generation: 0
+        id: csi-7701b84c4e8b30682969dac7e8fbbfa9c25606e64cb504da836f628ac89707a5
+        nodeID: vmi1147231
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      csi-b64bbc46e0dbc90b1b33a7abefb8566326098909f86115067e0698a19f88fb84:
+        generation: 0
+        id: csi-b64bbc46e0dbc90b1b33a7abefb8566326098909f86115067e0698a19f88fb84
+        nodeID: vmi1343463
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+    volume: pvc-d8eeb595-410d-4360-80bd-edbd0190cff0
+  status:
+    attachmentTicketStatuses:
+      csi-7701b84c4e8b30682969dac7e8fbbfa9c25606e64cb504da836f628ac89707a5:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-16T17:10:41Z"
+          message: Waiting for volume share to be available
+          reason: ""
+          status: "False"
+          type: Satisfied
+        generation: 0
+        id: csi-7701b84c4e8b30682969dac7e8fbbfa9c25606e64cb504da836f628ac89707a5
+        satisfied: false
+      csi-b64bbc46e0dbc90b1b33a7abefb8566326098909f86115067e0698a19f88fb84:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-16T16:59:34Z"
+          message: Waiting for volume share to be available
+          reason: ""
+          status: "False"
+          type: Satisfied
+        generation: 0
+        id: csi-b64bbc46e0dbc90b1b33a7abefb8566326098909f86115067e0698a19f88fb84
+        satisfied: false
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:55Z"
+    finalizers:
+    - longhorn.io
+    generation: 782
+    labels:
+      longhornvolume: pvc-e05dbd29-8011-4a9f-92c7-aee841c84e6d
+    name: pvc-e05dbd29-8011-4a9f-92c7-aee841c84e6d
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-e05dbd29-8011-4a9f-92c7-aee841c84e6d
+      uid: 8122a9a4-9eac-4a2d-8fb0-c50f3b038ba7
+    resourceVersion: "199125109"
+    uid: bc9a6b4b-d8ba-407d-bbf5-0d1e1894f3e1
+  spec:
+    attachmentTickets: {}
+    volume: pvc-e05dbd29-8011-4a9f-92c7-aee841c84e6d
+  status:
+    attachmentTicketStatuses: {}
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:55Z"
+    finalizers:
+    - longhorn.io
+    generation: 1719
+    labels:
+      longhornvolume: pvc-e757b8ba-5c5c-4982-9b65-07ec72e0edbe
+    name: pvc-e757b8ba-5c5c-4982-9b65-07ec72e0edbe
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-e757b8ba-5c5c-4982-9b65-07ec72e0edbe
+      uid: 436feb82-ccfd-46f3-96b5-f9d6f37604a2
+    resourceVersion: "200757939"
+    uid: c8df0aa2-67fb-400d-9064-f13e9cfb0881
+  spec:
+    attachmentTickets: {}
+    volume: pvc-e757b8ba-5c5c-4982-9b65-07ec72e0edbe
+  status:
+    attachmentTicketStatuses: {}
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:54Z"
+    finalizers:
+    - longhorn.io
+    generation: 1136
+    labels:
+      longhornvolume: pvc-eb0a9b88-8390-488d-b5c8-2854e2a84fed
+    name: pvc-eb0a9b88-8390-488d-b5c8-2854e2a84fed
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-eb0a9b88-8390-488d-b5c8-2854e2a84fed
+      uid: 385e827e-3d69-4179-9256-1b0b541eb462
+    resourceVersion: "200758575"
+    uid: aecfcf2a-7c64-4eaa-b812-b50f6d0b7bc4
+  spec:
+    attachmentTickets:
+      csi-960654febe200aa70da8aa9fbf7667183e686dde062a551b9af520e775d03338:
+        generation: 0
+        id: csi-960654febe200aa70da8aa9fbf7667183e686dde062a551b9af520e775d03338
+        nodeID: vmi1343463
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      csi-b4d59d06a07f73bfd1d1a1f97a85d225ad50e43378a4f8e1f5d935425d6d75b1:
+        generation: 0
+        id: csi-b4d59d06a07f73bfd1d1a1f97a85d225ad50e43378a4f8e1f5d935425d6d75b1
+        nodeID: vmi1147231
+        parameters:
+          disableFrontend: "false"
+          lastAttachedBy: ""
+        type: csi-attacher
+      share-manager-controller-pvc-eb0a9b88-8390-488d-b5c8-2854e2a84fed:
+        generation: 1
+        id: share-manager-controller-pvc-eb0a9b88-8390-488d-b5c8-2854e2a84fed
+        nodeID: vmi1343465
+        parameters:
+          disableFrontend: "false"
+        type: share-manager-controller
+    volume: pvc-eb0a9b88-8390-488d-b5c8-2854e2a84fed
+  status:
+    attachmentTicketStatuses:
+      csi-960654febe200aa70da8aa9fbf7667183e686dde062a551b9af520e775d03338:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-11T16:16:13Z"
+          message: The attachment ticket is satisfied
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: csi-960654febe200aa70da8aa9fbf7667183e686dde062a551b9af520e775d03338
+        satisfied: true
+      csi-b4d59d06a07f73bfd1d1a1f97a85d225ad50e43378a4f8e1f5d935425d6d75b1:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-16T02:44:39Z"
+          message: The attachment ticket is satisfied
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 0
+        id: csi-b4d59d06a07f73bfd1d1a1f97a85d225ad50e43378a4f8e1f5d935425d6d75b1
+        satisfied: true
+      share-manager-controller-pvc-eb0a9b88-8390-488d-b5c8-2854e2a84fed:
+        conditions:
+        - lastProbeTime: ""
+          lastTransitionTime: "2024-01-11T16:15:46Z"
+          message: ""
+          reason: ""
+          status: "True"
+          type: Satisfied
+        generation: 1
+        id: share-manager-controller-pvc-eb0a9b88-8390-488d-b5c8-2854e2a84fed
+        satisfied: true
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2024-01-06T23:58:17Z"
+    finalizers:
+    - longhorn.io
+    generation: 5
+    labels:
+      longhornvolume: pvc-f02e5f32-1f76-4f40-be2e-dd0042605f10
+    name: pvc-f02e5f32-1f76-4f40-be2e-dd0042605f10
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-f02e5f32-1f76-4f40-be2e-dd0042605f10
+      uid: e8ff75c2-1359-4844-80b7-1e3ac0d22378
+    resourceVersion: "199124522"
+    uid: cf38c512-34b3-4a5f-a0d9-0c01f336031b
+  spec:
+    attachmentTickets: {}
+    volume: pvc-f02e5f32-1f76-4f40-be2e-dd0042605f10
+  status:
+    attachmentTicketStatuses: {}
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:57Z"
+    finalizers:
+    - longhorn.io
+    generation: 361
+    labels:
+      longhornvolume: pvc-f9f99738-9d2f-4023-88b5-15fece55f831
+    name: pvc-f9f99738-9d2f-4023-88b5-15fece55f831
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: pvc-f9f99738-9d2f-4023-88b5-15fece55f831
+      uid: 11eca808-d303-4b30-bcd5-26d746a8dfdd
+    resourceVersion: "201011271"
+    uid: cfe77037-ba43-4856-a82e-1f02e8f85b6b
+  spec:
+    attachmentTickets: {}
+    volume: pvc-f9f99738-9d2f-4023-88b5-15fece55f831
+  status:
+    attachmentTicketStatuses: {}
+- apiVersion: longhorn.io/v1beta2
+  kind: VolumeAttachment
+  metadata:
+    creationTimestamp: "2023-11-30T16:27:59Z"
+    finalizers:
+    - longhorn.io
+    generation: 322
+    labels:
+      longhornvolume: silverflow-odoo
+    name: silverflow-odoo
+    namespace: longhorn-system
+    ownerReferences:
+    - apiVersion: longhorn.io/v1beta2
+      kind: Volume
+      name: silverflow-odoo
+      uid: 646ac1b3-6f08-4c79-9111-341d69933a24
+    resourceVersion: "199127048"
+    uid: 193471dd-38f4-4c8f-b358-68bf5c1d2802
+  spec:
+    attachmentTickets: {}
+    volume: silverflow-odoo
+  status:
+    attachmentTicketStatuses: {}
+kind: List
+metadata:
+  resourceVersion: ""
