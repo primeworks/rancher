@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-cbf
+    app: odoo-base
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-cbf
-  name: odoo-cbf
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-base
+  name: odoo-base
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-cbf
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-base
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,13 +25,13 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-cbf
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-base
     spec:
       initContainers:
       - command:
         - sh
         - -c
-        - until pg_isready -h db-cbf -p 5432; do echo waiting for database; sleep
+        - until pg_isready -h db-base -p 5432; do echo waiting for database; sleep
           2; done;
         image: postgres:9.6.5
         imagePullPolicy: IfNotPresent
@@ -51,7 +51,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-cbf
+          value: db-base
         - name: PASSWORD
           value: odoo
         - name: USER
@@ -92,7 +92,7 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-cbf
+        name: odoo-base
         resources:
           requests:
             cpu: 100m
@@ -129,11 +129,11 @@ spec:
       volumes:
       - configMap:
           defaultMode: 509
-          name: odoo-cbf.conf
+          name: odoo-base.conf
           optional: true
         name: config
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: odoo-cbf
+          claimName: odoo-base
 
