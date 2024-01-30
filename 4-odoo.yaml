@@ -39,10 +39,10 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: app
+              - key: stack
                 operator: In
                 values:
-                - files
+                - odoo
       containers:
       - env:
         - name: HOST
