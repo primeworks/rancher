@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-base
+    app: odoo-ssws
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-base
-  name: odoo-base
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-ssws
+  name: odoo-ssws
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-base
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-ssws
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,15 +25,15 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-base
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-ssws
     spec:
       initContainers:
       - command:
         - sh
         - -c
         - |
-          until PGPASSWORD="odoo" psql -h db-base -U odoo -d base -c "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users');" | grep -q t; do
-          echo "Waiting for the res_users table to be available in the database....."; 
+          until PGPASSWORD="odoo" psql -h db-ssws -U odoo -d ssws -c "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users');" | grep -q t; do
+          echo "Waiting for the res_users table to be available in the datassws....."; 
           sleep 2; 
           done;
         image: odoo:17
@@ -59,7 +59,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-base
+          value: db-ssws
         - name: PASSWORD
           value: odoo
         - name: USER
@@ -100,7 +100,7 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-base
+        name: odoo-ssws
         resources:
           requests:
             cpu: 100m
@@ -137,11 +137,11 @@ spec:
       volumes:
       - configMap:
           defaultMode: 509
-          name: odoo-base.conf
+          name: odoo-ssws.conf
           optional: true
         name: config
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: odoo-base
+          claimName: odoo-ssws
 

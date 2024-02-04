@@ -17,7 +17,7 @@ data:
     max_cron_threads = 2
     pidfile = None
     reportgz = False
-    server_wide_modules = base,web
+    server_wide_modules = ssws,web
     smtp_password = UA29dGB28Gx5PWz8bnRW
     smtp_port = 25
     smtp_server = relay.mailbaby.net
@@ -28,4 +28,4 @@ data:
     report_url = ^%d$:8069
 kind: ConfigMap
 metadata:
-  name: odoo-base.conf
+  name: odoo-ssws.conf

@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-base
+    app: odoo-ssws
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-base
-  name: odoo-base
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-ssws
+  name: odoo-ssws
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-base
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-ssws
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,13 +25,13 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-base
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-ssws
     spec:
       initContainers:
       - command:
         - sh
         - -c
-        - until pg_isready -h db-base -p 5432; do echo waiting for database; sleep
+        - until pg_isready -h db-ssws -p 5432; do echo waiting for datassws; sleep
           2; done;
         image: postgres:9.6.5
         imagePullPolicy: IfNotPresent
@@ -42,9 +42,9 @@ spec:
       - command:
         - sh
         - -c
-        - 'if psql -h db-base -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "base";
-          then echo "The database base exists." else until createdb -h db-base
-          -U odoo -p 5432 base; fi '
+        - 'if psql -h db-ssws -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "ssws";
+          then echo "The datassws ssws exists." else until createdb -h db-ssws
+          -U odoo -p 5432 ssws; fi '
         env:
         - name: POSTGRES_DB
           value: postgres
@@ -67,9 +67,9 @@ spec:
           FTP_PASSWORD="i24125114A"
           FTP_REMOTE_FILE="dump.sql"
           FTP_REMOTE_FILESTORE="odoo17-basic.zip"
-          LOCAL_HOST="db-base"
+          LOCAL_HOST="db-ssws"
           LOCAL_USER="odoo"
-          LOCAL_DATABASE="base"
+          LOCAL_DATAssws="ssws"
           LOCAL_DUMP_FILE="odoo17-basic.zip"
 
           echo "Entering odoo directory...."
@@ -77,20 +77,20 @@ spec:
           echo "Creating filestore directory..."
           mkdir filestore
           mkdir addons
-          echo "Creating $LOCAL_DATABASE directory..."
-          mkdir filestore/$LOCAL_DATABASE
+          echo "Creating $LOCAL_DATAssws directory..."
+          mkdir filestore/$LOCAL_DATAssws
           echo "Downloading filestore files..."
           cd addons/
           wget -P ./ "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE"
           echo "Extracting archive..."
           unzip $LOCAL_DUMP_FILE
           echo "Move files from directory"
-          mv filestore/* /mnt/filestore/$LOCAL_DATABASE
+          mv filestore/* /mnt/filestore/$LOCAL_DATAssws
           mv dump.sql /mnt/
           echo "List items in odoo directory..."
           ls /mnt/
           echo "List contents in filestore directory..."
-          ls /mnt/filestore/$LOCAL_DATABASE/
+          ls /mnt/filestore/$LOCAL_DATAssws/
 
           echo "Setting directory permissions..."
           chmod -Rv 777 /mnt/filestore
@@ -112,33 +112,33 @@ spec:
         - sh
         - -c
         - |
-          LOCAL_HOST="db-base"
+          LOCAL_HOST="db-ssws"
           LOCAL_USER="odoo"
-          LOCAL_DATABASE="base"
+          LOCAL_DATAssws="ssws"
           LOCAL_DUMP_FILE="odoo-basic.dump"
 
-          if ! PGPASSWORD="odoo" psql -h db-base -U odoo -d base -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-            echo "The res_users table doesn't exist in the base database. Proceeding with database restore..."
+          if ! PGPASSWORD="odoo" psql -h db-ssws -U odoo -d ssws -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+            echo "The res_users table doesn't exist in the ssws datassws. Proceeding with datassws restore..."
 
             echo "Entering odoo directory..."
             cd /var/lib/odoo/addons/
             echo "List contents of odoo directory..."
             ls /var/lib/odoo/addons/
 
-            echo "Restoring database dump locally..."
-            if PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"; then
-              echo "The database $LOCAL_DATABASE created..."
-            else echo "The database $LOCAL_DATABASE already exists..."
+            echo "Restoring datassws dump locally..."
+            if PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATAssws"; then
+              echo "The datassws $LOCAL_DATAssws created..."
+            else echo "The datassws $LOCAL_DATAssws already exists..."
             fi
-            if PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"; then
+            if PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATAssws" -v "$LOCAL_DUMP_FILE"; then
                  
-                 echo "Database restored successfully."
+                 echo "Datassws restored successfully."
                  rm "$LOCAL_DUMP_FILE"
-              else  echo "Database failed to be restored."
+              else  echo "Datassws failed to be restored."
                     rm "$LOCAL_DUMP_FILE"
               fi
           else
-            echo "The res_users table already exists in the base database. Skipping database restore."
+            echo "The res_users table already exists in the ssws datassws. Skipping datassws restore."
           fi
         image: odoo:17
         imagePullPolicy: IfNotPresent
@@ -163,7 +163,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-base
+          value: db-ssws
         - name: PASSWORD
           value: odoo
         - name: USER
@@ -204,7 +204,7 @@ spec:
           periodSeconds: 300
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-base
+        name: odoo-ssws
         resources:
           requests:
             cpu: 100m
@@ -241,11 +241,11 @@ spec:
       volumes:
       - configMap:
           defaultMode: 509
-          name: odoo-base.conf
+          name: odoo-ssws.conf
           optional: true
         name: config
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: odoo-base
+          claimName: odoo-ssws
 
