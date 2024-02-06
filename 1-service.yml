@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-baze
+  name: odoo-hh
 spec:
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
@@ -10,7 +10,7 @@ spec:
   ipFamilies:
   - IPv4
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-baze
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-hh
   type: LoadBalancer
   sessionAffinity: None
   ports:

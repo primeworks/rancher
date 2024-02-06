@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: db-baze
+  name: db-hh
   ownerReferences:
   - apiVersion: apps/v1beta2
     controller: true
     kind: statefulset
-    name: db-baze
+    name: db-hh
     uid: d136565c-b478-49ea-9e0f-f5d36e00195b
 spec:
   selector:
-    workload.user.cattle.io/workloadselector: statefulSet-default-db-baze
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-hh
   sessionAffinity: None
   clusterIP: None
   clusterIPs:
