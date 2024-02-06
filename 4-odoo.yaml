@@ -131,7 +131,7 @@ spec:
       volumes:
       - configMap:
           defaultMode: 509
-          name: odoo.conf
+          name: odoo-studio24.conf
           optional: true
         name: config
       # Edit the volume to match the existing pv in the cluster
