@@ -19,9 +19,11 @@ data:
     reportgz = False
     server_wide_modules = base,web
     smtp_password = UA29dGB28Gx5PWz8bnRW
-    smtp_port = 25
+    smtp_port = 587
     smtp_server = relay.mailbaby.net
     smtp_user = mb16635
+    smtp_ssl = True
+    email_from = odoo@siliconstreets.com
     ;workers = 2
     list_db = True
     proxy_mode = True
