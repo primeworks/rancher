@@ -19,7 +19,7 @@ data:
     reportgz = False
     server_wide_modules = base,web
     smtp_password = "UA29dGB28Gx5PWz8bnRW"
-    smtp_port = "25"
+    smtp_port = 25
     smtp_server = "relay.mailbaby.net"
     smtp_user = "mb16635"
     email_from = "odoo@siliconstreets.com"
