@@ -33,15 +33,15 @@ spec:
         command: ['sh', '-c', 
           'until pg_isready -h db-studio24 -p 5432; 
           do echo waiting for database; sleep 2; done;']
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: stack
-                operator: In
-                values:
-                - '24'
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: stack
+      #           operator: In
+      #           values:
+      #           - '24'
       containers:
       - env:
         - name: HOST
