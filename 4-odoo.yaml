@@ -35,15 +35,15 @@ spec:
         - -c
         - until pg_isready -h db-abopeng -p 5432; do echo waiting for database; sleep
           2; done;
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: stack
-                operator: In
-                values:
-                - odoo
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: stack
+      #           operator: In
+      #           values:
+      #           - odoo
       containers:
       - env:
         - name: HOST
