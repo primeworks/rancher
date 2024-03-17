@@ -25,15 +25,15 @@ spec:
       labels:
         workload.user.cattle.io/workloadselector: statefulSet-default-db-didisng
     spec:
-      # affinity:
-      #   nodeAffinity:
-      #     requiredDuringSchedulingIgnoredDuringExecution:
-      #       nodeSelectorTerms:
-      #       - matchExpressions:
-      #         - key: stack
-      #           operator: In
-      #           values:
-      #           - odoo
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: stack
+                operator: In
+                values:
+                - odoo
       containers:
       - args:
         - --max_connections=1200
