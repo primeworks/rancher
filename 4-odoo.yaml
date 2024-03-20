@@ -105,8 +105,8 @@ spec:
         - mountPath: /mnt/extra-addons
           name: vol-7xe3r
           subPath: odoo/addons
-        - mountPath: /etc/odoo
-          name: config
+        #- mountPath: /etc/odoo
+        #  name: config
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -118,11 +118,11 @@ spec:
         operator: Equal
         value: odoo
       volumes:
-      - configMap:
-          defaultMode: 509
-          name: odoo.conf
-          optional: true
-        name: config
+      #- configMap:
+      #    defaultMode: 509
+      #    name: odoo.conf
+      #    optional: true
+      #  name: config
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
