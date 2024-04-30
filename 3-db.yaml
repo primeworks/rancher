@@ -24,15 +24,15 @@ spec:
       labels:
         workload.user.cattle.io/workloadselector: statefulSet-default-db-studio24
     spec:
-      # affinity:
-      #   nodeAffinity:
-      #     requiredDuringSchedulingIgnoredDuringExecution:
-      #       nodeSelectorTerms:
-      #       - matchExpressions:
-      #         - key: stack
-      #           operator: In
-      #           values:
-      #           - '24'
+       affinity:
+         nodeAffinity:
+           requiredDuringSchedulingIgnoredDuringExecution:
+             nodeSelectorTerms:
+             - matchExpressions:
+               - key: stack
+                 operator: In
+                 values:
+                 - 'db'
       containers:
       - args:
         - --max_connections=100
@@ -86,7 +86,7 @@ spec:
       - effect: NoSchedule
         key: stack
         operator: Equal
-        value: '24'
+        value: 'db'
       volumes:
       - emptyDir:
           medium: Memory
