@@ -81,7 +81,7 @@ spec:
       - effect: NoSchedule
         key: stack
         operator: Equal
-        value: odoo
+        value: db
       volumes:
       - emptyDir:
           medium: Memory
