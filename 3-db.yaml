@@ -32,7 +32,7 @@ spec:
                - key: stack
                  operator: In
                  values:
-                 - 'db'
+                 - db
       containers:
       - args:
         - --max_connections=100
@@ -86,7 +86,7 @@ spec:
       - effect: NoSchedule
         key: stack
         operator: Equal
-        value: 'db'
+        value: db
       volumes:
       - emptyDir:
           medium: Memory
