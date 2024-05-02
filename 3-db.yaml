@@ -10,7 +10,7 @@ metadata:
   name: db-sflow
 spec:
   podManagementPolicy: OrderedReady
-  replicas: 0
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -79,6 +79,11 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: stack
+        operator: Equal
+        value: db
       volumes:
       - emptyDir:
           medium: Memory
