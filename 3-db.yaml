@@ -33,7 +33,7 @@ spec:
               - key: stack
                 operator: In
                 values:
-                - db
+                - odoo
       containers:
       - args:
         - --max_connections=1200
@@ -83,7 +83,7 @@ spec:
       - effect: NoSchedule
         key: stack
         operator: Equal
-        value: db
+        value: odoo
       volumes:
       - emptyDir:
           medium: Memory
