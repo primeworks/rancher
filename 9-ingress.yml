@@ -18,7 +18,20 @@ spec:
             name: odoo-sflow
             port:
               name: http
+  - host: silverflow.webdiscode.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-sflow
+            port:
+              name: http
   tls:
   - hosts:
     - odoo-sflow.webdiscode.com
     secretName: odoo-sflow.webdiscode.com-tls
+  - hosts:
+    - silverflow.webdiscode.com
+    secretName: silverflow.webdiscode.com-tls
