@@ -10,7 +10,7 @@ metadata:
   name: db-sflow
 spec:
   podManagementPolicy: OrderedReady
-  replicas: 1
+  replicas: 0
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -33,7 +33,7 @@ spec:
               - key: stack
                 operator: In
                 values:
-                - odoo
+                - db
       containers:
       - args:
         - --max_connections=1200
@@ -83,7 +83,7 @@ spec:
       - effect: NoSchedule
         key: stack
         operator: Equal
-        value: odoo
+        value: db
       volumes:
       - emptyDir:
           medium: Memory
