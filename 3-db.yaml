@@ -33,7 +33,7 @@ spec:
               - key: stack
                 operator: In
                 values:
-                - odoo
+                - db
       containers:
       - args:
         - --max_connections=100
@@ -83,6 +83,11 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: stack
+        operator: Equal
+        value: db
       volumes:
       - emptyDir:
           medium: Memory
