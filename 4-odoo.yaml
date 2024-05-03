@@ -35,7 +35,7 @@ spec:
         - -c
         - until pg_isready -h db-abopeng -p 5432; do echo waiting for database; sleep
           2; done;
-       affinity:
+        affinity:
          nodeAffinity:
            requiredDuringSchedulingIgnoredDuringExecution:
              nodeSelectorTerms:

@@ -34,64 +34,64 @@ spec:
                  operator: In
                  values:
                  - db
-      containers:
-      - args:
-        - --max_connections=100
-        - --shared_buffers=3072MB
-        - --effective_cache_size=8192MB
-        - --work_mem=30GB
-        - --dynamic_shared_memory_type=posix
-        - --max_parallel_workers_per_gather=8
-        env:
-        - name: POSTGRES_DB
-          value: postgres
-        - name: POSTGRES_PASSWORD
-          value: odoo
-        - name: POSTGRES_USER
-          value: odoo
-        image: postgres:15
-        imagePullPolicy: IfNotPresent
-        name: db-abopeng
+       containers:
+       - args:
+         - --max_connections=100
+         - --shared_buffers=3072MB
+         - --effective_cache_size=8192MB
+         - --work_mem=30GB
+         - --dynamic_shared_memory_type=posix
+         - --max_parallel_workers_per_gather=8
+         env:
+         - name: POSTGRES_DB
+           value: postgres
+         - name: POSTGRES_PASSWORD
+           value: odoo
+         - name: POSTGRES_USER
+           value: odoo
+         image: postgres:15
+         imagePullPolicy: IfNotPresent
+         name: db-abopeng
         
-        resources:
+         resources:
           requests:
             cpu: 100m
             memory: 512Mi
-        securityContext:
+         securityContext:
           allowPrivilegeEscalation: false
           capabilities: {}
           privileged: false
           readOnlyRootFilesystem: false
           runAsNonRoot: false
-        stdin: true
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-        tty: true
-        volumeMounts:
+         stdin: true
+         terminationMessagePath: /dev/termination-log
+         terminationMessagePolicy: File
+         tty: true
+         volumeMounts:
         # Edit the volume to match the existing volumeMounts in the cluster
-        - mountPath: /dev/shm
-          name: dshm
-        - mountPath: /var/lib/postgresql/data
-          name: vol-ytjxx
-          subPath: database
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
-      tolerations:
-      - effect: NoSchedule
-        key: stack
-        operator: Equal
-        value: db
-      volumes:
-      - emptyDir:
+         - mountPath: /dev/shm
+           name: dshm
+         - mountPath: /var/lib/postgresql/data
+           name: vol-ytjxx
+           subPath: database
+       dnsPolicy: ClusterFirst
+       restartPolicy: Always
+       schedulerName: default-scheduler
+       securityContext: {}
+       terminationGracePeriodSeconds: 30
+       tolerations:
+       - effect: NoSchedule
+         key: stack
+         operator: Equal
+         value: db
+       volumes:
+       - emptyDir:
           medium: Memory
           sizeLimit: 1Gi
-        name: dshm
+         name: dshm
       # Edit the volume to match the existing pv in the cluster
-      - name: vol-ytjxx
-        persistentVolumeClaim:
+       - name: vol-ytjxx
+         persistentVolumeClaim:
           claimName: odoo-abopeng
   updateStrategy:
     type: RollingUpdate
