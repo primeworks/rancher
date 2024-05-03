@@ -10,7 +10,7 @@ metadata:
 spec:
   progressDeadlineSeconds: 600
   replicas: 0
-  revisionHistoryLimit: 10
+  revisionHistoryLimit: 100
   selector:
     matchLabels:
       workload.user.cattle.io/workloadselector: deployment-default-odoo-abopeng
