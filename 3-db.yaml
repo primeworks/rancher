@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: db-cbf
+    app: db-bip
     app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
     objectset.rio.cattle.io/hash: dbb408b909497414f93be5e7a78a2f285d27b7e1
-    workload.user.cattle.io/workloadselector: statefulSet-default-db-cbf
-  name: db-cbf
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-bip
+  name: db-bip
 spec:
   podManagementPolicy: OrderedReady
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: statefulSet-default-db-cbf
-  serviceName: db-cbf
+      workload.user.cattle.io/workloadselector: statefulSet-default-db-bip
+  serviceName: db-bip
   template:
     metadata:
       annotations:
@@ -23,7 +23,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: statefulSet-default-db-cbf
+        workload.user.cattle.io/workloadselector: statefulSet-default-db-bip
     spec:
       affinity:
         nodeAffinity:
@@ -55,7 +55,7 @@ spec:
           value: odoo
         image: postgres:15
         imagePullPolicy: IfNotPresent
-        name: db-cbf
+        name: db-bip
         
         resources:
           requests:
@@ -96,7 +96,7 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
         persistentVolumeClaim:
-          claimName: odoo-cbf
+          claimName: odoo-bip
   updateStrategy:
     type: RollingUpdate
 status:

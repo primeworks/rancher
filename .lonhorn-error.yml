@@ -531,7 +531,7 @@ items:
       name: pvc-7802db76-b34a-4cb5-8380-d9afa3c7984e
       uid: 9c09547f-5bfe-4687-8ed7-422dd3fa0e56
     resourceVersion: "200768285"
-    uid: 7642fcbf-47ef-4cb8-85d4-6cd43e5a2b60
+    uid: 7642fbip-47ef-4cb8-85d4-6cd43e5a2b60
   spec:
     attachmentTickets:
       csi-240efe3087f9e0710af7df925a32ebd5d00e0839fc6fb543c616b9d2087ae182:
@@ -601,13 +601,13 @@ items:
     - longhorn.io
     generation: 229
     labels:
-      longhornvolume: pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c
-    name: pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c
+      longhornvolume: pvc-838ffddf-26a5-4eee-b513-5e35bipe000c
+    name: pvc-838ffddf-26a5-4eee-b513-5e35bipe000c
     namespace: longhorn-system
     ownerReferences:
     - apiVersion: longhorn.io/v1beta2
       kind: Volume
-      name: pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c
+      name: pvc-838ffddf-26a5-4eee-b513-5e35bipe000c
       uid: 90abf0b1-270c-49ad-988d-3c37889cecc9
     resourceVersion: "200996914"
     uid: 86a45c67-b8cc-4c1f-9471-8d346d54f86d
@@ -621,14 +621,14 @@ items:
           disableFrontend: "false"
           lastAttachedBy: ""
         type: csi-attacher
-      share-manager-controller-pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c:
+      share-manager-controller-pvc-838ffddf-26a5-4eee-b513-5e35bipe000c:
         generation: 7
-        id: share-manager-controller-pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c
+        id: share-manager-controller-pvc-838ffddf-26a5-4eee-b513-5e35bipe000c
         nodeID: vmi1343465
         parameters:
           disableFrontend: "false"
         type: share-manager-controller
-    volume: pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c
+    volume: pvc-838ffddf-26a5-4eee-b513-5e35bipe000c
   status:
     attachmentTicketStatuses:
       csi-d56ff7a6c818504474edaceefa815f89b395232e06553f2bb6b48ff5dfe1de6e:
@@ -642,7 +642,7 @@ items:
         generation: 0
         id: csi-d56ff7a6c818504474edaceefa815f89b395232e06553f2bb6b48ff5dfe1de6e
         satisfied: true
-      share-manager-controller-pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c:
+      share-manager-controller-pvc-838ffddf-26a5-4eee-b513-5e35bipe000c:
         conditions:
         - lastProbeTime: ""
           lastTransitionTime: "2024-01-11T21:34:31Z"
@@ -651,7 +651,7 @@ items:
           status: "True"
           type: Satisfied
         generation: 7
-        id: share-manager-controller-pvc-838ffddf-26a5-4eee-b513-5e35cbfe000c
+        id: share-manager-controller-pvc-838ffddf-26a5-4eee-b513-5e35bipe000c
         satisfied: true
 - apiVersion: longhorn.io/v1beta2
   kind: VolumeAttachment
