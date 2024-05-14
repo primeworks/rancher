@@ -26,7 +26,7 @@ data:
     email_from = odoo@siliconstreets.com
     ;workers = 2
     list_db = False
-    proxy_mode = True
+    proxy_mode = False
     report_url = ^%d$:8069
 kind: ConfigMap
 metadata:
