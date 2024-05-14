@@ -9,7 +9,7 @@ metadata:
   name: odoo-bip
 spec:
   progressDeadlineSeconds: 600
-  replicas: 1
+  replicas: 0
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -159,7 +159,7 @@ spec:
               - key: stack
                 operator: In
                 values:
-                - odoo
+                - db
       containers:
       - env:
         - name: HOST
