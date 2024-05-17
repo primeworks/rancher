@@ -18,16 +18,16 @@ spec:
             name: odoo-bip
             port:
               name: http
-  # - host: www.bipocbpn.ca
-  #   http:
-  #     paths:
-  #     - path: /
-  #       pathType: Prefix
-  #       backend:
-  #         service:
-  #           name: odoo-bip
-  #           port:
-  #             name: http
+  - host: www.bipocbpn.ca
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-bip
+            port:
+              name: http
   # - host: *.bipocbpn.ca
   #   http:
   #     paths:
@@ -45,6 +45,6 @@ spec:
   # - hosts:
   #   - *.bipocbpn.ca
   #   secretName: *.bipocbpn.ca-tls
-  # - hosts:
-  #   - www.bipocbpn.ca
-  #   secretName: www.bipocbpn.ca-tls
+  - hosts:
+    - www.bipocbpn.ca
+    secretName: www.bipocbpn.ca-tls
