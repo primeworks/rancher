@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-base-app
+    app: odoo-basic-app
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-base-app
-  name: odoo-base-app
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-basic-app
+  name: odoo-basic-app
 spec:
   progressDeadlineSeconds: 600
   replicas: 2
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-base-app
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-basic-app
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,13 +25,13 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-base-app
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-basic-app
     spec:
       initContainers:
       - command:
         - sh
         - -c
-        - until pg_isready -h db-base -p 5432; do echo waiting for database; sleep
+        - until pg_isready -h db-basic -p 5432; do echo waiting for databasic; sleep
           2; done;
         image: postgres:9.6.5
         imagePullPolicy: IfNotPresent
@@ -42,9 +42,9 @@ spec:
       - command:
         - sh
         - -c
-        - 'if psql -h db-base -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "base";
-          then echo "The database base exists." else until createdb -h db-base
-          -U odoo -p 5432 base; fi '
+        - 'if psql -h db-basic -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "basic";
+          then echo "The databasic basic exists." else until createdb -h db-basic
+          -U odoo -p 5432 basic; fi '
         env:
         - name: POSTGRES_DB
           value: postgres
@@ -67,9 +67,9 @@ spec:
           FTP_PASSWORD="i24125114A"
           FTP_REMOTE_FILE="dump.sql"
           FTP_REMOTE_FILESTORE="odoo17-basic.zip"
-          LOCAL_HOST="db-base"
+          LOCAL_HOST="db-basic"
           LOCAL_USER="odoo"
-          LOCAL_DATABASE="base"
+          LOCAL_DATAbasic="basic"
           LOCAL_DUMP_FILE="odoo17-basic.zip"
 
           echo "Entering odoo directory...."
@@ -77,20 +77,20 @@ spec:
           echo "Creating filestore directory..."
           mkdir filestore
           mkdir addons
-          echo "Creating $LOCAL_DATABASE directory..."
-          mkdir filestore/$LOCAL_DATABASE
+          echo "Creating $LOCAL_DATAbasic directory..."
+          mkdir filestore/$LOCAL_DATAbasic
           echo "Downloading filestore files..."
           cd addons/
           wget -P ./ "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE"
           echo "Extracting archive..."
           unzip $LOCAL_DUMP_FILE
           echo "Move files from directory"
-          mv filestore/* /mnt/filestore/$LOCAL_DATABASE
+          mv filestore/* /mnt/filestore/$LOCAL_DATAbasic
           mv dump.sql /mnt/
           echo "List items in odoo directory..."
           ls /mnt/
           echo "List contents in filestore directory..."
-          ls /mnt/filestore/$LOCAL_DATABASE/
+          ls /mnt/filestore/$LOCAL_DATAbasic/
 
           echo "Setting directory permissions..."
           chmod -Rv 777 /mnt/filestore
@@ -112,33 +112,33 @@ spec:
         - sh
         - -c
         - |
-          LOCAL_HOST="db-base"
+          LOCAL_HOST="db-basic"
           LOCAL_USER="odoo"
-          LOCAL_DATABASE="base"
+          LOCAL_DATAbasic="basic"
           LOCAL_DUMP_FILE="odoo-basic.dump"
 
-          if ! PGPASSWORD="odoo" psql -h db-base -U odoo -d base -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-            echo "The res_users table doesn't exist in the base database. Proceeding with database restore..."
+          if ! PGPASSWORD="odoo" psql -h db-basic -U odoo -d basic -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+            echo "The res_users table doesn't exist in the basic databasic. Proceeding with databasic restore..."
 
             echo "Entering odoo directory..."
             cd /var/lib/odoo/addons/
             echo "List contents of odoo directory..."
             ls /var/lib/odoo/addons/
 
-            echo "Restoring database dump locally..."
-            if PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"; then
-              echo "The database $LOCAL_DATABASE created..."
-            else echo "The database $LOCAL_DATABASE already exists..."
+            echo "Restoring databasic dump locally..."
+            if PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATAbasic"; then
+              echo "The databasic $LOCAL_DATAbasic created..."
+            else echo "The databasic $LOCAL_DATAbasic already exists..."
             fi
-            if PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"; then
+            if PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATAbasic" -v "$LOCAL_DUMP_FILE"; then
                  
-                 echo "Database restored successfully."
+                 echo "Databasic restored successfully."
                  rm "$LOCAL_DUMP_FILE"
-              else  echo "Database failed to be restored."
+              else  echo "Databasic failed to be restored."
                     rm "$LOCAL_DUMP_FILE"
               fi
           else
-            echo "The res_users table already exists in the base database. Skipping database restore."
+            echo "The res_users table already exists in the basic databasic. Skipping databasic restore."
           fi
         image: odoo:17
         imagePullPolicy: IfNotPresent
@@ -163,7 +163,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-base
+          value: db-basic
         - name: PASSWORD
           value: odoo
         - name: USER
@@ -204,7 +204,7 @@ spec:
           periodSeconds: 300
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-base-app
+        name: odoo-basic-app
         resources:
           requests:
             cpu: 100m
@@ -241,11 +241,11 @@ spec:
       volumes:
       - configMap:
           defaultMode: 509
-          name: odoo-base.conf
+          name: odoo-basic.conf
           optional: true
         name: config
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: odoo-base
+          claimName: odoo-basic
 
