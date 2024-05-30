@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-studio24
+    app: odoo-studio24-app
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-studio24
-  name: odoo-studio24
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-studio24-app
+  name: odoo-studio24-app
 spec:
   progressDeadlineSeconds: 600
-  replicas: 1
+  replicas: 2
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-studio24
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-studio24-app
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,7 +25,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-studio24
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-studio24-app
     spec:
       initContainers:
       - name: check-db-ready
@@ -86,7 +86,7 @@ spec:
           periodSeconds: 3000
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-studio24
+        name: odoo-studio24-app
         resources:
           limits:
             cpu: "1"
