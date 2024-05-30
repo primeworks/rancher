@@ -18,6 +18,16 @@ spec:
             name: odoo-ssws
             port:
               name: http
+  - host: odoo-ssws.webdiscode.com
+    http:
+      paths:
+      - path: /web
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: odoo-ssws-app
+            port:
+              name: http
   tls:
   - hosts:
     - odoo-ssws.webdiscode.com
