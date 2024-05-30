@@ -11,8 +11,8 @@ spec:
   - host: odoo-ssws.webdiscode.com
     http:
       paths:
-      - path: /web*
-        pathType: ImplementationSpecific
+      - path: /web(/|$)(.*)
+        pathType: Prefix
         backend:
           service:
             name: odoo-ssws-app
