@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-basic
+    app: odoo-plastic
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
-  name: odoo-basic
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-plastic
+  name: odoo-plastic
 spec:
   progressDeadlineSeconds: 600
   replicas: 2
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-plastic
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,13 +25,13 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-basic
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-plastic
     spec:
       initContainers:
       - command:
         - sh
         - -c
-        - until pg_isready -h db-basic -p 5432; do echo waiting for databasic; sleep
+        - until pg_isready -h db-plastic -p 5432; do echo waiting for dataplastic; sleep
           2; done;
         image: postgres:9.6.5
         imagePullPolicy: IfNotPresent
@@ -42,9 +42,9 @@ spec:
       # - command:
       #   - sh
       #   - -c
-      #   - 'if psql -h db-basic -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "basic";
-      #     then echo "The databasic basic exists." else until createdb -h db-basic
-      #     -U odoo -p 5432 basic; fi '
+      #   - 'if psql -h db-plastic -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "plastic";
+      #     then echo "The dataplastic plastic exists." else until createdb -h db-plastic
+      #     -U odoo -p 5432 plastic; fi '
       #   env:
       #   - name: POSTGRES_DB
       #     value: postgres
@@ -66,31 +66,31 @@ spec:
       #     FTP_USER="odoo_ss.vps50988.mylogin.co"
       #     FTP_PASSWORD="i24125114A"
       #     FTP_REMOTE_FILE="dump.sql"
-      #     FTP_REMOTE_FILESTORE="odoo17-basic.zip"
-      #     LOCAL_HOST="db-basic"
+      #     FTP_REMOTE_FILESTORE="odoo17-plastic.zip"
+      #     LOCAL_HOST="db-plastic"
       #     LOCAL_USER="odoo"
-      #     LOCAL_DATAbasic="basic"
-      #     LOCAL_DUMP_FILE="odoo17-basic.zip"
+      #     LOCAL_DATAplastic="plastic"
+      #     LOCAL_DUMP_FILE="odoo17-plastic.zip"
 
       #     echo "Entering odoo directory...."
       #     cd /mnt/
       #     echo "Creating filestore directory..."
       #     mkdir filestore
       #     mkdir addons
-      #     echo "Creating $LOCAL_DATAbasic directory..."
-      #     mkdir filestore/$LOCAL_DATAbasic
+      #     echo "Creating $LOCAL_DATAplastic directory..."
+      #     mkdir filestore/$LOCAL_DATAplastic
       #     echo "Downloading filestore files..."
       #     cd addons/
       #     wget -P ./ "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE"
       #     echo "Extracting archive..."
       #     unzip $LOCAL_DUMP_FILE
       #     echo "Move files from directory"
-      #     mv filestore/* /mnt/filestore/$LOCAL_DATAbasic
+      #     mv filestore/* /mnt/filestore/$LOCAL_DATAplastic
       #     mv dump.sql /mnt/
       #     echo "List items in odoo directory..."
       #     ls /mnt/
       #     echo "List contents in filestore directory..."
-      #     ls /mnt/filestore/$LOCAL_DATAbasic/
+      #     ls /mnt/filestore/$LOCAL_DATAplastic/
 
       #     echo "Setting directory permissions..."
       #     chmod -Rv 777 /mnt/filestore
@@ -112,33 +112,33 @@ spec:
       #   - sh
       #   - -c
       #   - |
-      #     LOCAL_HOST="db-basic"
+      #     LOCAL_HOST="db-plastic"
       #     LOCAL_USER="odoo"
-      #     LOCAL_DATAbasic="basic"
-      #     LOCAL_DUMP_FILE="odoo-basic.dump"
+      #     LOCAL_DATAplastic="plastic"
+      #     LOCAL_DUMP_FILE="odoo-plastic.dump"
 
-      #     if ! PGPASSWORD="odoo" psql -h db-basic -U odoo -d basic -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-      #       echo "The res_users table doesn't exist in the basic databasic. Proceeding with databasic restore..."
+      #     if ! PGPASSWORD="odoo" psql -h db-plastic -U odoo -d plastic -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+      #       echo "The res_users table doesn't exist in the plastic dataplastic. Proceeding with dataplastic restore..."
 
       #       echo "Entering odoo directory..."
       #       cd /var/lib/odoo/addons/
       #       echo "List contents of odoo directory..."
       #       ls /var/lib/odoo/addons/
 
-      #       echo "Restoring databasic dump locally..."
-      #       if PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATAbasic"; then
-      #         echo "The databasic $LOCAL_DATAbasic created..."
-      #       else echo "The databasic $LOCAL_DATAbasic already exists..."
+      #       echo "Restoring dataplastic dump locally..."
+      #       if PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATAplastic"; then
+      #         echo "The dataplastic $LOCAL_DATAplastic created..."
+      #       else echo "The dataplastic $LOCAL_DATAplastic already exists..."
       #       fi
-      #       if PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATAbasic" -v "$LOCAL_DUMP_FILE"; then
+      #       if PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATAplastic" -v "$LOCAL_DUMP_FILE"; then
                  
-      #            echo "Databasic restored successfully."
+      #            echo "Dataplastic restored successfully."
       #            rm "$LOCAL_DUMP_FILE"
-      #         else  echo "Databasic failed to be restored."
+      #         else  echo "Dataplastic failed to be restored."
       #               rm "$LOCAL_DUMP_FILE"
       #         fi
       #     else
-      #       echo "The res_users table already exists in the basic databasic. Skipping databasic restore."
+      #       echo "The res_users table already exists in the plastic dataplastic. Skipping dataplastic restore."
       #     fi
       #   image: odoo:17
       #   imagePullPolicy: IfNotPresent
@@ -164,7 +164,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-basic
+          value: db-plastic
         - name: PASSWORD
           value: odoo
         - name: USER
@@ -205,7 +205,7 @@ spec:
           periodSeconds: 300
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-basic
+        name: odoo-plastic
         resources:
           requests:
             cpu: 100m
@@ -242,11 +242,11 @@ spec:
       volumes:
       - configMap:
           defaultMode: 509
-          name: odoo-basic.conf
+          name: odoo-plastic.conf
           optional: true
         name: config
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: odoo-basic
+          claimName: odoo-plastic
 

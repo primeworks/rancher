@@ -1,37 +1,37 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-basic
+  name: odoo-plastic
   annotations:
     cert-manager.io/issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-  - host: odoo-basic.webdiscode.com
+  - host: odoo-plastic.webdiscode.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: odoo-basic
+            name: odoo-plastic
             port:
               name: http
-  # - host: www.basicocbpn.ca
+  # - host: www.plasticocbpn.ca
   #   http:
   #     paths:
   #     - path: /
   #       pathType: Prefix
   #       backend:
   #         service:
-  #           name: odoo-basic
+  #           name: odoo-plastic
   #           port:
   #             name: http
   tls:
   - hosts:
-    - odoo-basic.webdiscode.com
-    secretName: odoo-basic.webdiscode.com-tls
+    - odoo-plastic.webdiscode.com
+    secretName: odoo-plastic.webdiscode.com-tls
   # - hosts:
-  #   - www.basicocbpn.ca
-  #   secretName: www.basicocbpn.ca-tls
+  #   - www.plasticocbpn.ca
+  #   secretName: www.plasticocbpn.ca-tls
