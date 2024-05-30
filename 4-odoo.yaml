@@ -9,7 +9,7 @@ metadata:
   name: odoo-studio24
 spec:
   progressDeadlineSeconds: 600
-  replicas: 1
+  replicas: 2
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -33,15 +33,15 @@ spec:
         command: ['sh', '-c', 
           'until pg_isready -h db-studio24 -p 5432; 
           do echo waiting for database; sleep 2; done;']
-      # affinity:
-      #   nodeAffinity:
-      #     requiredDuringSchedulingIgnoredDuringExecution:
-      #       nodeSelectorTerms:
-      #       - matchExpressions:
-      #         - key: stack
-      #           operator: In
-      #           values:
-      #           - '24'
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: stack
+                operator: In
+                values:
+                - odoo
       containers:
       - env:
         - name: HOST
@@ -127,7 +127,7 @@ spec:
       - effect: NoSchedule
         key: stack
         operator: Equal
-        value: '24'
+        value: odoo
       volumes:
       - configMap:
           defaultMode: 509
