@@ -77,7 +77,7 @@ spec:
           name: dshm
         - mountPath: /var/lib/postgresql/data
           name: vol-ytjxx
-          subPath: dataplastic
+          subPath: database
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler

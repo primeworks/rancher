@@ -31,7 +31,7 @@ spec:
       - command:
         - sh
         - -c
-        - until pg_isready -h db-plastic -p 5432; do echo waiting for dataplastic; sleep
+        - until pg_isready -h db-plastic -p 5432; do echo waiting for database; sleep
           2; done;
         image: postgres:9.6.5
         imagePullPolicy: IfNotPresent
@@ -43,7 +43,7 @@ spec:
       #   - sh
       #   - -c
       #   - 'if psql -h db-plastic -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "plastic";
-      #     then echo "The dataplastic plastic exists." else until createdb -h db-plastic
+      #     then echo "The database plastic exists." else until createdb -h db-plastic
       #     -U odoo -p 5432 plastic; fi '
       #   env:
       #   - name: POSTGRES_DB
@@ -69,7 +69,7 @@ spec:
       #     FTP_REMOTE_FILESTORE="odoo17-plastic.zip"
       #     LOCAL_HOST="db-plastic"
       #     LOCAL_USER="odoo"
-      #     LOCAL_DATAplastic="plastic"
+      #     LOCAL_DATABASE="plastic"
       #     LOCAL_DUMP_FILE="odoo17-plastic.zip"
 
       #     echo "Entering odoo directory...."
@@ -77,20 +77,20 @@ spec:
       #     echo "Creating filestore directory..."
       #     mkdir filestore
       #     mkdir addons
-      #     echo "Creating $LOCAL_DATAplastic directory..."
-      #     mkdir filestore/$LOCAL_DATAplastic
+      #     echo "Creating $LOCAL_DATABASE directory..."
+      #     mkdir filestore/$LOCAL_DATABASE
       #     echo "Downloading filestore files..."
       #     cd addons/
       #     wget -P ./ "ftp://$FTP_USER:$FTP_PASSWORD@$FTP_HOST/$FTP_REMOTE_FILESTORE"
       #     echo "Extracting archive..."
       #     unzip $LOCAL_DUMP_FILE
       #     echo "Move files from directory"
-      #     mv filestore/* /mnt/filestore/$LOCAL_DATAplastic
+      #     mv filestore/* /mnt/filestore/$LOCAL_DATABASE
       #     mv dump.sql /mnt/
       #     echo "List items in odoo directory..."
       #     ls /mnt/
       #     echo "List contents in filestore directory..."
-      #     ls /mnt/filestore/$LOCAL_DATAplastic/
+      #     ls /mnt/filestore/$LOCAL_DATABASE/
 
       #     echo "Setting directory permissions..."
       #     chmod -Rv 777 /mnt/filestore
@@ -114,31 +114,31 @@ spec:
       #   - |
       #     LOCAL_HOST="db-plastic"
       #     LOCAL_USER="odoo"
-      #     LOCAL_DATAplastic="plastic"
+      #     LOCAL_DATABASE="plastic"
       #     LOCAL_DUMP_FILE="odoo-plastic.dump"
 
       #     if ! PGPASSWORD="odoo" psql -h db-plastic -U odoo -d plastic -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-      #       echo "The res_users table doesn't exist in the plastic dataplastic. Proceeding with dataplastic restore..."
+      #       echo "The res_users table doesn't exist in the plastic database. Proceeding with database restore..."
 
       #       echo "Entering odoo directory..."
       #       cd /var/lib/odoo/addons/
       #       echo "List contents of odoo directory..."
       #       ls /var/lib/odoo/addons/
 
-      #       echo "Restoring dataplastic dump locally..."
-      #       if PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATAplastic"; then
-      #         echo "The dataplastic $LOCAL_DATAplastic created..."
-      #       else echo "The dataplastic $LOCAL_DATAplastic already exists..."
+      #       echo "Restoring database dump locally..."
+      #       if PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"; then
+      #         echo "The database $LOCAL_DATABASE created..."
+      #       else echo "The database $LOCAL_DATABASE already exists..."
       #       fi
-      #       if PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATAplastic" -v "$LOCAL_DUMP_FILE"; then
+      #       if PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"; then
                  
-      #            echo "Dataplastic restored successfully."
+      #            echo "database restored successfully."
       #            rm "$LOCAL_DUMP_FILE"
-      #         else  echo "Dataplastic failed to be restored."
+      #         else  echo "database failed to be restored."
       #               rm "$LOCAL_DUMP_FILE"
       #         fi
       #     else
-      #       echo "The res_users table already exists in the plastic dataplastic. Skipping dataplastic restore."
+      #       echo "The res_users table already exists in the plastic database. Skipping database restore."
       #     fi
       #   image: odoo:17
       #   imagePullPolicy: IfNotPresent
