@@ -66,11 +66,11 @@ spec:
           FTP_USER="odoo_ss.vps50988.mylogin.co"
           FTP_PASSWORD="i24125114A"
           FTP_REMOTE_FILE="dump.sql"
-          FTP_REMOTE_FILESTORE="odoo17-plastic.zip"
+          FTP_REMOTE_FILESTORE="odoo17-basic.zip"
           LOCAL_HOST="db-plastic"
           LOCAL_USER="odoo"
           LOCAL_DATABASE="plastic"
-          LOCAL_DUMP_FILE="odoo17-plastic.zip"
+          LOCAL_DUMP_FILE="odoo17-basic.zip"
 
           echo "Entering odoo directory...."
           cd /mnt/
@@ -115,7 +115,7 @@ spec:
           LOCAL_HOST="db-plastic"
           LOCAL_USER="odoo"
           LOCAL_DATABASE="plastic"
-          LOCAL_DUMP_FILE="odoo-plastic.dump"
+          LOCAL_DUMP_FILE="odoo-basic.dump"
 
           if ! PGPASSWORD="odoo" psql -h db-plastic -U odoo -d plastic -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
             echo "The res_users table doesn't exist in the plastic database. Proceeding with database restore..."
@@ -132,9 +132,9 @@ spec:
             fi
             if PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"; then
                  
-                 echo "database restored successfully."
+                 echo "Database restored successfully."
                  rm "$LOCAL_DUMP_FILE"
-              else  echo "database failed to be restored."
+              else  echo "Database failed to be restored."
                     rm "$LOCAL_DUMP_FILE"
               fi
           else
