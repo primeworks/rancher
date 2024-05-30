@@ -1,9 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-ssws
+  name: odoo-ssws-app
   annotations:
-    cert-manager.io/issuer: letsencrypt-prod
+    # cert-manager.io/issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
@@ -11,11 +11,11 @@ spec:
   - host: odoo-ssws.webdiscode.com
     http:
       paths:
-      - path: /
-        pathType: Prefix
+      - path: /web
+        pathType: ImplementationSpecific
         backend:
           service:
-            name: odoo-ssws
+            name: odoo-ssws-app
             port:
               name: http
   tls:
