@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-plastic-app
+  name: odoo-corz-app
   annotations:
     # cert-manager.io/issuer: letsencrypt-prod
     kubernetes.io/ingress.class: nginx
@@ -11,30 +11,30 @@ metadata:
 spec:
   # ingressClassName: nginx
   rules:
-  - host: odoo-plastic.webdiscode.com
+  - host: odoo-corz.webdiscode.com
     http:
       paths:
       - path: /web#(/|$)(.*)
         pathType: Prefix
         backend:
           service:
-            name: odoo-plastic-app
+            name: odoo-corz-app
             port:
               name: http
-  # - host: www.plasticocbpn.ca
+  # - host: www.corzocbpn.ca
   #   http:
   #     paths:
   #     - path: /web#(/|$)(.*)
   #       pathType: Prefix
   #       backend:
   #         service:
-  #           name: odoo-plastic-app
+  #           name: odoo-corz-app
   #           port:
   #             name: http
   tls:
   - hosts:
-    - odoo-plastic.webdiscode.com
-    secretName: odoo-plastic.webdiscode.com-tls
+    - odoo-corz.webdiscode.com
+    secretName: odoo-corz.webdiscode.com-tls
   # - hosts:
-  #   - www.plasticocbpn.ca
-  #   secretName: www.plasticocbpn.ca-tls
+  #   - www.corzocbpn.ca
+  #   secretName: www.corzocbpn.ca-tls

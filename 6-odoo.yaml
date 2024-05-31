@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-plastic
+    app: odoo-corz
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-plastic
-  name: odoo-plastic
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-corz
+  name: odoo-corz
 spec:
   progressDeadlineSeconds: 600
   replicas: 2
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-plastic
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-corz
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,18 +25,18 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-plastic
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-corz
     spec:
       initContainers:
       - command:
         - sh
         - -c
         - |
-          LOCAL_HOST="db-plastic"
+          LOCAL_HOST="db-corz"
           LOCAL_USER="odoo"
-          LOCAL_DATABASE="plastic"
+          LOCAL_DATABASE="corz"
 
-           until pg_isready -h db-plastic -p 5432; do echo waiting for database; sleep
+           until pg_isready -h db-corz -p 5432; do echo waiting for database; sleep
           2; done;
         image: postgres:9.6.5
         imagePullPolicy: IfNotPresent
@@ -49,20 +49,20 @@ spec:
       #   - sh
       #   - -c
       #   - |
-      #     LOCAL_HOST="db-plastic"
+      #     LOCAL_HOST="db-corz"
       #     LOCAL_USER="odoo"
-      #     LOCAL_DATABASE="plastic"
-      #     LOCAL_DUMP_FILE="odoo-plastic.dump"
+      #     LOCAL_DATABASE="corz"
+      #     LOCAL_DUMP_FILE="odoo-corz.dump"
 
-      #     if ! PGPASSWORD="odoo" psql -h db-plastic -U odoo -d plastic -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-      #       echo "The res_users table doesn't exist in the plastic database. Proceeding with database restore..."
+      #     if ! PGPASSWORD="odoo" psql -h db-corz -U odoo -d corz -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+      #       echo "The res_users table doesn't exist in the corz database. Proceeding with database restore..."
       
       # - command:
       #   - sh
       #   - -c
-      #   - 'if psql -h db-plastic -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "plastic";
-      #     then echo "The database plastic exists." else until createdb -h db-plastic
-      #     -U odoo -p 5432 plastic; fi '
+      #   - 'if psql -h db-corz -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "corz";
+      #     then echo "The database corz exists." else until createdb -h db-corz
+      #     -U odoo -p 5432 corz; fi '
       #   env:
       #   - name: POSTGRES_DB
       #     value: postgres
@@ -84,11 +84,11 @@ spec:
       #     FTP_USER="odoo_ss.vps50988.mylogin.co"
       #     FTP_PASSWORD="i24125114A"
       #     FTP_REMOTE_FILE="dump.sql"
-      #     FTP_REMOTE_FILESTORE="odoo17-plastic.zip"
-      #     LOCAL_HOST="db-plastic"
+      #     FTP_REMOTE_FILESTORE="odoo17-corz.zip"
+      #     LOCAL_HOST="db-corz"
       #     LOCAL_USER="odoo"
-      #     LOCAL_DATABASE="plastic"
-      #     LOCAL_DUMP_FILE="odoo17-plastic.zip"
+      #     LOCAL_DATABASE="corz"
+      #     LOCAL_DUMP_FILE="odoo17-corz.zip"
 
       #     echo "Entering odoo directory...."
       #     cd /mnt/
@@ -130,13 +130,13 @@ spec:
       #   - sh
       #   - -c
       #   - |
-      #     LOCAL_HOST="db-plastic"
+      #     LOCAL_HOST="db-corz"
       #     LOCAL_USER="odoo"
-      #     LOCAL_DATABASE="plastic"
-      #     LOCAL_DUMP_FILE="odoo-plastic.dump"
+      #     LOCAL_DATABASE="corz"
+      #     LOCAL_DUMP_FILE="odoo-corz.dump"
 
-      #     if ! PGPASSWORD="odoo" psql -h db-plastic -U odoo -d plastic -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-      #       echo "The res_users table doesn't exist in the plastic database. Proceeding with database restore..."
+      #     if ! PGPASSWORD="odoo" psql -h db-corz -U odoo -d corz -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+      #       echo "The res_users table doesn't exist in the corz database. Proceeding with database restore..."
 
       #       echo "Entering odoo directory..."
       #       cd /var/lib/odoo/addons/
@@ -156,7 +156,7 @@ spec:
       #               rm "$LOCAL_DUMP_FILE"
       #         fi
       #     else
-      #       echo "The res_users table already exists in the plastic database. Skipping database restore."
+      #       echo "The res_users table already exists in the corz database. Skipping database restore."
       #     fi
       #   image: odoo:17
       #   imagePullPolicy: IfNotPresent
@@ -182,7 +182,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-plastic
+          value: db-corz
         - name: PASSWORD
           value: odoo
         - name: USER
@@ -223,7 +223,7 @@ spec:
           periodSeconds: 300
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-plastic
+        name: odoo-corz
         resources:
           requests:
             cpu: 100m
@@ -260,11 +260,11 @@ spec:
       volumes:
       - configMap:
           defaultMode: 509
-          name: odoo-plastic.conf
+          name: odoo-corz.conf
           optional: true
         name: config
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: odoo-plastic
+          claimName: odoo-corz
 

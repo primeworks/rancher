@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: db-plastic
+  name: db-corz
   ownerReferences:
   - apiVersion: apps/v1beta2
     controller: true
     kind: statefulset
-    name: db-plastic
+    name: db-corz
     uid: d136565c-b478-49ea-9e0f-f5d36e00195b
 spec:
   selector:
-    workload.user.cattle.io/workloadselector: statefulSet-default-db-plastic
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-corz
   sessionAffinity: None
   clusterIP: None
   clusterIPs:
