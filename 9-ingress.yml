@@ -18,7 +18,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: odoo-plastic
+            name: odoo-plastic-app
             port:
               name: http
   - host: odoo-plastic.webdiscode.com
