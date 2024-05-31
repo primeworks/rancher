@@ -31,14 +31,33 @@ spec:
       - command:
         - sh
         - -c
-        - until pg_isready -h db-plastic -p 5432; do echo waiting for database; sleep
+        - |
+          LOCAL_HOST="db-plastic"
+          LOCAL_USER="odoo"
+          LOCAL_DATABASE="plastic"
+          LOCAL_DUMP_FILE="odoo-plastic.dump"
+
+           until pg_isready -h db-plastic -p 5432; do echo waiting for database; sleep
           2; done;
         image: postgres:9.6.5
         imagePullPolicy: IfNotPresent
-        name: check-db-ready
+        name: check-db-set
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+      
+      # - command:
+      #   - sh
+      #   - -c
+      #   - |
+      #     LOCAL_HOST="db-plastic"
+      #     LOCAL_USER="odoo"
+      #     LOCAL_DATABASE="plastic"
+      #     LOCAL_DUMP_FILE="odoo-plastic.dump"
+
+      #     if ! PGPASSWORD="odoo" psql -h db-plastic -U odoo -d plastic -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+      #       echo "The res_users table doesn't exist in the plastic database. Proceeding with database restore..."
+      
       # - command:
       #   - sh
       #   - -c
