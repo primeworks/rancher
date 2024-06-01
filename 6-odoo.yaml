@@ -28,22 +28,11 @@ spec:
         workload.user.cattle.io/workloadselector: deployment-default-odoo-corz
     spec:
       initContainers:
-      - command:
-        - sh
-        - -c
-        - |
-          LOCAL_HOST="db-corz"
-          LOCAL_USER="odoo"
-          LOCAL_DATABASE="corz"
-
-           until pg_isready -h db-corz -p 5432; do echo waiting for database; sleep
-          2; done;
-        image: postgres:9.6.5
-        imagePullPolicy: IfNotPresent
-        name: check-db-set
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
+      - name: wait-for-webserver
+        image: curlimages/curl:latest
+        command: ["/bin/sh","-c"]
+        args: ["while [ $(curl -sw '%{http_code}' http://odoo-corz-app.svc.cluster.local -o /dev/null) -ne 200 ]; do sleep 5; echo 'Waiting for the webserver...'; done"]
+      
       
       # - command:
       #   - sh
