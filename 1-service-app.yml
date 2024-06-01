@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-corz-app
+  name: odoo-nerd-app
 spec:
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
@@ -10,7 +10,7 @@ spec:
   ipFamilies:
   - IPv4
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-corz-app
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-nerd-app
   type: LoadBalancer
   sessionAffinity: None
   ports:

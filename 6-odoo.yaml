@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-corz
+    app: odoo-nerd
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-corz
-  name: odoo-corz
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-nerd
+  name: odoo-nerd
 spec:
   progressDeadlineSeconds: 600
   replicas: 2
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-corz
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-nerd
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,33 +25,33 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-corz
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-nerd
     spec:
       initContainers:
       - name: wait-for-webserver
         image: curlimages/curl:latest
         command: ["/bin/sh","-c"]
-        args: ["while [ $(curl -sw '%{http_code}' http://odoo-corz-app.svc.cluster.local -o /dev/null) -ne 200 ]; do sleep 5; echo 'Waiting for the webserver...'; done"]
+        args: ["while [ $(curl -sw '%{http_code}' http://odoo-nerd-app.svc.cluster.local -o /dev/null) -ne 200 ]; do sleep 5; echo 'Waiting for the webserver...'; done"]
       
       
       # - command:
       #   - sh
       #   - -c
       #   - |
-      #     LOCAL_HOST="db-corz"
+      #     LOCAL_HOST="db-nerd"
       #     LOCAL_USER="odoo"
-      #     LOCAL_DATABASE="corz"
-      #     LOCAL_DUMP_FILE="odoo-corz.dump"
+      #     LOCAL_DATABASE="nerd"
+      #     LOCAL_DUMP_FILE="odoo-nerd.dump"
 
-      #     if ! PGPASSWORD="odoo" psql -h db-corz -U odoo -d corz -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-      #       echo "The res_users table doesn't exist in the corz database. Proceeding with database restore..."
+      #     if ! PGPASSWORD="odoo" psql -h db-nerd -U odoo -d nerd -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+      #       echo "The res_users table doesn't exist in the nerd database. Proceeding with database restore..."
       
       # - command:
       #   - sh
       #   - -c
-      #   - 'if psql -h db-corz -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "corz";
-      #     then echo "The database corz exists." else until createdb -h db-corz
-      #     -U odoo -p 5432 corz; fi '
+      #   - 'if psql -h db-nerd -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "nerd";
+      #     then echo "The database nerd exists." else until createdb -h db-nerd
+      #     -U odoo -p 5432 nerd; fi '
       #   env:
       #   - name: POSTGRES_DB
       #     value: postgres
@@ -73,11 +73,11 @@ spec:
       #     FTP_USER="odoo_ss.vps50988.mylogin.co"
       #     FTP_PASSWORD="i24125114A"
       #     FTP_REMOTE_FILE="dump.sql"
-      #     FTP_REMOTE_FILESTORE="odoo17-corz.zip"
-      #     LOCAL_HOST="db-corz"
+      #     FTP_REMOTE_FILESTORE="odoo17-nerd.zip"
+      #     LOCAL_HOST="db-nerd"
       #     LOCAL_USER="odoo"
-      #     LOCAL_DATABASE="corz"
-      #     LOCAL_DUMP_FILE="odoo17-corz.zip"
+      #     LOCAL_DATABASE="nerd"
+      #     LOCAL_DUMP_FILE="odoo17-nerd.zip"
 
       #     echo "Entering odoo directory...."
       #     cd /mnt/
@@ -119,13 +119,13 @@ spec:
       #   - sh
       #   - -c
       #   - |
-      #     LOCAL_HOST="db-corz"
+      #     LOCAL_HOST="db-nerd"
       #     LOCAL_USER="odoo"
-      #     LOCAL_DATABASE="corz"
-      #     LOCAL_DUMP_FILE="odoo-corz.dump"
+      #     LOCAL_DATABASE="nerd"
+      #     LOCAL_DUMP_FILE="odoo-nerd.dump"
 
-      #     if ! PGPASSWORD="odoo" psql -h db-corz -U odoo -d corz -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-      #       echo "The res_users table doesn't exist in the corz database. Proceeding with database restore..."
+      #     if ! PGPASSWORD="odoo" psql -h db-nerd -U odoo -d nerd -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+      #       echo "The res_users table doesn't exist in the nerd database. Proceeding with database restore..."
 
       #       echo "Entering odoo directory..."
       #       cd /var/lib/odoo/addons/
@@ -145,7 +145,7 @@ spec:
       #               rm "$LOCAL_DUMP_FILE"
       #         fi
       #     else
-      #       echo "The res_users table already exists in the corz database. Skipping database restore."
+      #       echo "The res_users table already exists in the nerd database. Skipping database restore."
       #     fi
       #   image: odoo:17
       #   imagePullPolicy: IfNotPresent
@@ -171,7 +171,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-corz
+          value: db-nerd
         - name: PASSWORD
           value: odoo
         - name: USER
@@ -212,7 +212,7 @@ spec:
           periodSeconds: 300
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-corz
+        name: odoo-nerd
         resources:
           requests:
             cpu: 100m
@@ -249,11 +249,11 @@ spec:
       volumes:
       - configMap:
           defaultMode: 509
-          name: odoo-corz.conf
+          name: odoo-nerd.conf
           optional: true
         name: config
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: odoo-corz
+          claimName: odoo-nerd
 
