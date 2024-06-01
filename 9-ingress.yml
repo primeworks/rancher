@@ -14,21 +14,18 @@ spec:
   - host: odoo-corz.webdiscode.com
     http:
       paths:
-      - path: /web#(/|$)(.*)
-        pathType: Prefix
-        backend:
-          service:
-            name: odoo-corz-app
-            port:
-              name: http
-  - host: odoo-corz.webdiscode.com
-    http:
-      paths:
       - path: /
         pathType: Prefix
         backend:
           service:
             name: odoo-corz
+            port:
+              name: http
+      - path: /web(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-corz-app
             port:
               name: http
   # - host: www.corzocbpn.ca
