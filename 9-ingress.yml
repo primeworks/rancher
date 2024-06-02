@@ -21,7 +21,7 @@ spec:
             name: odoo-nerd
             port:
               name: http
-      - path: /web(/|$)
+      - path: /web#(/|$)
         pathType: Prefix
         backend:
           service:
