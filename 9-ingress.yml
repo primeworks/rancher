@@ -14,18 +14,18 @@ spec:
   - host: odoo-nerd.webdiscode.com
     http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: odoo-nerd
-            port:
-              name: http
       - path: /web#(/|$)
         pathType: Prefix
         backend:
           service:
             name: odoo-nerd-app
+            port:
+              name: http
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-nerd
             port:
               name: http
   # - host: www.nerdocbpn.ca
