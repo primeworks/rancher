@@ -23,7 +23,7 @@ spec:
             port:
               name: http
               
-      - path: /web(#...*)
+      - path: /(\/...*)(?:\=)(...*)
         pathType: Prefix
         backend:
           service:
