@@ -7,7 +7,7 @@ metadata:
     # kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
     # nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
@@ -21,13 +21,13 @@ spec:
             name: odoo-nerd-app
             port:
               name: http
-      - path: /(^(?!.*=).*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: odoo-nerd
-            port:
-              name: http
+      # - path: /(^(?!.*=).*)
+      #   pathType: ImplementationSpecific
+      #   backend:
+      #     service:
+      #       name: odoo-nerd
+      #       port:
+      #         name: http
   tls:
   - hosts:
     - odoo-nerd.webdiscode.com
