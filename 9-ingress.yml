@@ -6,7 +6,7 @@ metadata:
     cert-manager.io/issuer: letsencrypt-prod
     # kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
     # nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   ingressClassName: nginx
@@ -14,7 +14,7 @@ spec:
   - host: odoo-nerd.webdiscode.com
     http:
       paths:
-      - path: /(...*)(?:\=)(...*)
+      - path: /web(...*)(?:\=)(...*)
         pathType: ImplementationSpecific
         backend:
           service:
