@@ -4,7 +4,7 @@ metadata:
   name: odoo-nerd
   annotations:
     cert-manager.io/issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/use-regex: "true"
+    # nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
@@ -12,14 +12,7 @@ spec:
   - host: odoo-nerd.webdiscode.com
     http:
       paths:
-      - path: /web*
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: odoo-nerd-app
-            port:
-              name: http
-      - path: /*
+      - path: /
         pathType: Prefix
         backend:
           service:
