@@ -6,7 +6,7 @@ metadata:
     # cert-manager.io/issuer: letsencrypt-prod
     # kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
-    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /web$2
 spec:
   ingressClassName: nginx
@@ -21,10 +21,10 @@ spec:
             name: odoo-nerd-app
             port:
               name: http
-  # tls:
-  # - hosts:
-  #   - odoo-nerd.webdiscode.com
-  #   secretName: odoo-nerd.webdiscode.com-tls
-  # - hosts:
-  #   - www.nerdocbpn.ca
-  #   secretName: www.nerdocbpn.ca-tls
+  tls:
+  - hosts:
+    - odoo-nerd.webdiscode.com
+    secretName: odoo-nerd.webdiscode.com-tls
+  - hosts:
+    - www.nerdocbpn.ca
+    secretName: www.nerdocbpn.ca-tls
