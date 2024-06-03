@@ -25,6 +25,6 @@ spec:
   - hosts:
     - odoo-nerd.webdiscode.com
     secretName: odoo-nerd.webdiscode.com-tls
-  - hosts:
-    - www.nerdocbpn.ca
-    secretName: www.nerdocbpn.ca-tls
+  # - hosts:
+  #   - www.nerdocbpn.ca
+  #   secretName: www.nerdocbpn.ca-tls
