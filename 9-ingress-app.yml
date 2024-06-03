@@ -18,13 +18,12 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: odoo-nerd-app
-            port:
-              name: http
-  tls:
-  - hosts:
-    - odoo-nerd.webdiscode.com
-    secretName: odoo-nerd.webdiscode.com-tls
+            serviceName: odoo-nerd-app
+            servicePort: 80
+  # tls:
+  # - hosts:
+  #   - odoo-nerd.webdiscode.com
+  #   secretName: odoo-nerd.webdiscode.com-tls
   # - hosts:
   #   - www.nerdocbpn.ca
   #   secretName: www.nerdocbpn.ca-tls
