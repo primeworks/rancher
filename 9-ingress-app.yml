@@ -15,7 +15,7 @@ spec:
     http:
       paths:
       - path: /web(\#|$)(...*)(?:\=)(...*)
-        pathType: ImplementationSpecific
+        pathType: Prefix
         backend:
           service:
             name: odoo-nerd-app
