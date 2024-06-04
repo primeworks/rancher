@@ -32,7 +32,7 @@ data:
     proxy_mode = True
     report_url = ^%d$:8069
     ; XML RPC
-    ;xmlrpc = True
+    xmlrpc = True
     xmlrpc_interface = 127.0.0.1
     ;xmlrpc_port = 8069
     ;xmlrpcs = True
