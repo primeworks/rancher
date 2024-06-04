@@ -25,14 +25,14 @@ spec:
 #          value: int
 #      selectPolicy: string
 #      stabilizationWindowSeconds: int
-  maxReplicas: 4
+  maxReplicas: 3
   metrics:
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: 80
+          averageUtilization: 85
 #    - type: string
 #      containerResource:
 #        container: string
