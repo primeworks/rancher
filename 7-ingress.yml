@@ -1,0 +1,92 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: odoo-bip
+  annotations:
+    cert-manager.io/issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/server-snippets: |
+      location /websocket {
+        proxy_redirect off;
+        proxy_pass http://odoochat; (need upstream 127.0.0.1:8072) and not :8069 port
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_pass http://odoolp-get;
+        }
+      upstream odoo-get {
+        server 127.0.0.1:8069;
+        }
+
+      upstream odoolp-get {
+        server 127.0.0.1:8072;
+        }
+      location / {
+        proxy_redirect off;
+        add_header Access-Control-Allow-Origin *;
+        proxy_pass http://odoo-get;
+        }
+      upstream odoo {
+        server 127.0.0.1:8069;
+        }
+
+      upstream odoochat {
+        server 127.0.0.1:8072 weight=1 fail_timeout=0;
+        }
+
+      server {
+        server_name odoo-bip.webdiscode.com;
+
+        proxy_read_timeout 720s;
+        proxy_connect_timeout 720s;
+        proxy_send_timeout 720s;
+
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        }
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: odoo-bip.webdiscode.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-bip
+            port:
+              name: http
+  - host: www.bipocbpn.ca
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-bip
+            port:
+              name: http
+  # - host: *.bipocbpn.ca
+  #   http:
+  #     paths:
+  #     - path: /
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: odoo-bip
+  #           port:
+  #             name: http
+  tls:
+  - hosts:
+    - odoo-bip.webdiscode.com
+    secretName: odoo-bip.webdiscode.com-tls
+  # - hosts:
+  #   - *.bipocbpn.ca
+  #   secretName: *.bipocbpn.ca-tls
+  - hosts:
+    - www.bipocbpn.ca
+    secretName: www.bipocbpn.ca-tls

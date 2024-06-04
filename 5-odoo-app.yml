@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-bip
+    app: odoo-bip-app
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-bip
-  name: odoo-bip
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-bip-app
+  name: odoo-bip-app
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-bip
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-bip-app
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,7 +25,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-bip
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-bip-app
     spec:
       initContainers:
       - command:
@@ -145,6 +145,8 @@ spec:
         name: db-restored
         volumeMounts:
         # Edit the volume to match the existing mountPaths in the cluster
+        - mountPath: /etc/odoo
+          name: config
         - mountPath: /var/lib/odoo
           name: vol-7xe3r
           subPath: odoo
@@ -204,7 +206,7 @@ spec:
           periodSeconds: 300
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-bip
+        name: odoo-bip-app
         resources:
           requests:
             cpu: 100m
