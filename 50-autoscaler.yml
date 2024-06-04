@@ -104,4 +104,3 @@ spec:
     kind: Deployment
     name: odoo-nerd
   type: io.k8s.api.autoscaling.v1.horizontalpodautoscalerspec
-__clone: true
