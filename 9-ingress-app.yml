@@ -11,16 +11,11 @@ metadata:
     # nginx.ingress.kubernetes.io/rewrite-target: /web$2
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    # nginx.ingress.kubernetes.io/stream-snippet: |
-    #   server {
-    #     listen 8000;
-    #     proxy_pass 127.0.0.1:80;
-    #   }
-    nginx.ingress.kubernetes.io/stream-snippet: |
-      location /websocket {
+    nginx.ingress.kubernetes.io/server-snippets: |
+    location /websocket {
         proxy_redirect off;
         proxy_pass http://odoochat;
-      }
+        }
 spec:
   ingressClassName: nginx
   rules:
