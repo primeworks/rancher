@@ -10,8 +10,10 @@ data:
     max_cron_threads = 2
 
     ; Memory limits (in bytes)
-    limit_memory_hard = 2684354560  ; 2.5 GB
-    limit_memory_soft = 2147483648  ; 2 GB
+    limit_memory_hard = 2684354560  
+    ; 2.5 GB
+    limit_memory_soft = 2147483648  
+    ; 2 GB
 
     ; Time limits (in seconds)
     limit_time_cpu = 60
