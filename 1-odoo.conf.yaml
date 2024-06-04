@@ -34,7 +34,7 @@ data:
     ; XML RPC
     xmlrpc = True
     xmlrpc_interface = 127.0.0.1
-    ;xmlrpc_port = 8069
+    xmlrpc_port = 8069
     ;xmlrpcs = True
     ;xmlrpcs_interface =
     ;xmlrpcs_port = 8071
