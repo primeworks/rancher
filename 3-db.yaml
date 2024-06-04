@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: db-nerd
+    app: db-corz
     app.kubernetes.io/managed-by: Helm
     cattle.io/creator: norman
     objectset.rio.cattle.io/hash: dbb408b909497414f93be5e7a78a2f285d27b7e1
-    workload.user.cattle.io/workloadselector: statefulSet-default-db-nerd
-  name: db-nerd
+    workload.user.cattle.io/workloadselector: statefulSet-default-db-corz
+  name: db-corz
 spec:
   podManagementPolicy: OrderedReady
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: statefulSet-default-db-nerd
-  serviceName: db-nerd
+      workload.user.cattle.io/workloadselector: statefulSet-default-db-corz
+  serviceName: db-corz
   template:
     metadata:
       annotations:
@@ -23,7 +23,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: statefulSet-default-db-nerd
+        workload.user.cattle.io/workloadselector: statefulSet-default-db-corz
     spec:
       affinity:
         nodeAffinity:
@@ -55,7 +55,7 @@ spec:
           value: odoo
         image: postgres:15
         imagePullPolicy: IfNotPresent
-        name: db-nerd
+        name: db-corz
         
         resources:
           requests:
@@ -96,7 +96,7 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
         persistentVolumeClaim:
-          claimName: odoo-nerd
+          claimName: odoo-corz
   updateStrategy:
     type: RollingUpdate
 status:

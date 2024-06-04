@@ -20,4 +20,4 @@ data:
     limit_time_real = 120
 kind: ConfigMap
 metadata:
-  name: odoo-nerd.conf
+  name: odoo-corz.conf

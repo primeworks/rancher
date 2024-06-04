@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-nerd
+  name: odoo-corz
   annotations:
     cert-manager.io/issuer: letsencrypt-prod
     # nginx.ingress.kubernetes.io/use-regex: "true"
@@ -38,7 +38,7 @@ metadata:
         }
 
       server {
-        server_name odoo-nerd.webdiscode.com;
+        server_name odoo-corz.webdiscode.com;
 
         proxy_read_timeout 720s;
         proxy_connect_timeout 720s;
@@ -52,30 +52,30 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: odoo-nerd.webdiscode.com
+  - host: odoo-corz.webdiscode.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: odoo-nerd
+            name: odoo-corz
             port:
               name: http
-  # - host: www.nerdocbpn.ca
+  # - host: www.corzocbpn.ca
   #   http:
   #     paths:
   #     - path: /
   #       pathType: Prefix
   #       backend:
   #         service:
-  #           name: odoo-nerd
+  #           name: odoo-corz
   #           port:
   #             name: http
   tls:
   - hosts:
-    - odoo-nerd.webdiscode.com
-    secretName: odoo-nerd.webdiscode.com-tls
+    - odoo-corz.webdiscode.com
+    secretName: odoo-corz.webdiscode.com-tls
   # - hosts:
-  #   - www.nerdocbpn.ca
-  #   secretName: www.nerdocbpn.ca-tls
+  #   - www.corzocbpn.ca
+  #   secretName: www.corzocbpn.ca-tls

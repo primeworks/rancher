@@ -40,4 +40,4 @@ data:
     ;xmlrpcs_port = 8071
 kind: ConfigMap
 metadata:
-  name: odoo-nerd.conf
+  name: odoo-corz.conf
