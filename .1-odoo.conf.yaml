@@ -1,0 +1,23 @@
+apiVersion: v1
+data:
+  odoo.conf: |
+    [options] 
+    addons_path = /mnt/extra-addons
+    data_dir = /var/lib/odoo
+    admin_passwd = UA29dGB28Gx5PWz8bnRW
+    ; Enable multiprocessing
+    workers = 4
+    max_cron_threads = 2
+
+    ; Memory limits (in bytes)
+    limit_memory_hard = 2684354560  
+    ; 2.5 GB
+    limit_memory_soft = 2147483648  
+    ; 2 GB
+
+    ; Time limits (in seconds)
+    limit_time_cpu = 60
+    limit_time_real = 120
+kind: ConfigMap
+metadata:
+  name: odoo-nerd.conf
