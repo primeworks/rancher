@@ -103,4 +103,3 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: odoo-nerd
-  type: io.k8s.api.autoscaling.v1.horizontalpodautoscalerspec
