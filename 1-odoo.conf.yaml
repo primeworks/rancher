@@ -8,8 +8,8 @@ data:
     db_maxconn = 100
     demo = {}
     http_port = 8069
-    limit_memory_hard = 3221225472
-    limit_memory_soft = 2684354560
+    limit_memory_hard = 4221225472
+    limit_memory_soft = 3684354560
     limit_request = 8192
     limit_time_cpu = 60
     limit_time_real = 1200
