@@ -10,7 +10,7 @@ data:
     ;http_port = 8069
     ;http_enable = True
     ;longpolling_port = 8072
-    ;gevent_port = 8072
+    gevent_port = 8072
     ;limit_memory_hard = 2560000000
     ;limit_memory_soft = 2048000000
     ;limit_request = 8192
