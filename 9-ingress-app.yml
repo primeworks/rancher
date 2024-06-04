@@ -5,7 +5,7 @@ metadata:
   annotations:
     # cert-manager.io/issuer: letsencrypt-prod
     # kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/proxy-body-size: 20m
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     # nginx.ingress.kubernetes.io/rewrite-target: /web$2
@@ -15,7 +15,45 @@ metadata:
       location /websocket {
         proxy_redirect off;
         proxy_pass http://odoochat; (need upstream 127.0.0.1:8072) and not :8069 port
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+        proxy_pass http://odoolp-get;
         }
+      upstream odoo-get {
+        server 127.0.0.1:8069;
+        }
+
+      upstream odoolp-get {
+        server 127.0.0.1:8072;
+        }
+      location / {
+        proxy_redirect off;
+        add_header Access-Control-Allow-Origin *;
+        proxy_pass http://odoo-get;
+        }
+      upstream odoo {
+        server 127.0.0.1:8081;
+        }
+
+      upstream odoochat {
+        server 127.0.0.1:20025 weight=1 fail_timeout=0;
+        }
+
+      server {
+        server_name erp.xyz.com;
+
+        proxy_read_timeout 720s;
+        proxy_connect_timeout 720s;
+        proxy_send_timeout 720s;
+
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        }
+
+        
+      
 spec:
   ingressClassName: nginx
   rules:
