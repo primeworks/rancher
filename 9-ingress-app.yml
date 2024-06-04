@@ -16,7 +16,6 @@ metadata:
         proxy_redirect off;
         proxy_pass http://odoochat; (need upstream 127.0.0.1:8072) and not :8069 port
         }
-      }
 spec:
   ingressClassName: nginx
   rules:
