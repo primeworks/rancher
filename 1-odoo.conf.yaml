@@ -34,7 +34,7 @@ data:
     xmlrpc_port = 8069
     xmlrpcs = True
     xmlrpcs_interface =
-    xmlrpcs_port = 8071
+    xmlrpcs_port = 8072
 kind: ConfigMap
 metadata:
   name: odoo-nerd.conf
