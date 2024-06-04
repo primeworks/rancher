@@ -35,7 +35,8 @@ data:
     xmlrpcs = True
     xmlrpcs_interface =
     xmlrpcs_port = 8071
-    longpolling_port = 8072
+    longpolling_port = False
+    gevent_port = 8072
 kind: ConfigMap
 metadata:
   name: odoo-nerd.conf
