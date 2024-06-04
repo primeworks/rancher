@@ -14,7 +14,7 @@ metadata:
     nginx.ingress.kubernetes.io/server-snippets: |
     location /websocket {
         proxy_redirect off;
-        proxy_pass http://odoochat; (need upstream 127.0.0.1:8072) and not :8069 port
+        proxy_pass http://odoochat;
         }
 spec:
   ingressClassName: nginx
