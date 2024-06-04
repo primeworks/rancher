@@ -29,7 +29,7 @@ data:
     smtp_ssl = True
     email_from = odoo@siliconstreets.com
     ;workers = 4
-    list_db = False
+    list_db = True
     proxy_mode = True
     report_url = ^%d$:8069
     ; XML RPC
