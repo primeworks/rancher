@@ -58,7 +58,7 @@ spec:
   - host: www.studio24nigeria.com
     http:
       paths:
-      - path: /web#(/|$)(.*)
+      - path: /web(...*)
         pathType: Prefix
         backend:
           service:
