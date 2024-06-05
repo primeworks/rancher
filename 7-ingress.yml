@@ -56,14 +56,6 @@ spec:
   - host: odoo-nerd.webdiscode.com
     http:
       paths:
-      - path: /longpolling
-            pathType: Prefix
-            backend:
-              service:
-                name: odoo-nerd-app
-                port:
-                  number: 8072
-      
       - path: /
         pathType: Prefix
         backend:
