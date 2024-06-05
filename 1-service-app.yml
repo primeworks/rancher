@@ -14,6 +14,9 @@ spec:
   type: LoadBalancer
   sessionAffinity: None
   ports:
+    - protocol: TCP
+      port: 8072
+      targetPort: 8072
     - name: http
       port: 80
       protocol: TCP
