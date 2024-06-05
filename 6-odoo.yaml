@@ -48,7 +48,7 @@ spec:
               - key: stack
                 operator: In
                 values:
-                - db
+                - odoo
       containers:
       - env:
         - name: HOST
