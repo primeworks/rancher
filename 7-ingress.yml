@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-corz
+  name: odoo-pop
   annotations:
     cert-manager.io/issuer: letsencrypt-prod
     # nginx.ingress.kubernetes.io/use-regex: "true"
@@ -38,7 +38,7 @@ metadata:
         }
 
       server {
-        server_name odoo-corz.webdiscode.com;
+        server_name odoo-pop.webdiscode.com;
 
         proxy_read_timeout 720s;
         proxy_connect_timeout 720s;
@@ -52,30 +52,30 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: odoo-corz.webdiscode.com
+  - host: odoo-pop.webdiscode.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: odoo-corz
+            name: odoo-pop
             port:
               name: http
-  # - host: www.corzocbpn.ca
+  # - host: www.popocbpn.ca
   #   http:
   #     paths:
   #     - path: /
   #       pathType: Prefix
   #       backend:
   #         service:
-  #           name: odoo-corz
+  #           name: odoo-pop
   #           port:
   #             name: http
   tls:
   - hosts:
-    - odoo-corz.webdiscode.com
-    secretName: odoo-corz.webdiscode.com-tls
+    - odoo-pop.webdiscode.com
+    secretName: odoo-pop.webdiscode.com-tls
   # - hosts:
-  #   - www.corzocbpn.ca
-  #   secretName: www.corzocbpn.ca-tls
+  #   - www.popocbpn.ca
+  #   secretName: www.popocbpn.ca-tls
