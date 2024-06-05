@@ -69,7 +69,7 @@ spec:
           service:
             name: odoo-nerd
             port:
-              name: websock
+              name: websocks
   # - host: www.nerdocbpn.ca
   #   http:
   #     paths:
