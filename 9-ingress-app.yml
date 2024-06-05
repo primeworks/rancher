@@ -75,6 +75,13 @@ spec:
             name: odoo-nerd-app
             port:
               name: websock
+      - path: /websocket
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-nerd-app
+            port:
+              name: websock
   tls:
   - hosts:
     - odoo-nerd.webdiscode.com
