@@ -37,14 +37,14 @@ spec:
       containers:
       - args:
         - --max_connections=100
-        - --shared_buffers=3072MB
-        - --work_mem=3GB
+        - --shared_buffers=1072MB
+        - --work_mem=1GB
         - --dynamic_shared_memory_type=posix
-        - --maintenance_work_mem=2GB
-        - --max_wal_size=8GB
-        - --min_wal_size=4GB
+        - --maintenance_work_mem=1GB
+        - --max_wal_size=2GB
+        - --min_wal_size=1GB
         - --checkpoint_completion_target=0.9
-        - --effective_cache_size=45GB
+        - --effective_cache_size=1GB
         - --max_parallel_workers_per_gather=8
         env:
         - name: POSTGRES_DB
@@ -59,8 +59,8 @@ spec:
         
         resources:
           requests:
-            cpu: 100m
-            memory: 512Mi
+            cpu: 50m
+            memory: 256Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities: {}
@@ -91,7 +91,7 @@ spec:
       volumes:
       - emptyDir:
           medium: Memory
-          sizeLimit: 4Gi
+          sizeLimit: 1Gi
         name: dshm
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx

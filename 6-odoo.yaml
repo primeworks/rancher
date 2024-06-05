@@ -96,8 +96,8 @@ spec:
         name: odoo-nerd
         resources:
           requests:
-            cpu: 100m
-            memory: 512Mi
+            cpu: 50m
+            memory: 256Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities: {}
