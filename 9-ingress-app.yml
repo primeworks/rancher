@@ -40,7 +40,7 @@ metadata:
         }
 
       server {
-        server_name odoo-studio24.webdiscode.com;
+        server_name www.studio24nigeria.com;
 
         proxy_read_timeout 720s;
         proxy_connect_timeout 720s;
