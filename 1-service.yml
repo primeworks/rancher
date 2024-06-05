@@ -18,3 +18,8 @@ spec:
       port: 80
       protocol: TCP
       targetPort: http
+    - protocol: TCP
+      port: 8072
+      targetPort: 8072
+      name: websock
+    
