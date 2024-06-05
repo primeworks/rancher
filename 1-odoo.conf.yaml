@@ -10,7 +10,7 @@ data:
     http_interface = 0.0.0.0
     http_port = 8069
     http_enable = True
-    longpolling_port = False
+    longpolling_port = 8072
     gevent_port=8072
     limit_memory_hard = 140388840001
     limit_memory_soft = 13538884000
