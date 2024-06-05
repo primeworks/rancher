@@ -7,6 +7,7 @@ data:
     admin_passwd = UA29dGB28Gx5PWz8bnRW
     db_maxconn = 100
     demo = {}
+    http_interface = 0.0.0.0
     http_port = 8069
     http_enable = True
     longpolling_port = False
@@ -27,7 +28,7 @@ data:
     smtp_user = mb16635
     smtp_ssl = True
     email_from = odoo@siliconstreets.com
-    ;workers = 4
+    workers = 2
     list_db = False
     proxy_mode = True
     report_url = ^%d$:8069
