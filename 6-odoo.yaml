@@ -31,14 +31,20 @@ spec:
       - command:
         - sh
         - -c
-        - until pg_isready -h db-bip -p 5432; do echo waiting for database; sleep
-          2; done;
-        image: postgres:9.6.5
-        imagePullPolicy: IfNotPresent
-        name: check-db-ready
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
+        - |
+          LOCAL_HOST="db-pop"
+          LOCAL_USER="odoo"
+          LOCAL_DATABASE="pop"
+
+          while true; do
+            if PGPASSWORD="odoo" psql -h $LOCAL_HOST -U $LOCAL_USER -d $LOCAL_DATABASE -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+              echo "The res_users table exists in the pop database. Proceeding to start the main container."
+              break
+            else
+              echo "The res_users table doesn't exist in the pop database. Retrying in 5 minutes..."
+              sleep 480
+            fi
+          done
       
       affinity:
         nodeAffinity:
@@ -48,7 +54,7 @@ spec:
               - key: stack
                 operator: In
                 values:
-                - db
+                - odoo
       containers:
       - env:
         - name: HOST
