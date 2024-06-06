@@ -28,17 +28,20 @@ spec:
         workload.user.cattle.io/workloadselector: deployment-default-odoo-pop
     spec:
       initContainers:
-      - command:
-        - sh
-        - -c
-        - until pg_isready -h db-pop -p 5432; do echo waiting for database; sleep
-          2; done;
-        image: postgres:9.6.5
-        imagePullPolicy: IfNotPresent
-        name: check-db-ready
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
+      - name: wait-for-odoo-pop-app
+        image: busybox
+        command: ['sh', '-c', 'until nc -z -v -w30 odoo-pop-app 8069; do echo "Waiting for odoo-pop-app to be ready..."; sleep 5; done']
+      # - command:
+      #   - sh
+      #   - -c
+      #   - until pg_isready -h db-pop -p 5432; do echo waiting for database; sleep
+      #     2; done;
+      #   image: postgres:9.6.5
+      #   imagePullPolicy: IfNotPresent
+      #   name: check-db-ready
+      #   resources: {}
+      #   terminationMessagePath: /dev/termination-log
+      #   terminationMessagePolicy: File
       
       affinity:
         nodeAffinity:
