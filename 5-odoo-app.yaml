@@ -86,7 +86,6 @@ spec:
           unzip $LOCAL_DUMP_FILE
           echo "Move files from directory"
           mv filestore/* /mnt/filestore/$LOCAL_DATABASE
-#          mv odoo-basic.dump /mnt/
           chmod -Rv 777 /var/lib/odoo/addons/odoo-basic.dump
           echo "Permissions set..."
           echo "List items in odoo directory..."
