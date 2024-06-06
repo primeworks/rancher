@@ -28,9 +28,42 @@ spec:
         workload.user.cattle.io/workloadselector: deployment-default-odoo-pop
     spec:
       initContainers:
-      - name: wait-for-odoo-pop-app
-        image: busybox
-        command: ['sh', '-c', 'until nc -z -v -w30 odoo-pop-app; do echo "Waiting for odoo-pop-app to be ready..."; sleep 5; done']
+      - name: wait-for-db-table
+        image: postgres:13
+        command:
+        - sh
+        - -c
+        - |
+          LOCAL_HOST="db-pop"
+          LOCAL_USER="odoo"
+          LOCAL_DATABASE="pop"
+          LOCAL_DUMP_FILE="odoo-basic.dump"
+
+          if ! PGPASSWORD="odoo" psql -h db-pop -U odoo -d pop -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+            echo "The res_users table doesn't exist in the pop database. Proceeding with database restore..."
+
+            echo "Entering odoo directory..."
+            cd /var/lib/odoo/addons/
+            echo "List contents of odoo directory..."
+            ls /var/lib/odoo/addons/
+
+            echo "Restoring database dump locally..."
+            if PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"; then
+              echo "The database $LOCAL_DATABASE created..."
+            else
+              echo "The database $LOCAL_DATABASE already exists..."
+            fi
+
+            if PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"; then
+              echo "Database restored successfully."
+              rm "$LOCAL_DUMP_FILE"
+            else
+              echo "Database failed to be restored."
+              rm "$LOCAL_DUMP_FILE"
+            fi
+          else
+            echo "The res_users table already exists in the pop database. Skipping database restore."
+          fi
       # - command:
       #   - sh
       #   - -c
