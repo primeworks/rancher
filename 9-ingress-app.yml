@@ -65,6 +65,20 @@ spec:
             name: odoo-studio24-app
             port:
               name: http
+      - path: /longpolling
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-pop-app
+            port:
+              name: websock-app
+      - path: /websocket
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-pop-app
+            port:
+              name: websock-app
   - host: odoo-studio24.webdiscode.com
     http:
       paths:
@@ -75,6 +89,20 @@ spec:
             name: odoo-studio24-app
             port:
               name: http
+      - path: /longpolling
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-pop-app
+            port:
+              name: websock-app
+      - path: /websocket
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-pop-app
+            port:
+              name: websock-app
   tls:
   - hosts:
     - www.studio24nigeria.com

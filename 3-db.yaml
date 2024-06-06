@@ -35,7 +35,7 @@ spec:
                  - db
        containers:
        - args:
-         - --max_connections=100
+         - --max_connections=300
          - --shared_buffers=3072MB
          - --work_mem=3GB
          - --dynamic_shared_memory_type=posix
