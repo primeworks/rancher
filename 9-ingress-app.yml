@@ -11,7 +11,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: 50m
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    nginx.ingress.kubernetes.io/websocket-services: "odoo-nerd"
+    nginx.ingress.kubernetes.io/websocket-services: "odoo-pop-app"
     nginx.ingress.kubernetes.io/server-snippets: |
       location /websocket {
         proxy_redirect off;
@@ -70,14 +70,14 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: odoo-nerd-app
+            name: odoo-pop-app
             port:
               name: websock-app
       - path: /websocket
         pathType: Prefix
         backend:
           service:
-            name: odoo-nerd-app
+            name: odoo-pop-app
             port:
               name: websock-app
   tls:

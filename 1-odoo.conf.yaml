@@ -28,7 +28,7 @@ data:
     smtp_user = mb16635
     smtp_ssl = True
     email_from = odoo@siliconstreets.com
-    workers = 3
+    workers = 2
     list_db = False
     proxy_mode = True
     report_url = ^%d$:8069
