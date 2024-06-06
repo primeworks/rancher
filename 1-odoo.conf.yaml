@@ -18,7 +18,7 @@ data:
     limit_time_cpu = 60
     limit_time_real = 1200
     limit_time_real_cron = -1
-    max_cron_threads = 2
+    max_cron_threads = 1
     pidfile = None
     reportgz = False
     server_wide_modules = base,web
