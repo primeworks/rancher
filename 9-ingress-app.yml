@@ -11,6 +11,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: 50m
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/websocket-services: "odoo-studio24-app"
     nginx.ingress.kubernetes.io/server-snippets: |
       location /websocket {
         proxy_redirect off;
@@ -69,14 +70,14 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: odoo-pop-app
+            name: odoo-studio24-app
             port:
               name: websock-app
       - path: /websocket
         pathType: Prefix
         backend:
           service:
-            name: odoo-pop-app
+            name: odoo-studio24-app
             port:
               name: websock-app
   - host: odoo-studio24.webdiscode.com
@@ -93,14 +94,14 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: odoo-pop-app
+            name: odoo-studio24-app
             port:
               name: websock-app
       - path: /websocket
         pathType: Prefix
         backend:
           service:
-            name: odoo-pop-app
+            name: odoo-studio24-app
             port:
               name: websock-app
   tls:
