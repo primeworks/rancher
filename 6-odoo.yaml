@@ -37,35 +37,14 @@ spec:
           LOCAL_HOST="db-pop"
           LOCAL_USER="odoo"
           LOCAL_DATABASE="pop"
-          LOCAL_DUMP_FILE="odoo-basic.dump"
+
           while true; do
             if PGPASSWORD="odoo" psql -h $LOCAL_HOST -U $LOCAL_USER -d $LOCAL_DATABASE -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
               echo "The res_users table exists in the pop database. Proceeding to start the main container."
               break
             else
-              echo "The res_users table doesn't exist in the pop database. Proceeding with database restore..."
-              
-              echo "Entering odoo directory..."
-              cd /var/lib/odoo/addons/
-              echo "List contents of odoo directory..."
-              ls /var/lib/odoo/addons/
-
-              echo "Restoring database dump locally..."
-              if PGPASSWORD="odoo" createdb -h "$LOCAL_HOST" -U "$LOCAL_USER" -e "$LOCAL_DATABASE"; then
-                echo "The database $LOCAL_DATABASE created..."
-              else
-                echo "The database $LOCAL_DATABASE already exists..."
-              fi
-
-              if PGPASSWORD="odoo" pg_restore -h "$LOCAL_HOST" -U "$LOCAL_USER" -d "$LOCAL_DATABASE" -v "$LOCAL_DUMP_FILE"; then
-                echo "Database restored successfully."
-                rm "$LOCAL_DUMP_FILE"
-                break
-              else
-                echo "Database failed to be restored. Retrying in 5 minutes..."
-                rm "$LOCAL_DUMP_FILE"
-                sleep 300
-              fi
+              echo "The res_users table doesn't exist in the pop database. Retrying in 5 minutes..."
+              sleep 300
             fi
           done
       # - command:
