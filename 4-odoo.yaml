@@ -28,11 +28,25 @@ spec:
         workload.user.cattle.io/workloadselector: deployment-default-odoo-studio24
     spec:
       initContainers:
-      - name: check-db-ready
-        image: postgres:9.6.5
-        command: ['sh', '-c', 
-          'until pg_isready -h db-studio24 -p 5432; 
-          do echo waiting for database; sleep 2; done;']
+      - name: wait-for-db-table
+        image: postgres:13
+        command:
+        - sh
+        - -c
+        - |
+          LOCAL_HOST="db-pop"
+          LOCAL_USER="odoo"
+          LOCAL_DATABASE="pop"
+
+          while true; do
+            if PGPASSWORD="odoo" psql -h $LOCAL_HOST -U $LOCAL_USER -d $LOCAL_DATABASE -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+              echo "The res_users table exists in the pop database. Proceeding to start the main container."
+              break
+            else
+              echo "The res_users table doesn't exist in the pop database. Retrying in 5 minutes..."
+              sleep 480
+            fi
+          done
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -59,7 +73,7 @@ spec:
             port: http
             scheme: HTTP
           initialDelaySeconds: 600
-          periodSeconds: 300
+          periodSeconds: 600
           successThreshold: 1
           timeoutSeconds: 5
         ports:
@@ -83,7 +97,7 @@ spec:
             port: http
             scheme: HTTP
           initialDelaySeconds: 30
-          periodSeconds: 3000
+          periodSeconds: 300
           successThreshold: 1
           timeoutSeconds: 5
         name: odoo-studio24
@@ -92,7 +106,7 @@ spec:
             cpu: "1"
             memory: 6000Mi
           requests:
-            cpu: 200m
+            cpu: 100m
             memory: 512Mi
         securityContext:
           allowPrivilegeEscalation: false

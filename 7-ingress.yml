@@ -37,7 +37,7 @@ metadata:
         }
 
       server {
-        server_name odoo-pop.webdiscode.com;
+        server_name www.studio24nigeria.com;
 
         proxy_read_timeout 720s;
         proxy_connect_timeout 720s;
@@ -61,20 +61,6 @@ spec:
             name: odoo-studio24
             port:
               name: http
-      - path: /longpolling
-        pathType: Prefix
-        backend:
-          service:
-            name: odoo-pop-app
-            port:
-              name: websock-app
-      - path: /websocket
-        pathType: Prefix
-        backend:
-          service:
-            name: odoo-pop-app
-            port:
-              name: websock-app
   - host: odoo-studio24.webdiscode.com
     http:
       paths:
@@ -85,20 +71,6 @@ spec:
             name: odoo-studio24
             port:
               name: http
-      - path: /longpolling
-        pathType: Prefix
-        backend:
-          service:
-            name: odoo-studio24
-            port:
-              name: websocks
-      - path: /websocket
-        pathType: Prefix
-        backend:
-          service:
-            name: odoo-studio24
-            port:
-              name: websocks
   tls:
   - hosts:
     - www.studio24nigeria.com
