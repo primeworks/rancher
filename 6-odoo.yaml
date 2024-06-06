@@ -30,7 +30,7 @@ spec:
       initContainers:
       - name: wait-for-odoo-pop-app
         image: busybox
-        command: ['sh', '-c', 'until nc -z -v -w30 odoo-pop-app 8069; do echo "Waiting for odoo-pop-app to be ready..."; sleep 5; done']
+        command: ['sh', '-c', 'until nc -z -v -w30 odoo-pop-app; do echo "Waiting for odoo-pop-app to be ready..."; sleep 5; done']
       # - command:
       #   - sh
       #   - -c
