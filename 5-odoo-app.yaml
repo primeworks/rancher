@@ -86,8 +86,8 @@ spec:
           unzip $LOCAL_DUMP_FILE
           echo "Move files from directory"
           mv filestore/* /mnt/filestore/$LOCAL_DATABASE
-          mv odoo-basic.dump /mnt/
-          chmod -Rv 777 /mnt/odoo-basic.dump
+          mv dump.sql /mnt/
+          chmod -Rv 777 /mnt/dump.sql
           echo "Permissions set..."
           echo "List items in odoo directory..."
           ls /mnt/
@@ -117,7 +117,7 @@ spec:
           LOCAL_HOST="db-pop"
           LOCAL_USER="odoo"
           LOCAL_DATABASE="pop"
-          LOCAL_DUMP_FILE="odoo-basic.dump"
+          LOCAL_DUMP_FILE="dump.sql"
 
           if ! PGPASSWORD="odoo" psql -h db-pop -U odoo -d pop -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
             echo "The res_users table doesn't exist in the pop database. Proceeding with database restore..."
