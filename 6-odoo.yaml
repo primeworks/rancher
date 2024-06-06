@@ -28,7 +28,9 @@ spec:
         workload.user.cattle.io/workloadselector: deployment-default-odoo-bip
     spec:
       initContainers:
-      - command:
+      - name: wait-for-db-table
+        image: postgres:13
+        command:
         - sh
         - -c
         - |
