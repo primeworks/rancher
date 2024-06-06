@@ -44,7 +44,7 @@ spec:
               break
             else
               echo "The res_users table doesn't exist in the pop database. Retrying in 5 minutes..."
-              sleep 300
+              sleep 480
             fi
           done
       # - command:
