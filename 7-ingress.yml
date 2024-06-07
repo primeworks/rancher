@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: 50m
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    # nginx.ingress.kubernetes.io/websocket-services: "odoo-studio24"
+    nginx.ingress.kubernetes.io/websocket-services: "odoo-studio24"
     # nginx.ingress.kubernetes.io/server-snippets: |
     #   location /websocket {
     #     proxy_redirect off;
@@ -61,6 +61,20 @@ spec:
             name: odoo-studio24
             port:
               name: http
+      - path: /longpolling
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-studio24
+            port:
+              name: websocks
+      - path: /websocket
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-studio24
+            port:
+              name: websocks
   - host: odoo-studio24.webdiscode.com
     http:
       paths:
@@ -71,6 +85,20 @@ spec:
             name: odoo-studio24
             port:
               name: http
+      - path: /longpolling
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-studio24
+            port:
+              name: websocks
+      - path: /websocket
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-studio24
+            port:
+              name: websocks
   tls:
   - hosts:
     - www.studio24nigeria.com
