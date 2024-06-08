@@ -12,11 +12,11 @@ data:
     http_enable = True
     longpolling_port = False
     gevent_port=8072
-    limit_memory_hard = 3221225472
-    limit_memory_soft = 2684354560
+    limit_memory_hard = 140388840001
+    limit_memory_soft = 13538884000
     limit_request = 8192
-    limit_time_cpu = 60
-    limit_time_real = 1200
+    limit_time_cpu = 86400
+    limit_time_real = 86400
     limit_time_real_cron = -1
     max_cron_threads = 2
     pidfile = None
