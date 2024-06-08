@@ -61,6 +61,20 @@ spec:
             name: odoo-bip
             port:
               name: http
+      - path: /longpolling
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-bip
+            port:
+              name: websocks
+      - path: /websocket
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-bip
+            port:
+              name: websocks
   - host: www.bipocbpn.ca
     http:
       paths:
@@ -71,6 +85,20 @@ spec:
             name: odoo-bip
             port:
               name: http
+      - path: /longpolling
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-bip
+            port:
+              name: websocks
+      - path: /websocket
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-bip
+            port:
+              name: websocks
   tls:
   - hosts:
     - odoo-bip.webdiscode.com
