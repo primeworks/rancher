@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-bip-app
+    app: odoo-bip
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-bip-app
-  name: odoo-bip-app
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-bip
+  name: odoo-bip
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-bip-app
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-bip
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,7 +25,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-bip-app
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-bip
     spec:
       initContainers:
       - command:
@@ -206,10 +206,10 @@ spec:
           periodSeconds: 300
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-bip-app
+        name: odoo-bip
         resources:
           requests:
-            cpu: 100m
+            cpu: 400m
             memory: 512Mi
         securityContext:
           allowPrivilegeEscalation: false
