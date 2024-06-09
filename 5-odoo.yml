@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-bip
+    app: odoo-corz3
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-bip
-  name: odoo-bip
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-corz3
+  name: odoo-corz3
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-bip
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-corz3
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,13 +25,13 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-bip
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-corz3
     spec:
       initContainers:
       - command:
         - sh
         - -c
-        - until pg_isready -h db-bip -p 5432; do echo waiting for database; sleep
+        - until pg_isready -h db-corz3 -p 5432; do echo waiting for database; sleep
           2; done;
         image: postgres:9.6.5
         imagePullPolicy: IfNotPresent
@@ -42,9 +42,9 @@ spec:
       - command:
         - sh
         - -c
-        - 'if psql -h db-bip -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "bip";
-          then echo "The database bip exists." else until createdb -h db-bip
-          -U odoo -p 5432 bip; fi '
+        - 'if psql -h db-corz3 -U odoo -p 5432 -lqt | cut -d \| -f 1 | grep -qw "corz3";
+          then echo "The database corz3 exists." else until createdb -h db-corz3
+          -U odoo -p 5432 corz3; fi '
         env:
         - name: POSTGRES_DB
           value: postgres
@@ -67,9 +67,9 @@ spec:
           FTP_PASSWORD="i24125114A"
           FTP_REMOTE_FILE="dump.sql"
           FTP_REMOTE_FILESTORE="odoo17-basic.zip"
-          LOCAL_HOST="db-bip"
+          LOCAL_HOST="db-corz3"
           LOCAL_USER="odoo"
-          LOCAL_DATABASE="bip"
+          LOCAL_DATABASE="corz3"
           LOCAL_DUMP_FILE="odoo17-basic.zip"
 
           echo "Entering odoo directory...."
@@ -112,13 +112,13 @@ spec:
         - sh
         - -c
         - |
-          LOCAL_HOST="db-bip"
+          LOCAL_HOST="db-corz3"
           LOCAL_USER="odoo"
-          LOCAL_DATABASE="bip"
+          LOCAL_DATABASE="corz3"
           LOCAL_DUMP_FILE="odoo-basic.dump"
 
-          if ! PGPASSWORD="odoo" psql -h db-bip -U odoo -d bip -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
-            echo "The res_users table doesn't exist in the bip database. Proceeding with database restore..."
+          if ! PGPASSWORD="odoo" psql -h db-corz3 -U odoo -d corz3 -c "SELECT 1 FROM information_schema.tables WHERE table_name = 'res_users'" | grep -q 1; then
+            echo "The res_users table doesn't exist in the corz3 database. Proceeding with database restore..."
 
             echo "Entering odoo directory..."
             cd /var/lib/odoo/addons/
@@ -138,7 +138,7 @@ spec:
                     rm "$LOCAL_DUMP_FILE"
               fi
           else
-            echo "The res_users table already exists in the bip database. Skipping database restore."
+            echo "The res_users table already exists in the corz3 database. Skipping database restore."
           fi
         image: odoo:17
         imagePullPolicy: IfNotPresent
@@ -165,7 +165,7 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-bip
+          value: db-corz3
         - name: PASSWORD
           value: odoo
         - name: USER
@@ -206,7 +206,7 @@ spec:
           periodSeconds: 300
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-bip
+        name: odoo-corz3
         resources:
           requests:
             cpu: 400m
@@ -243,11 +243,11 @@ spec:
       volumes:
       - configMap:
           defaultMode: 509
-          name: odoo-bip.conf
+          name: odoo-corz3.conf
           optional: true
         name: config
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: odoo-bip
+          claimName: odoo-corz3
 
