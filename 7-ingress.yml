@@ -103,6 +103,6 @@ spec:
   - hosts:
     - odoo-corz3.webdiscode.com
     secretName: odoo-corz3.webdiscode.com-tls
-  - hosts:
-    - www.corz3ocbpn.ca
-    secretName: www.corz3ocbpn.ca-tls
+  # - hosts:
+  #   - www.corz3ocbpn.ca
+  #   secretName: www.corz3ocbpn.ca-tls
