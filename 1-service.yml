@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-corz3
+  name: odoo-sflows
 spec:
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
@@ -10,7 +10,7 @@ spec:
   ipFamilies:
   - IPv4
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-corz3
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-sflows
   type: LoadBalancer
   sessionAffinity: None
   ports:
