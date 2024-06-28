@@ -1,13 +1,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-corz3
+  name: odoo-ndu
   annotations:
     cert-manager.io/issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/proxy-body-size: 50m
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    nginx.ingress.kubernetes.io/websocket-services: "odoo-corz3"
+    nginx.ingress.kubernetes.io/websocket-services: "odoo-ndu"
     # nginx.ingress.kubernetes.io/server-snippets: |
     #   location /websocket {
     #     proxy_redirect off;
@@ -37,7 +37,7 @@ metadata:
     #     }
 
     #   server {
-    #     server_name odoo-corz3.webdiscode.com;
+    #     server_name odoo-ndu.webdiscode.com;
 
     #     proxy_read_timeout 720s;
     #     proxy_connect_timeout 720s;
@@ -51,58 +51,58 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: odoo-corz3.webdiscode.com
+  - host: odoo-ndu.webdiscode.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: odoo-corz3
+            name: odoo-ndu
             port:
               name: http
       # - path: /longpolling
       #   pathType: Prefix
       #   backend:
       #     service:
-      #       name: odoo-corz3
+      #       name: odoo-ndu
       #       port:
       #         name: websocks
       # - path: /websocket
       #   pathType: Prefix
       #   backend:
       #     service:
-      #       name: odoo-corz3
+      #       name: odoo-ndu
       #       port:
       #         name: websocks
-  - host: www.corz3ocbpn.ca
+  - host: www.nduocbpn.ca
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: odoo-corz3
+            name: odoo-ndu
             port:
               name: http
       # - path: /longpolling
       #   pathType: Prefix
       #   backend:
       #     service:
-      #       name: odoo-corz3
+      #       name: odoo-ndu
       #       port:
       #         name: websocks
       # - path: /websocket
       #   pathType: Prefix
       #   backend:
       #     service:
-      #       name: odoo-corz3
+      #       name: odoo-ndu
       #       port:
       #         name: websocks
   tls:
   - hosts:
-    - odoo-corz3.webdiscode.com
-    secretName: odoo-corz3.webdiscode.com-tls
+    - odoo-ndu.webdiscode.com
+    secretName: odoo-ndu.webdiscode.com-tls
   # - hosts:
-  #   - www.corz3ocbpn.ca
-  #   secretName: www.corz3ocbpn.ca-tls
+  #   - www.nduocbpn.ca
+  #   secretName: www.nduocbpn.ca-tls

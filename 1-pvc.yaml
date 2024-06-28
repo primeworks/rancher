@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: odoo-corz3
+  name: odoo-ndu
   labels:
-    app: odoo-corz3
+    app: odoo-ndu
 spec:
   accessModes:
     - ReadWriteMany

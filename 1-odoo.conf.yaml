@@ -42,4 +42,4 @@ data:
     ;xmlrpcs_port = 8071
 kind: ConfigMap
 metadata:
-  name: odoo-corz3.conf
+  name: odoo-ndu.conf
