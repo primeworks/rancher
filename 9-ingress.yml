@@ -4,7 +4,10 @@ metadata:
   name: odoo-ss
   annotations:
     cert-manager.io/issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/websocket-services: "odoo-ss"
 spec:
   ingressClassName: nginx
   rules:
