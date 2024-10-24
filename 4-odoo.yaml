@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-17-tpl
+    app: odoo-18-tpl
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-17-tpl
-  name: odoo-17-tpl
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-18-tpl
+  name: odoo-18-tpl
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-17-tpl
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-18-tpl
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,13 +25,13 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-17-tpl
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-18-tpl
     spec:
       initContainers:
       - command:
         - sh
         - -c
-        - until pg_isready -h db-17-tpl -p 5432; do echo waiting for database; sleep
+        - until pg_isready -h db-18-tpl -p 5432; do echo waiting for database; sleep
           2; done;
         image: postgres:9.6.5
         imagePullPolicy: IfNotPresent
@@ -51,12 +51,12 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-17-tpl
+          value: db-18-tpl
         - name: PASSWORD
           value: odoo
         - name: USER
           value: odoo
-        image: odoo:17
+        image: odoo:18
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 6
@@ -92,7 +92,7 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 5
-        name: odoo-17-tpl
+        name: odoo-18-tpl
         resources:
           requests:
             cpu: 100m
@@ -129,11 +129,11 @@ spec:
       volumes:
       - configMap:
           defaultMode: 509
-          name: odoo-17-tpl.conf
+          name: odoo-18-tpl.conf
           optional: true
         name: config
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: odoo-17-tpl
+          claimName: odoo-18-tpl
 
