@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-ss
+  name: odoo-free
 spec:
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
@@ -10,7 +10,7 @@ spec:
   ipFamilies:
   - IPv4
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-ss
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-free
   type: LoadBalancer
   sessionAffinity: None
   ports:
