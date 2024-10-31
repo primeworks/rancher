@@ -23,5 +23,5 @@ spec:
               name: http
   tls:
   - hosts:
-    - '*.f.webdiscode.com'
-    secretName: '*.f.webdiscode.com-tls'
+    - 'odoo-free.webdiscode.com'
+    secretName: 'odoo-free.webdiscode.com-tls'
