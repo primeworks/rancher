@@ -83,7 +83,7 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-ytjxx
         persistentVolumeClaim:
-          claimName: cnet3-odoo-d
+          claimName: odoo-cnet3
   updateStrategy:
     type: RollingUpdate
 status:
