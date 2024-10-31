@@ -46,7 +46,7 @@ spec:
           value: odoo
         - name: POSTGRES_USER
           value: odoo
-        image: postgres:12
+        image: postgres:15
         imagePullPolicy: IfNotPresent
         name: db-cnet3
         resources:
