@@ -23,5 +23,5 @@ spec:
               name: http
   tls:
   - hosts:
-    - odoo-free.webdiscode.com
-    secretName: odoo-free.webdiscode.com-tls
+    - '*-f.webdiscode.com'
+    secretName: '*-f.webdiscode.com-tls'
