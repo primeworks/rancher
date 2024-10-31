@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: odoo-evoucherng
+  name: odoo-cnet2
   labels:
-    app: odoo-evoucherng
+    app: odoo-cnet2
 spec:
   accessModes:
     - ReadWriteMany

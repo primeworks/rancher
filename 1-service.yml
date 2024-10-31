@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-evoucherng
+  name: odoo-cnet2
 spec:
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
@@ -10,7 +10,7 @@ spec:
   ipFamilies:
   - IPv4
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-evoucherng
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-cnet2
   type: LoadBalancer
   sessionAffinity: None
   ports:

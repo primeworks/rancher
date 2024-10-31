@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: odoo-evoucherng
+    app: odoo-cnet2
     tier: frontend
     cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-default-odoo-evoucherng
-  name: odoo-evoucherng
+    workload.user.cattle.io/workloadselector: deployment-default-odoo-cnet2
+  name: odoo-cnet2
 spec:
   progressDeadlineSeconds: 600
   replicas: 0
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-default-odoo-evoucherng
+      workload.user.cattle.io/workloadselector: deployment-default-odoo-cnet2
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -25,7 +25,7 @@ spec:
         field.cattle.io/ports: '[[]]'
       creationTimestamp: null
       labels:
-        workload.user.cattle.io/workloadselector: deployment-default-odoo-evoucherng
+        workload.user.cattle.io/workloadselector: deployment-default-odoo-cnet2
     spec:
       affinity:
         nodeAffinity:
@@ -39,12 +39,12 @@ spec:
       containers:
       - env:
         - name: HOST
-          value: db-evoucherng
+          value: db-cnet2
         - name: PASSWORD
           value: odoo
         - name: USER
           value: odoo
-        image: odoo:12
+        image: odoo:18
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 6
@@ -69,7 +69,7 @@ spec:
                 - /bin/sh
                 - '-c'
                 - '-e'
-                - exec pg_isready -U "odoo" -d "dbname=postgres" -h db-evoucherng
+                - exec pg_isready -U "odoo" -d "dbname=postgres" -h db-cnet2
         readinessProbe:
           failureThreshold: 6
           initialDelaySeconds: 30
@@ -78,7 +78,7 @@ spec:
           tcpSocket:
             port: 8069
           timeoutSeconds: 5
-        name: odoo-evoucherng
+        name: odoo-cnet2
         resources:
           requests:
             cpu: 100m
@@ -126,5 +126,5 @@ spec:
       # Edit the volume to match the existing pv in the cluster
       - name: vol-7xe3r
         persistentVolumeClaim:
-          claimName: odoo-evoucherng
+          claimName: odoo-cnet2
 
