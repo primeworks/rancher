@@ -9,7 +9,7 @@ metadata:
   name: odoo-cnet3
 spec:
   progressDeadlineSeconds: 600
-  replicas: 0
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -44,7 +44,7 @@ spec:
           value: odoo
         - name: USER
           value: odoo
-        image: odoo:13
+        image: odoo:18
         imagePullPolicy: IfNotPresent
         name: odoo-cnet3
         resources:
