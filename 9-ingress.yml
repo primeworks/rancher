@@ -11,7 +11,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: odoo-free.webdiscode.com
+  - host: '*.f.webdiscode.com'
     http:
       paths:
       - path: /
@@ -23,5 +23,5 @@ spec:
               name: http
   tls:
   - hosts:
-    - 'odoo-free.webdiscode.com'
-    secretName: 'odoo-free.webdiscode.com-tls'
+    - '*.f.webdiscode.com'
+    secretName: '*.f.webdiscode.com-tls'
