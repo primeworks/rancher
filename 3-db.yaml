@@ -10,7 +10,7 @@ metadata:
   name: db-cnet2
 spec:
   podManagementPolicy: OrderedReady
-  replicas: 0
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
