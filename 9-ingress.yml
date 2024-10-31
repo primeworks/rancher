@@ -21,7 +21,7 @@ spec:
             name: odoo-free
             port:
               name: http
-  tls:
-  - hosts:
-    - '*.f.webdiscode.com'
-    secretName: '*.f.webdiscode.com-tls'
+  # tls:
+  # - hosts:
+  #   - '*.f.webdiscode.com'
+  #   secretName: '*.f.webdiscode.com-tls'
