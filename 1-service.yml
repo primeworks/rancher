@@ -9,6 +9,6 @@ spec:
   ports:
     - protocol: TCP
       targetPort: odoo-cnet3
-      nodePort: 30036
+      nodePort: ''
       port: 8069
       name: odoo-cnet3
