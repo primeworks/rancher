@@ -49,13 +49,13 @@ spec:
         image: postgres:15
         imagePullPolicy: IfNotPresent
         name: db-cnet3
-        resources:
-          limits:
-            cpu: "1"
-            memory: 6000Mi
-          requests:
-            cpu: 100m
-            memory: 512Mi
+        # resources:
+        #   limits:
+        #     cpu: "1"
+        #     memory: 6000Mi
+        #   requests:
+        #     cpu: 100m
+        #     memory: 512Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities: {}

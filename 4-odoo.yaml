@@ -47,13 +47,13 @@ spec:
         image: odoo:18
         imagePullPolicy: IfNotPresent
         name: odoo-cnet3
-        resources:
-          limits:
-            cpu: "1"
-            memory: 6000Mi
-          requests:
-            cpu: 100m
-            memory: 512Mi
+        # resources:
+        #   limits:
+        #     cpu: "1"
+        #     memory: 6000Mi
+        #   requests:
+        #     cpu: 100m
+        #     memory: 512Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities: {}
