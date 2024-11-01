@@ -25,15 +25,15 @@ spec:
       labels:
         workload.user.cattle.io/workloadselector: statefulSet-default-db-cnet3
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - db
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: app
+      #           operator: In
+      #           values:
+      #           - db
       containers:
       - args:
         - --max_connections=1200
