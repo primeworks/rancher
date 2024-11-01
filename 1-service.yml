@@ -5,8 +5,10 @@ metadata:
 spec:
   selector:
     workload.user.cattle.io/workloadselector: deployment-default-odoo-cnet3
+  type: NodePort
   ports:
     - protocol: TCP
       targetPort: odoo-cnet3
+      nodePort: 30036
       port: 8069
       name: odoo-cnet3

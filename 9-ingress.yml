@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: cnet3.webdiscode.com
+  - host: cnet3.209.145.58.65
     http:
       paths:
       - path: /
