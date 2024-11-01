@@ -82,9 +82,6 @@ spec:
           sizeLimit: 1Gi
         name: dshm
       # Edit the volume to match the existing pv in the cluster
-      - name: vol-ytjxx
-        persistentVolumeClaim:
-          claimName: odoo-cnet3
       - hostPath:
           path: /mnt/data
           type: DirectoryOrCreate
