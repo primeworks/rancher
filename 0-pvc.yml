@@ -4,6 +4,7 @@ metadata:
   name: odoo-cnet3
 spec:
   storageClassName: manual
+  persistentVolumeReclaimPolicy: Delete
   accessModes:
     - ReadWriteOnce
   resources:
