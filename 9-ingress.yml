@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: odoo-cnet5.webdiscode.com
+  - host: cnet.webdiscode.com
     http:
       paths:
       - path: /
@@ -20,5 +20,5 @@ spec:
               name: http
   tls:
   - hosts:
-    - odoo-cnet5.webdiscode.com
-    secretName: odoo-cnet5.webdiscode.com-tls
+    - cnet.webdiscode.com
+    secretName: cnet.webdiscode.com-tls

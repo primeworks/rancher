@@ -114,10 +114,10 @@ spec:
         volumeMounts:
         # Edit the volume to match the existing mountPaths in the cluster
         - mountPath: /var/lib/odoo
-          name: vol-7xe3r
+          name: vol-wjslm
           subPath: odoo
         - mountPath: /mnt/extra-addons
-          name: vol-7xe3r
+          name: vol-wjslm
           subPath: odoo/addons
         - mountPath: /etc/odoo
           name: config
@@ -127,13 +127,14 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
       volumes:
+      # Edit the volume to match the existing pv in the cluster
+      - hostPath:
+          path: /mnt/data
+          type: DirectoryOrCreate
+        name: vol-wjslm
       - configMap:
           defaultMode: 509
-          name: odoo-cnet5.conf
+          name: odoo.conf
           optional: true
         name: config
-      # Edit the volume to match the existing pv in the cluster
-      - name: vol-7xe3r
-        persistentVolumeClaim:
-          claimName: odoo-cnet5
 

@@ -72,7 +72,7 @@ spec:
         - mountPath: /dev/shm
           name: dshm
         - mountPath: /var/lib/postgresql/data
-          name: vol-ytjxx
+          name: vol-wjslm
           subPath: database
       dnsPolicy: ClusterFirst
       restartPolicy: Always
@@ -90,9 +90,10 @@ spec:
           sizeLimit: 3Gi
         name: dshm
       # Edit the volume to match the existing pv in the cluster
-      - name: vol-ytjxx
-        persistentVolumeClaim:
-          claimName: odoo-cnet5
+      - hostPath:
+          path: /mnt/data
+          type: DirectoryOrCreate
+        name: vol-wjslm
   updateStrategy:
     type: RollingUpdate
 status:
