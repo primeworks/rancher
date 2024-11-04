@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: odoo-cnet5
 spec:
-  externalTrafficPolicy: Cluster
-  internalTrafficPolicy: Cluster
-  allocateLoadBalancerNodePorts: true
-  ipFamilyPolicy: SingleStack
-  ipFamilies:
-  - IPv4
+  # externalTrafficPolicy: Cluster
+  # internalTrafficPolicy: Cluster
+  # allocateLoadBalancerNodePorts: true
+  # ipFamilyPolicy: SingleStack
+  # ipFamilies:
+  # - IPv4
   selector:
     workload.user.cattle.io/workloadselector: deployment-default-odoo-cnet5
   type: NodePort
