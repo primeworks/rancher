@@ -42,4 +42,4 @@ data:
     ;xmlrpcs_port = 8071
 kind: ConfigMap
 metadata:
-  name: odoo-18-tpl.conf
+  name: odoo-cnet5.conf

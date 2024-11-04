@@ -1,24 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: odoo-18-tpl
+  name: odoo-cnet5
   annotations:
     cert-manager.io/issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
-  - host: odoo-18-tpl.webdiscode.com
+  - host: odoo-cnet5.webdiscode.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: odoo-18-tpl
+            name: odoo-cnet5
             port:
               name: http
   tls:
   - hosts:
-    - odoo-18-tpl.webdiscode.com
-    secretName: odoo-18-tpl.webdiscode.com-tls
+    - odoo-cnet5.webdiscode.com
+    secretName: odoo-cnet5.webdiscode.com-tls
