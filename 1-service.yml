@@ -11,10 +11,10 @@ spec:
   - IPv4
   selector:
     workload.user.cattle.io/workloadselector: deployment-default-odoo-cnet5
-  type: LoadBalancer
-  sessionAffinity: None
+  type: NodePort
   ports:
-    - name: http
-      port: 80
-      protocol: TCP
-      targetPort: http
+    - protocol: TCP
+      targetPort: odoo-cnet3
+      nodePort: 
+      port: 8069
+      name: odoo-cnet3
