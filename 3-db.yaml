@@ -25,15 +25,15 @@ spec:
       labels:
         workload.user.cattle.io/workloadselector: statefulSet-default-db-cnet5
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: stack
-                operator: In
-                values:
-                - db
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: stack
+      #           operator: In
+      #           values:
+      #           - db
       containers:
       - args:
         - --max_connections=1200
@@ -79,11 +79,11 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
-      tolerations:
-      - effect: NoSchedule
-        key: stack
-        operator: Equal
-        value: db
+      # tolerations:
+      # - effect: NoSchedule
+      #   key: stack
+      #   operator: Equal
+      #   value: db
       volumes:
       - emptyDir:
           medium: Memory
