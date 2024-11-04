@@ -91,7 +91,7 @@ spec:
         name: dshm
       # Edit the volume to match the existing pv in the cluster
       - hostPath:
-          path: /mnt/data
+          path: /mnt/cnet5/data
           type: DirectoryOrCreate
         name: vol-wjslm
   updateStrategy:
