@@ -1,40 +1,20 @@
 apiVersion: v1
 kind: Service
-metadata:  
+metadata:
   name: odoo-cnet5
 spec:
-  selector:    
-    app: my-app
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  allocateLoadBalancerNodePorts: true
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+  - IPv4
+  selector:
     workload.user.cattle.io/workloadselector: deployment-default-odoo-cnet5
-  type: NodePort
-  ports:  
-  - name: http
-    port: 8069
-    targetPort: 80
-    nodePort: 30036
-    protocol: TCP
-
-
-
-
-
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: odoo-cnet5
-# spec:
-#   # externalTrafficPolicy: Cluster
-#   # internalTrafficPolicy: Cluster
-#   # allocateLoadBalancerNodePorts: true
-#   # ipFamilyPolicy: SingleStack
-#   # ipFamilies:
-#   # - IPv4
-#   selector:
-#     workload.user.cattle.io/workloadselector: deployment-default-odoo-cnet5
-#   type: NodePort
-#   ports:
-#     - protocol: TCP
-#       targetPort: odoo-cnet3
-#       nodePort: 
-#       port: 8069
-#       name: odoo-cnet3
+  type: LoadBalancer
+  sessionAffinity: None
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
