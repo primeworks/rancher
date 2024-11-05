@@ -135,7 +135,7 @@ spec:
         name: vol-wjslm
       - configMap:
           defaultMode: 509
-          name: odoo.conf
+          name: odoo-cnet5.conf
           optional: true
         name: config
 
