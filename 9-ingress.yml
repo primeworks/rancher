@@ -17,9 +17,9 @@ spec:
             name: odoo-cnet5
             port:
               name: http
-    # host: cnet.webdiscode.com
+    host: cnet.webdiscode.com
     
-  # tls:
-  # - hosts:
-  #   - cnet.webdiscode.com
-  #   secretName: cnet.webdiscode.com-tls
+  tls:
+  - hosts:
+    - cnet.webdiscode.com
+    secretName: cnet.webdiscode.com-tls
