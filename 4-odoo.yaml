@@ -129,7 +129,7 @@ spec:
       volumes:
       # Edit the volume to match the existing pv in the cluster
       - hostPath:
-          path: /mnt/cnet5/data
+          path: /mnt/cnet5/odoo
           type: DirectoryOrCreate
         name: vol-wjslm
       - configMap:
