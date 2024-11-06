@@ -4,7 +4,7 @@ data:
     [options] 
     addons_path = /mnt/extra-addons
     data_dir = /var/lib/odoo
-    ;admin_passwd = UA29dGB28Gx5PWz8bnRW
+    admin_passwd = UA29dGB28Gx5PWz8bnRW
     ;admin_passwd = UA2-9dGB28
     db_maxconn = 100
     demo = {}
